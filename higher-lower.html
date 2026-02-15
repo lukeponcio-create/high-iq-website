@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher or Lower: THC Edition 🎮</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --red: #EF4444;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(251, 191, 36, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 8vw, 4rem);
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 15px 30px;
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            color: var(--lime);
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .strain-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .strain-card.left {
+            border: 3px solid var(--lime);
+        }
+
+        .strain-card.right {
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .strain-name {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strain-type {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .strain-type.indica {
+            background: linear-gradient(135deg, #9333EA, #7C3AED);
+        }
+
+        .strain-type.sativa {
+            background: linear-gradient(135deg, #10B981, #059669);
+        }
+
+        .strain-type.hybrid {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+        }
+
+        .thc-display {
+            font-family: 'Righteous', cursive;
+            font-size: 5rem;
+            color: var(--lime);
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .thc-hidden {
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .game-button {
+            padding: 20px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+        }
+
+        .game-button.higher {
+            background: linear-gradient(135deg, var(--lime), var(--green));
+        }
+
+        .game-button.lower {
+            background: linear-gradient(135deg, var(--orange), var(--red));
+        }
+
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .result-overlay.show {
+            display: flex;
+        }
+
+        .result-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            max-width: 500px;
+            border: 3px solid;
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-content.correct {
+            border-color: var(--green);
+        }
+
+        .result-content.wrong {
+            border-color: var(--red);
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .result-text {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .result-text.correct {
+            color: var(--green);
+        }
+
+        .result-text.wrong {
+            color: var(--red);
+        }
+
+        .result-details {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .continue-btn {
+            padding: 15px 40px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .game-over {
+            display: none;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .game-over.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .game-over-title {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .final-score {
+            font-family: 'Righteous', cursive;
+            font-size: 5rem;
+            color: var(--lime);
+            margin: 30px 0;
+        }
+
+        .game-over-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .play-again-btn {
+            padding: 20px 50px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--lime), var(--green));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-again-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(132, 204, 22, 0.5);
+        }
+
+        .start-screen {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .start-title {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .start-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            padding: 20px 50px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                grid-template-columns: 1fr;
+            }
+
+            .strain-name {
+                font-size: 2rem;
+            }
+
+            .thc-display {
+                font-size: 4rem;
+            }
+
+            .score-board {
+                gap: 15px;
+            }
+
+            .score-item {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <div class="container">
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <h1 class="start-title">Higher or Lower: THC Edition 🎮</h1>
+            <p class="start-description">
+                Test your cannabis knowledge! You'll see two strains - one with its THC percentage revealed, and one mystery strain. 
+                Guess if the mystery strain has HIGHER or LOWER THC than the first one. How many can you get right in a row?
+            </p>
+            <button class="start-btn" onclick="startGame()">Let's Play! 🌿</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="hidden">
+            <header>
+                <h1>Higher or Lower 🎮</h1>
+                <p class="subtitle">Which strain has more THC?</p>
+            </header>
+
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="score-label">Current Streak</div>
+                    <div class="score-value" id="currentScore">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Best Streak</div>
+                    <div class="score-value" id="highScore">0</div>
+                </div>
+            </div>
+
+            <div class="game-container">
+                <!-- Left Card (Known) -->
+                <div class="strain-card left">
+                    <div class="card-label">Known Strain</div>
+                    <h2 class="strain-name" id="leftStrainName"></h2>
+                    <span class="strain-type" id="leftStrainType"></span>
+                    <div class="thc-display" id="leftThc"></div>
+                </div>
+
+                <!-- Right Card (Unknown) -->
+                <div class="strain-card right">
+                    <div class="card-label">Mystery Strain</div>
+                    <h2 class="strain-name" id="rightStrainName"></h2>
+                    <span class="strain-type" id="rightStrainType"></span>
+                    <div class="thc-hidden">?</div>
+                    
+                    <div class="button-group">
+                        <button class="game-button higher" onclick="makeGuess('higher')">
+                            ⬆️ HIGHER THC
+                        </button>
+                        <button class="game-button lower" onclick="makeGuess('lower')">
+                            ⬇️ LOWER THC
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div class="game-over" id="gameOver">
+            <h2 class="game-over-title">Game Over! 💀</h2>
+            <div class="final-score" id="finalScore">0</div>
+            <p class="game-over-text" id="gameOverMessage"></p>
+            <button class="play-again-btn" onclick="startGame()">Play Again 🔄</button>
+        </div>
+    </div>
+
+    <!-- Result Overlay -->
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-content" id="resultContent">
+            <div class="result-icon" id="resultIcon"></div>
+            <h2 class="result-text" id="resultText"></h2>
+            <p class="result-details" id="resultDetails"></p>
+            <button class="continue-btn" onclick="nextRound()">Continue →</button>
+        </div>
+    </div>
+
+    <script>
+        const strains = [
+            { name: "Blue Dream", type: "hybrid", thc: 18 },
+            { name: "Runtz", type: "hybrid", thc: 25 },
+            { name: "Sour Diesel", type: "sativa", thc: 20 },
+            { name: "Gushers", type: "indica", thc: 22 },
+            { name: "Northern Lights", type: "indica", thc: 16 },
+            { name: "Wedding Cake", type: "hybrid", thc: 24 },
+            { name: "Jack Herer", type: "sativa", thc: 18 },
+            { name: "Gelato", type: "hybrid", thc: 23 },
+            { name: "Zkittlez", type: "indica", thc: 20 },
+            { name: "OG Kush", type: "hybrid", thc: 20 },
+            { name: "Girl Scout Cookies", type: "hybrid", thc: 21 },
+            { name: "Durban Poison", type: "sativa", thc: 17 },
+            { name: "Granddaddy Purple", type: "indica", thc: 17 },
+            { name: "White Widow", type: "hybrid", thc: 19 },
+            { name: "Pineapple Express", type: "sativa", thc: 19 },
+            { name: "Apple Fritter", type: "hybrid", thc: 24 },
+            { name: "Gorilla Glue #4", type: "hybrid", thc: 25 },
+            { name: "Mac 1", type: "hybrid", thc: 23 },
+            { name: "Cereal Milk", type: "hybrid", thc: 22 },
+            { name: "Purple Punch", type: "indica", thc: 20 },
+            { name: "Tropicana Cookies", type: "hybrid", thc: 24 },
+            { name: "Strawberry Cough", type: "sativa", thc: 18 },
+            { name: "Do-Si-Dos", type: "indica", thc: 23 },
+            { name: "Sunset Sherbet", type: "indica", thc: 19 },
+            { name: "Mimosa", type: "sativa", thc: 21 },
+            { name: "Chemdog", type: "hybrid", thc: 20 },
+            { name: "Green Crack", type: "sativa", thc: 18 },
+            { name: "Cherry Pie", type: "hybrid", thc: 18 },
+            { name: "Animal Cookies", type: "hybrid", thc: 24 },
+            { name: "Lemon Haze", type: "sativa", thc: 18 },
+            { name: "Biscotti", type: "indica", thc: 25 },
+            { name: "Slurricane", type: "indica", thc: 22 },
+            { name: "London Pound Cake", type: "hybrid", thc: 23 },
+            { name: "Papaya", type: "indica", thc: 21 },
+            { name: "Super Silver Haze", type: "sativa", thc: 19 },
+            { name: "Watermelon Zkittlez", type: "indica", thc: 20 },
+            { name: "Afghani", type: "indica", thc: 16 },
+            { name: "Trainwreck", type: "sativa", thc: 19 },
+            { name: "Black Cherry Gelato", type: "hybrid", thc: 24 },
+            { name: "Cookies and Cream", type: "hybrid", thc: 20 },
+            { name: "Jet Fuel", type: "hybrid", thc: 21 },
+            { name: "Forbidden Fruit", type: "indica", thc: 23 },
+            { name: "Tangie", type: "sativa", thc: 20 },
+            { name: "Ice Cream Cake", type: "indica", thc: 23 },
+            { name: "Triangle Kush", type: "indica", thc: 20 },
+            { name: "Pink Runtz", type: "hybrid", thc: 24 },
+            { name: "Lava Cake", type: "indica", thc: 21 },
+            { name: "Candyland", type: "sativa", thc: 19 },
+            { name: "Jealousy", type: "hybrid", thc: 25 },
+            { name: "Blackberry Kush", type: "indica", thc: 18 }
+        ];
+
+        let currentScore = 0;
+        let highScore = localStorage.getItem('highScore') || 0;
+        let usedStrains = [];
+        let currentLeft = null;
+        let currentRight = null;
+
+        document.getElementById('highScore').textContent = highScore;
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameOver').classList.remove('show');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            
+            currentScore = 0;
+            usedStrains = [];
+            document.getElementById('currentScore').textContent = currentScore;
+            
+            loadNewRound();
+        }
+
+        function getRandomStrain() {
+            const available = strains.filter(s => !usedStrains.includes(s.name));
+            if (available.length === 0) {
+                usedStrains = [];
+                return strains[Math.floor(Math.random() * strains.length)];
+            }
+            return available[Math.floor(Math.random() * available.length)];
+        }
+
+        function loadNewRound() {
+            currentLeft = getRandomStrain();
+            usedStrains.push(currentLeft.name);
+            
+            currentRight = getRandomStrain();
+            usedStrains.push(currentRight.name);
+
+            document.getElementById('leftStrainName').textContent = currentLeft.name;
+            document.getElementById('leftStrainType').textContent = currentLeft.type;
+            document.getElementById('leftStrainType').className = `strain-type ${currentLeft.type}`;
+            document.getElementById('leftThc').textContent = currentLeft.thc + '%';
+
+            document.getElementById('rightStrainName').textContent = currentRight.name;
+            document.getElementById('rightStrainType').textContent = currentRight.type;
+            document.getElementById('rightStrainType').className = `strain-type ${currentRight.type}`;
+        }
+
+        function makeGuess(guess) {
+            const isHigher = currentRight.thc > currentLeft.thc;
+            const isCorrect = (guess === 'higher' && isHigher) || (guess === 'lower' && !isHigher);
+
+            showResult(isCorrect);
+        }
+
+        function showResult(isCorrect) {
+            const overlay = document.getElementById('resultOverlay');
+            const content = document.getElementById('resultContent');
+            const icon = document.getElementById('resultIcon');
+            const text = document.getElementById('resultText');
+            const details = document.getElementById('resultDetails');
+
+            if (isCorrect) {
+                currentScore++;
+                document.getElementById('currentScore').textContent = currentScore;
+                
+                if (currentScore > highScore) {
+                    highScore = currentScore;
+                    localStorage.setItem('highScore', highScore);
+                    document.getElementById('highScore').textContent = highScore;
+                }
+
+                content.className = 'result-content correct';
+                icon.textContent = '🎉';
+                text.textContent = 'CORRECT!';
+                text.className = 'result-text correct';
+                details.textContent = `${currentRight.name} has ${currentRight.thc}% THC!`;
+            } else {
+                content.className = 'result-content wrong';
+                icon.textContent = '💀';
+                text.textContent = 'WRONG!';
+                text.className = 'result-text wrong';
+                details.textContent = `${currentRight.name} has ${currentRight.thc}% THC, not ${currentRight.thc > currentLeft.thc ? 'lower' : 'higher'}!`;
+            }
+
+            overlay.classList.add('show');
+
+            if (!isCorrect) {
+                setTimeout(() => {
+                    overlay.classList.remove('show');
+                    endGame();
+                }, 2000);
+            }
+        }
+
+        function nextRound() {
+            document.getElementById('resultOverlay').classList.remove('show');
+            currentLeft = currentRight;
+            
+            document.getElementById('leftStrainName').textContent = currentLeft.name;
+            document.getElementById('leftStrainType').textContent = currentLeft.type;
+            document.getElementById('leftStrainType').className = `strain-type ${currentLeft.type}`;
+            document.getElementById('leftThc').textContent = currentLeft.thc + '%';
+
+            currentRight = getRandomStrain();
+            usedStrains.push(currentRight.name);
+
+            document.getElementById('rightStrainName').textContent = currentRight.name;
+            document.getElementById('rightStrainType').textContent = currentRight.type;
+            document.getElementById('rightStrainType').className = `strain-type ${currentRight.type}`;
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('gameOver').classList.add('show');
+            document.getElementById('finalScore').textContent = currentScore;
+
+            let message = '';
+            if (currentScore === 0) {
+                message = "Better luck next time! Cannabis knowledge takes practice. 🌿";
+            } else if (currentScore < 5) {
+                message = "Not bad for a start! Keep playing to improve your strain knowledge. 💚";
+            } else if (currentScore < 10) {
+                message = "Solid run! You know your THC percentages pretty well. 🔥";
+            } else if (currentScore < 15) {
+                message = "Impressive! You're a true cannabis connoisseur. 🏆";
+            } else {
+                message = "LEGENDARY! You're a walking strain encyclopedia! 👑";
+            }
+
+            document.getElementById('gameOverMessage').textContent = message;
+        }
+    </script>
+</body>
+</html>

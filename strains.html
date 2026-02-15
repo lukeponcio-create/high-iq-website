@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strain Database - High IQ 🌿</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --indica: #9333EA;
+            --sativa: #10B981;
+            --hybrid: #F59E0B;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(251, 191, 36, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.8; }
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--cyan);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .search-section {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            animation: fadeInDown 1.2s ease;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(132, 204, 22, 0.3);
+            border-radius: 50px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--lime);
+            box-shadow: 0 0 30px rgba(132, 204, 22, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            color: var(--lime);
+            pointer-events: none;
+        }
+
+        .search-examples {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .search-examples span {
+            color: var(--cyan);
+            font-style: italic;
+        }
+
+        .filters-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-btn:hover {
+            background: rgba(132, 204, 22, 0.2);
+            border-color: var(--lime);
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            border-color: var(--lime);
+            color: white;
+            font-weight: bold;
+        }
+
+        .results-info {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: var(--cyan);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .no-results-text {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .clear-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: var(--pink);
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: var(--purple);
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .strains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .strain-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(132, 204, 22, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .strain-card:hover::before {
+            left: 100%;
+        }
+
+        .strain-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(132, 204, 22, 0.3),
+                        inset 0 0 0 2px var(--lime);
+        }
+
+        .strain-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .strain-name {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--lime);
+            flex: 1;
+        }
+
+        .badges {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: flex-end;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .badge.indica {
+            background: linear-gradient(135deg, var(--indica), #7C3AED);
+            color: white;
+        }
+
+        .badge.sativa {
+            background: linear-gradient(135deg, var(--sativa), #059669);
+            color: white;
+        }
+
+        .badge.hybrid {
+            background: linear-gradient(135deg, var(--hybrid), #D97706);
+            color: white;
+        }
+
+        .badge.exotic {
+            background: linear-gradient(135deg, var(--pink), var(--orange));
+            color: white;
+        }
+
+        .strain-vibe {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .thc-level {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+        }
+
+        .thc-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .thc-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--lime), var(--cyan));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Modal/Popup Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(26, 0, 51, 0.95), rgba(0, 4, 40, 0.95));
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5),
+                        inset 0 0 0 2px rgba(132, 204, 22, 0.3);
+            position: relative;
+            animation: slideUp 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(236, 72, 153, 0.3);
+            border-color: var(--pink);
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            margin-bottom: 30px;
+        }
+
+        .modal-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .modal-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .info-section {
+            margin-bottom: 25px;
+        }
+
+        .info-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+        }
+
+        .info-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-content li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--lime);
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .level-box {
+            background: rgba(132, 204, 22, 0.1);
+            border: 1px solid rgba(132, 204, 22, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .level-label {
+            font-size: 0.8rem;
+            color: var(--lime);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .level-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .dosage-guide {
+            background: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid var(--cyan);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        .dosage-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dosage-row:last-child {
+            border-bottom: none;
+        }
+
+        .dosage-level {
+            font-weight: bold;
+            color: var(--cyan);
+        }
+
+        .dosage-amount {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .fun-fact {
+            background: rgba(236, 72, 153, 0.1);
+            border-left: 4px solid var(--pink);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .modal-title {
+                font-size: 2rem;
+            }
+
+            .strains-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .levels-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 6 + 5) + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <div class="container">
+        <header>
+            <h1>Strain Database 🌿</h1>
+            <p class="subtitle">Curated strains with real info stoners actually want to know. From classics to exotic drops.</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput"
+                    placeholder="Try: 'something for a party' or 'help me sleep' or 'creative but not sleepy'"
+                    onkeyup="handleSearch()"
+                >
+                <div class="search-icon">🔍</div>
+            </div>
+            <div class="search-examples">
+                Examples: <span>"I need energy for the gym"</span>, <span>"something chill for movies"</span>, <span>"party vibes"</span>
+            </div>
+
+            <div class="filters-container">
+                <button class="filter-btn active" data-filter="all" onclick="applyFilter('all')">All Strains</button>
+                <button class="filter-btn" data-filter="indica" onclick="applyFilter('indica')">Indica</button>
+                <button class="filter-btn" data-filter="sativa" onclick="applyFilter('sativa')">Sativa</button>
+                <button class="filter-btn" data-filter="hybrid" onclick="applyFilter('hybrid')">Hybrid</button>
+                <button class="filter-btn" data-filter="exotic" onclick="applyFilter('exotic')">Exotic Only</button>
+            </div>
+        </div>
+
+        <div class="results-info" id="resultsInfo"></div>
+
+        <div class="strains-grid" id="strainsGrid"></div>
+
+        <div class="no-results hidden" id="noResults">
+            <div class="no-results-icon">🤷</div>
+            <div class="no-results-text">No strains match your search</div>
+            <div style="color: rgba(255, 255, 255, 0.5); margin-top: 10px;">Try different keywords or clear your search</div>
+            <div class="clear-btn" onclick="clearSearch()">Clear Search</div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="strainModal">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal()">×</div>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-badges" id="modalBadges"></div>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const strains = [
+            {
+                name: "Blue Dream",
+                type: "hybrid",
+                exotic: false,
+                vibe: "The perfect balance – creative euphoria meets gentle relaxation",
+                thc: 18,
+                cbd: 0.1,
+                effects: ["Euphoric", "Creative", "Relaxed", "Uplifted"],
+                bestFor: ["Daytime use", "Creative projects", "Social situations", "Stress relief"],
+                flavors: ["Sweet berry", "Vanilla", "Herbal"],
+                medical: ["Stress", "Depression", "Pain", "Fatigue"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-5 hits",
+                    experienced: "5+ hits"
+                },
+                funFact: "Born in California, Blue Dream is one of the most popular strains in the US. It's like the gateway to understanding hybrids – not too sleepy, not too wired."
+            },
+            {
+                name: "Runtz",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Candy store meets gas station – sweet, potent, and absolutely hyped",
+                thc: 25,
+                cbd: 0.1,
+                effects: ["Euphoric", "Relaxed", "Giggly", "Tingly"],
+                bestFor: ["Evening chill", "Movie nights", "Gaming sessions", "Unwinding after work"],
+                flavors: ["Sweet candy", "Fruity", "Tropical"],
+                medical: ["Stress", "Anxiety", "Insomnia", "Pain"],
+                dosage: {
+                    beginner: "1 hit (seriously, it's strong)",
+                    moderate: "2-3 hits",
+                    experienced: "4-6 hits"
+                },
+                funFact: "A cross of Zkittlez and Gelato, Runtz became legendary in rap culture. Playboi Carti, Future, and tons of rappers reference it. If you know, you know."
+            },
+            {
+                name: "Sour Diesel",
+                type: "sativa",
+                exotic: false,
+                vibe: "Rocket fuel for your brain – energizing, focusing, and pungent AF",
+                thc: 20,
+                cbd: 0.2,
+                effects: ["Energetic", "Focused", "Uplifted", "Creative"],
+                bestFor: ["Morning use", "Exercise", "Productivity", "Social events"],
+                flavors: ["Diesel", "Citrus", "Pungent"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5+ hits"
+                },
+                funFact: "East Coast classic from the 90s. The smell is LOUD – your neighbors will know. Not subtle, never boring."
+            },
+            {
+                name: "Gushers",
+                type: "indica",
+                exotic: true,
+                vibe: "Fruit snack vibes with heavy body high – sweet, relaxing, unforgettable",
+                thc: 22,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Sleepy", "Happy"],
+                bestFor: ["Night time", "Netflix binges", "Pain relief", "Sleep aid"],
+                flavors: ["Sweet berries", "Tropical fruit", "Cookie dough"],
+                medical: ["Insomnia", "Chronic pain", "Stress", "Appetite loss"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Named after the fruit snack. Carti referenced it, and it became one of the most sought-after exotic strains. Gelato x Triangle Kush genetics."
+            },
+            {
+                name: "Northern Lights",
+                type: "indica",
+                exotic: false,
+                vibe: "The OG relaxation strain – pure body bliss and peaceful mind",
+                thc: 16,
+                cbd: 0.1,
+                effects: ["Relaxed", "Sleepy", "Happy", "Euphoric"],
+                bestFor: ["Bedtime", "Meditation", "Chronic pain", "Stress relief"],
+                flavors: ["Sweet", "Spicy", "Earthy"],
+                medical: ["Insomnia", "Pain", "Depression", "Stress"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "One of the most famous indicas ever. Won countless Cannabis Cup awards. If someone says 'couch-lock,' this is what they mean."
+            },
+            {
+                name: "Wedding Cake",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Dessert flavors with balanced high – sweet, relaxing, slightly euphoric",
+                thc: 24,
+                cbd: 0.2,
+                effects: ["Relaxed", "Euphoric", "Happy", "Giggly"],
+                bestFor: ["Evening use", "Social gatherings", "Creativity", "Unwinding"],
+                flavors: ["Sweet vanilla", "Earthy", "Pepper"],
+                medical: ["Pain", "Anxiety", "Depression", "Insomnia"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-5 hits",
+                    experienced: "6+ hits"
+                },
+                funFact: "Also called Pink Cookies. It's a dessert strain that actually tastes like cake. Cherry Pie x Girl Scout Cookies = perfection."
+            },
+            {
+                name: "Jack Herer",
+                type: "sativa",
+                exotic: false,
+                vibe: "Clear-headed creativity and energy – the thinker's sativa",
+                thc: 18,
+                cbd: 0.1,
+                effects: ["Energetic", "Creative", "Uplifted", "Focused"],
+                bestFor: ["Daytime", "Work projects", "Conversations", "Outdoor activities"],
+                flavors: ["Pine", "Spicy", "Earthy"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Named after the legendary cannabis activist and author. It's won so many awards it has its own Wikipedia page. A true legend."
+            },
+            {
+                name: "Gelato",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Sweet, potent, and perfectly balanced – dessert strain royalty",
+                thc: 23,
+                cbd: 0.1,
+                effects: ["Euphoric", "Relaxed", "Creative", "Uplifted"],
+                bestFor: ["Any time", "Creative work", "Social vibes", "Relaxation"],
+                flavors: ["Sweet berries", "Citrus", "Lavender"],
+                medical: ["Stress", "Depression", "Pain", "Inflammation"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Bay Area bred, Cookie Fam genetics. This strain launched a thousand variants (Gelato 33, 41, 45, etc.). The whole family tree is fire."
+            },
+            {
+                name: "Zkittlez",
+                type: "indica",
+                exotic: true,
+                vibe: "Taste the rainbow, feel the calm – fruity flavors with deep relaxation",
+                thc: 20,
+                cbd: 0.2,
+                effects: ["Relaxed", "Happy", "Euphoric", "Focused"],
+                bestFor: ["Evening", "Stress relief", "Creative projects", "Chill sessions"],
+                flavors: ["Fruity candy", "Sweet berries", "Grape"],
+                medical: ["Stress", "Anxiety", "Depression", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Won 1st place at the 2016 Emerald Cup. Literally tastes like Skittles candy. Part of the Runtz lineage – if you like one, you'll love the other."
+            },
+            {
+                name: "OG Kush",
+                type: "hybrid",
+                exotic: false,
+                vibe: "The OG for a reason – earthy, potent, legendary status",
+                thc: 20,
+                cbd: 0.2,
+                effects: ["Euphoric", "Relaxed", "Happy", "Uplifted"],
+                bestFor: ["Any time", "Stress relief", "Pain management", "Social use"],
+                flavors: ["Earthy", "Pine", "Woody"],
+                medical: ["Stress", "Depression", "Pain", "Insomnia"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "The backbone of West Coast cannabis culture. So many modern strains have OG Kush in their genetics. Respect your elders."
+            },
+            {
+                name: "Girl Scout Cookies",
+                type: "hybrid",
+                exotic: false,
+                vibe: "Sweet, potent, and euphoric – the cookie that changed the game",
+                thc: 21,
+                cbd: 0.1,
+                effects: ["Euphoric", "Relaxed", "Happy", "Creative"],
+                bestFor: ["Afternoon/evening", "Creativity", "Social gatherings", "Relaxation"],
+                flavors: ["Sweet", "Earthy", "Mint"],
+                medical: ["Pain", "Nausea", "Appetite loss", "Stress"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-5 hits",
+                    experienced: "6+ hits"
+                },
+                funFact: "GSC (renamed from Girl Scout Cookies) is a legend. Parent to countless strains like Wedding Cake and Gelato. Changed the dessert strain game forever."
+            },
+            {
+                name: "Durban Poison",
+                type: "sativa",
+                exotic: false,
+                vibe: "Pure sativa energy – clear-headed, uplifting, and motivating",
+                thc: 17,
+                cbd: 0.1,
+                effects: ["Energetic", "Uplifted", "Focused", "Creative"],
+                bestFor: ["Morning", "Exercise", "Social events", "Productivity"],
+                flavors: ["Sweet", "Spicy", "Earthy"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "From South Africa. One of the purest sativa landrace strains available. No couch-lock here – it's all gas, no brakes."
+            },
+            {
+                name: "Granddaddy Purple",
+                type: "indica",
+                exotic: false,
+                vibe: "Purple buds, grape flavor, ultimate relaxation – a bedtime classic",
+                thc: 17,
+                cbd: 0.1,
+                effects: ["Relaxed", "Sleepy", "Euphoric", "Happy"],
+                bestFor: ["Night time", "Pain relief", "Sleep aid", "Stress relief"],
+                flavors: ["Grape", "Berry", "Sweet"],
+                medical: ["Insomnia", "Pain", "Stress", "Appetite loss"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7-9 hits"
+                },
+                funFact: "GDP is iconic. Those purple hues aren't just for show – it's packed with anthocyanins. Looks as good as it feels."
+            },
+            {
+                name: "White Widow",
+                type: "hybrid",
+                exotic: false,
+                vibe: "Energizing yet balanced – a Dutch classic with frosted buds",
+                thc: 19,
+                cbd: 0.2,
+                effects: ["Energetic", "Euphoric", "Creative", "Focused"],
+                bestFor: ["Daytime", "Social events", "Creative projects", "Conversations"],
+                flavors: ["Earthy", "Woody", "Spicy"],
+                medical: ["Depression", "Stress", "Pain", "Fatigue"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Amsterdam coffee shop staple since the 90s. Won the High Times Cannabis Cup. If you've been to Amsterdam, you've probably smoked this."
+            },
+            {
+                name: "Pineapple Express",
+                type: "sativa",
+                exotic: false,
+                vibe: "Tropical flavors with uplifting energy – yes, like the movie",
+                thc: 19,
+                cbd: 0.1,
+                effects: ["Energetic", "Euphoric", "Happy", "Creative"],
+                bestFor: ["Daytime", "Social activities", "Exercise", "Creativity"],
+                flavors: ["Pineapple", "Tropical", "Cedar"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Made famous by the Seth Rogen movie. It actually existed before the film, but the movie put it on the map. Now everyone wants to try it."
+            },
+            {
+                name: "Apple Fritter",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Dessert vibes with powerful effects – sweet, balanced, unforgettable",
+                thc: 24,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Uplifted"],
+                bestFor: ["Evening", "Stress relief", "Pain management", "Social use"],
+                flavors: ["Sweet apple", "Cinnamon", "Cheesy"],
+                medical: ["Stress", "Anxiety", "Pain", "Insomnia"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Bred by Lumpy's Flowers. This strain won awards and became an instant classic. Tastes exactly like apple fritter pastry."
+            },
+            {
+                name: "Gorilla Glue #4",
+                type: "hybrid",
+                exotic: false,
+                vibe: "Heavy-hitting and sticky – couch-lock champion with euphoric vibes",
+                thc: 25,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Sleepy"],
+                bestFor: ["Night time", "Pain relief", "Stress relief", "Sleep aid"],
+                flavors: ["Earthy", "Sour", "Pungent"],
+                medical: ["Pain", "Insomnia", "Stress", "Depression"],
+                dosage: {
+                    beginner: "1 hit",
+                    moderate: "2-3 hits",
+                    experienced: "4-6 hits"
+                },
+                funFact: "Also called GG4. Won multiple Cannabis Cup awards. So resinous it'll glue your scissors shut when trimming. Beast mode strain."
+            },
+            {
+                name: "Mac 1",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Miracle Alien Cookies – perfectly balanced with unique terps",
+                thc: 23,
+                cbd: 0.1,
+                effects: ["Euphoric", "Creative", "Uplifted", "Happy"],
+                bestFor: ["Any time", "Creative work", "Social settings", "Mood boost"],
+                flavors: ["Citrus", "Sour", "Floral"],
+                medical: ["Depression", "Stress", "Fatigue", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Bred by Capulator. MAC stands for Miracle Alien Cookies. Super exclusive genetics that everyone wants to grow."
+            },
+            {
+                name: "Cereal Milk",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Tastes like the milk after cereal – sweet, creamy, balanced high",
+                thc: 22,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Uplifted"],
+                bestFor: ["Afternoon/evening", "Socializing", "Creativity", "Relaxation"],
+                flavors: ["Sweet", "Creamy", "Fruity"],
+                medical: ["Stress", "Anxiety", "Depression", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "From Cookies Fam genetics. Literally tastes like cereal milk. Y2K crossed with Snowman – absolute fire."
+            },
+            {
+                name: "Purple Punch",
+                type: "indica",
+                exotic: true,
+                vibe: "Dessert indica with knockout relaxation – sweet dreams guaranteed",
+                thc: 20,
+                cbd: 0.1,
+                effects: ["Relaxed", "Sleepy", "Euphoric", "Happy"],
+                bestFor: ["Night time", "Sleep aid", "Pain relief", "Stress relief"],
+                flavors: ["Grape", "Blueberry", "Vanilla"],
+                medical: ["Insomnia", "Pain", "Stress", "Nausea"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7-9 hits"
+                },
+                funFact: "Larry OG x Granddaddy Purple. Tastes like grape candy and knocks you out peacefully. Perfect bedtime strain."
+            },
+            {
+                name: "Tropicana Cookies",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Citrus explosion with uplifting effects – morning sunshine in a bud",
+                thc: 24,
+                cbd: 0.1,
+                effects: ["Energetic", "Uplifted", "Creative", "Focused"],
+                bestFor: ["Morning/daytime", "Creative projects", "Social events", "Focus"],
+                flavors: ["Orange", "Citrus", "Tropical"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "GSC x Tangie. Also called MTN Trop. Smells like a fresh orange peel. Wake and bake champion."
+            },
+            {
+                name: "Strawberry Cough",
+                type: "sativa",
+                exotic: false,
+                vibe: "Sweet berry flavor with expansive sativa energy – smooth but potent",
+                thc: 18,
+                cbd: 0.2,
+                effects: ["Uplifted", "Euphoric", "Energetic", "Creative"],
+                bestFor: ["Daytime", "Social situations", "Creative work", "Conversations"],
+                flavors: ["Strawberry", "Sweet berry", "Earthy"],
+                medical: ["Stress", "Anxiety", "Depression", "Fatigue"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Known for making you cough (hence the name) but the strawberry taste makes it worth it. Clear-headed high that's perfect for day smoking."
+            },
+            {
+                name: "Do-Si-Dos",
+                type: "indica",
+                exotic: true,
+                vibe: "Cookies lineage with heavy relaxation – sweet, earthy, powerful",
+                thc: 23,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Sleepy"],
+                bestFor: ["Evening/night", "Stress relief", "Pain management", "Relaxation"],
+                flavors: ["Sweet", "Earthy", "Floral"],
+                medical: ["Pain", "Insomnia", "Stress", "Depression"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "GSC x Face Off OG. Part of the legendary Cookies genetics. Named after the cookie, packs a punch like the minty treat."
+            },
+            {
+                name: "Sunset Sherbet",
+                type: "indica",
+                exotic: true,
+                vibe: "Fruity dessert strain with mellow vibes – smooth, sweet, euphoric",
+                thc: 19,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Uplifted"],
+                bestFor: ["Evening", "Stress relief", "Social use", "Relaxation"],
+                flavors: ["Sweet berry", "Citrus", "Fruity"],
+                medical: ["Stress", "Pain", "Depression", "Appetite loss"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Parent strain to Gelato. From the Cookies Fam. Tastes like a frozen dessert on a summer night."
+            },
+            {
+                name: "Mimosa",
+                type: "sativa",
+                exotic: true,
+                vibe: "Brunch vibes in bud form – citrusy, uplifting, energizing",
+                thc: 21,
+                cbd: 0.1,
+                effects: ["Energetic", "Uplifted", "Happy", "Focused"],
+                bestFor: ["Morning/daytime", "Social events", "Creative work", "Exercise"],
+                flavors: ["Citrus", "Tropical", "Earthy"],
+                medical: ["Depression", "Stress", "Fatigue", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Purple Punch x Clementine. Named after the brunch cocktail. Perfect wake and bake strain with that citrus kick."
+            },
+            {
+                name: "Chemdog",
+                type: "hybrid",
+                exotic: false,
+                vibe: "Legendary genetics with diesel punch – potent, pungent, iconic",
+                thc: 20,
+                cbd: 0.2,
+                effects: ["Euphoric", "Relaxed", "Creative", "Uplifted"],
+                bestFor: ["Any time", "Creative work", "Stress relief", "Social use"],
+                flavors: ["Diesel", "Pungent", "Earthy"],
+                medical: ["Stress", "Pain", "Depression", "Fatigue"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Parent to Sour Diesel and OG Kush. One of the most important strains in cannabis history. The DNA of modern weed."
+            },
+            {
+                name: "Green Crack",
+                type: "sativa",
+                exotic: false,
+                vibe: "Energy in a bud – sharp focus and motivation without paranoia",
+                thc: 18,
+                cbd: 0.1,
+                effects: ["Energetic", "Focused", "Uplifted", "Creative"],
+                bestFor: ["Morning/daytime", "Exercise", "Productivity", "Creative work"],
+                flavors: ["Citrus", "Mango", "Earthy"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Snoop Dogg named this strain. Reportedly renamed from 'Green Cush' because it's so energizing. Not crack, just really good sativa."
+            },
+            {
+                name: "Cherry Pie",
+                type: "hybrid",
+                exotic: false,
+                vibe: "Sweet cherry flavor with balanced effects – dessert meets medication",
+                thc: 18,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Uplifted"],
+                bestFor: ["Evening", "Stress relief", "Social use", "Creativity"],
+                flavors: ["Cherry", "Sweet", "Earthy"],
+                medical: ["Stress", "Anxiety", "Pain", "Depression"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Granddaddy Purple x Durban Poison. Parent to Wedding Cake. Sweet cherry pie flavor that's as good as it sounds."
+            },
+            {
+                name: "Animal Cookies",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Potent cookies genetics with relaxing effects – sweet, earthy, powerful",
+                thc: 24,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Sleepy"],
+                bestFor: ["Evening/night", "Pain relief", "Stress relief", "Sleep aid"],
+                flavors: ["Sweet", "Earthy", "Pungent"],
+                medical: ["Pain", "Insomnia", "Stress", "Depression"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "GSC x Fire OG. Cookies Fam genetics. Heavy hitter that'll have you on the couch but feeling amazing."
+            },
+            {
+                name: "Lemon Haze",
+                type: "sativa",
+                exotic: false,
+                vibe: "Citrus explosion with energizing effects – happy, focused, uplifting",
+                thc: 18,
+                cbd: 0.1,
+                effects: ["Energetic", "Uplifted", "Creative", "Happy"],
+                bestFor: ["Morning/daytime", "Social events", "Creative work", "Exercise"],
+                flavors: ["Lemon", "Citrus", "Sweet"],
+                medical: ["Depression", "Stress", "Fatigue", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Won High Times Cannabis Cup twice. Lemon Skunk x Silver Haze. That lemon flavor is no joke – pure citrus heaven."
+            },
+            {
+                name: "Biscotti",
+                type: "indica",
+                exotic: true,
+                vibe: "Cookies meets Gelato – sweet, relaxing, dessert strain perfection",
+                thc: 25,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Sleepy", "Happy"],
+                bestFor: ["Night time", "Pain relief", "Stress relief", "Sleep aid"],
+                flavors: ["Sweet", "Nutty", "Spicy"],
+                medical: ["Pain", "Insomnia", "Stress", "Anxiety"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Gelato 25 x Girl Scout Cookies x Gorilla Glue. Cookies Fam strikes again. Tastes like an Italian cookie, hits like a champion."
+            },
+            {
+                name: "Slurricane",
+                type: "indica",
+                exotic: true,
+                vibe: "Tropical flavors with heavy relaxation – sweet, fruity, knockout power",
+                thc: 22,
+                cbd: 0.1,
+                effects: ["Relaxed", "Sleepy", "Euphoric", "Happy"],
+                bestFor: ["Night time", "Sleep aid", "Pain relief", "Stress relief"],
+                flavors: ["Berry", "Tropical", "Sweet"],
+                medical: ["Insomnia", "Pain", "Stress", "Anxiety"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Do-Si-Dos x Purple Punch. In-House Genetics bred this heavy hitter. Tastes tropical, hits like a hurricane."
+            },
+            {
+                name: "London Pound Cake",
+                type: "hybrid",
+                exotic: true,
+                vibe: "UK-inspired dessert strain – sweet, balanced, increasingly popular",
+                thc: 23,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Uplifted"],
+                bestFor: ["Evening", "Stress relief", "Social use", "Relaxation"],
+                flavors: ["Sweet berry", "Nutty", "Lemon"],
+                medical: ["Stress", "Anxiety", "Pain", "Depression"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Sunset Sherbet x another unknown strain. Cookies Fam genetics. Trending heavy in the exotic market right now."
+            },
+            {
+                name: "Papaya",
+                type: "indica",
+                exotic: true,
+                vibe: "Tropical fruit flavors with mellow vibes – sweet, relaxing, unique",
+                thc: 21,
+                cbd: 0.2,
+                effects: ["Relaxed", "Happy", "Euphoric", "Sleepy"],
+                bestFor: ["Evening/night", "Stress relief", "Pain management", "Sleep aid"],
+                flavors: ["Tropical fruit", "Mango", "Sweet"],
+                medical: ["Pain", "Insomnia", "Stress", "Nausea"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7-9 hits"
+                },
+                funFact: "Citral #13 x Ice #2. Nirvana Seeds creation. Tastes exactly like papaya fruit. Exotic tropical vibes in every puff."
+            },
+            {
+                name: "Super Silver Haze",
+                type: "sativa",
+                exotic: false,
+                vibe: "Award-winning sativa with long-lasting energy – spicy, uplifting, legendary",
+                thc: 19,
+                cbd: 0.1,
+                effects: ["Energetic", "Uplifted", "Euphoric", "Creative"],
+                bestFor: ["Morning/daytime", "Exercise", "Social events", "Productivity"],
+                flavors: ["Spicy", "Citrus", "Herbal"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Won High Times Cannabis Cup three years in a row (1997-1999). Skunk x Northern Lights x Haze. Hall of fame strain."
+            },
+            {
+                name: "Watermelon Zkittlez",
+                type: "indica",
+                exotic: true,
+                vibe: "Fruity candy meets watermelon – sweet, relaxing, flavor explosion",
+                thc: 20,
+                cbd: 0.1,
+                effects: ["Relaxed", "Happy", "Euphoric", "Uplifted"],
+                bestFor: ["Evening", "Stress relief", "Pain management", "Relaxation"],
+                flavors: ["Watermelon", "Fruity candy", "Sweet"],
+                medical: ["Stress", "Pain", "Insomnia", "Anxiety"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7-9 hits"
+                },
+                funFact: "Zkittlez x Watermelon. Dying Breed Seeds genetics. Tastes like summer in a bud – watermelon candy perfection."
+            },
+            {
+                name: "Afghani",
+                type: "indica",
+                exotic: false,
+                vibe: "Pure landrace indica – earthy, relaxing, ancient genetics",
+                thc: 16,
+                cbd: 0.2,
+                effects: ["Relaxed", "Sleepy", "Euphoric", "Happy"],
+                bestFor: ["Night time", "Sleep aid", "Pain relief", "Meditation"],
+                flavors: ["Earthy", "Sweet", "Pungent"],
+                medical: ["Insomnia", "Pain", "Stress", "Anxiety"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7-9 hits"
+                },
+                funFact: "One of the original landrace strains from Afghanistan. Parent to many modern indicas including Northern Lights. Cannabis history in a bud."
+            },
+            {
+                name: "Trainwreck",
+                type: "sativa",
+                exotic: false,
+                vibe: "Fast-hitting sativa with cerebral effects – spicy, energizing, intense",
+                thc: 19,
+                cbd: 0.1,
+                effects: ["Energetic", "Euphoric", "Creative", "Uplifted"],
+                bestFor: ["Daytime", "Creative work", "Social events", "Focus"],
+                flavors: ["Lemon", "Pine", "Spicy"],
+                medical: ["Depression", "Stress", "Pain", "Fatigue"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Legend says it was named because growers had to harvest early due to a nearby train wreck. Hits fast and hard like its name."
+            },
+            {
+                name: "Black Cherry Gelato",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Dark berries meet dessert strain – potent, balanced, delicious",
+                thc: 24,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Creative"],
+                bestFor: ["Any time", "Stress relief", "Social use", "Creativity"],
+                flavors: ["Black cherry", "Berry", "Sweet"],
+                medical: ["Stress", "Pain", "Depression", "Anxiety"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Black Cherry Funk x Acai Gelato. Backpack Boyz genetics. Dark purple buds with cherry flavor that's becoming cult status."
+            },
+            {
+                name: "Cookies and Cream",
+                type: "hybrid",
+                exotic: false,
+                vibe: "Vanilla cookie flavor with balanced high – sweet, smooth, crowd-pleaser",
+                thc: 20,
+                cbd: 0.1,
+                effects: ["Relaxed", "Happy", "Euphoric", "Uplifted"],
+                bestFor: ["Any time", "Stress relief", "Social use", "Relaxation"],
+                flavors: ["Vanilla", "Sweet", "Earthy"],
+                medical: ["Stress", "Anxiety", "Depression", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Starfighter x GSC. Exotic Genetix creation. Tastes like Oreos. Simple name, complex flavor, perfect effects."
+            },
+            {
+                name: "Jet Fuel",
+                type: "hybrid",
+                exotic: false,
+                vibe: "Diesel power with uplifting effects – pungent, energizing, potent",
+                thc: 21,
+                cbd: 0.1,
+                effects: ["Energetic", "Uplifted", "Euphoric", "Focused"],
+                bestFor: ["Daytime", "Creative work", "Social events", "Exercise"],
+                flavors: ["Diesel", "Pine", "Skunk"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Also called G6. Aspen OG x High Country Diesel. Smells loud like jet fuel, launches you to the clouds. Great for focus."
+            },
+            {
+                name: "Forbidden Fruit",
+                type: "indica",
+                exotic: true,
+                vibe: "Tropical forbidden pleasure – sweet, relaxing, deeply flavorful",
+                thc: 23,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Happy", "Sleepy"],
+                bestFor: ["Evening/night", "Stress relief", "Pain relief", "Relaxation"],
+                flavors: ["Cherry", "Tropical", "Lemon"],
+                medical: ["Stress", "Pain", "Insomnia", "Anxiety"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Cherry Pie x Tangie. Bred by Chameleon Extracts. Deep purple buds with tropical cherry flavor. Worth the sin."
+            },
+            {
+                name: "Tangie",
+                type: "sativa",
+                exotic: false,
+                vibe: "Citrus overload with creative energy – refreshing, uplifting, flavorful",
+                thc: 20,
+                cbd: 0.1,
+                effects: ["Energetic", "Creative", "Uplifted", "Happy"],
+                bestFor: ["Daytime", "Creative work", "Social events", "Exercise"],
+                flavors: ["Tangerine", "Citrus", "Sweet"],
+                medical: ["Depression", "Stress", "Fatigue", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Remake of Tangerine Dream from the 90s. DNA Genetics brought it back. Won awards for that incredible citrus flavor."
+            },
+            {
+                name: "Ice Cream Cake",
+                type: "indica",
+                exotic: true,
+                vibe: "Dessert indica with heavy relaxation – creamy, sweet, knockout power",
+                thc: 23,
+                cbd: 0.1,
+                effects: ["Relaxed", "Sleepy", "Euphoric", "Happy"],
+                bestFor: ["Night time", "Sleep aid", "Pain relief", "Stress relief"],
+                flavors: ["Vanilla", "Sugary", "Creamy"],
+                medical: ["Insomnia", "Pain", "Stress", "Anxiety"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Wedding Cake x Gelato 33. Seed Junky Genetics. Tastes like birthday cake ice cream. Perfect bedtime treat."
+            },
+            {
+                name: "Triangle Kush",
+                type: "indica",
+                exotic: false,
+                vibe: "Florida OG genetics – earthy, relaxing, authentic Kush experience",
+                thc: 20,
+                cbd: 0.2,
+                effects: ["Relaxed", "Euphoric", "Happy", "Sleepy"],
+                bestFor: ["Evening/night", "Pain relief", "Stress relief", "Sleep aid"],
+                flavors: ["Earthy", "Pine", "Lemon"],
+                medical: ["Pain", "Insomnia", "Stress", "Depression"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7-9 hits"
+                },
+                funFact: "One of the three original Florida OG Kush cuts. Parent to many modern strains. Real OG genetics, not trendy hype."
+            },
+            {
+                name: "Pink Runtz",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Pink candy vibes with balanced effects – sweet, smooth, highly sought",
+                thc: 24,
+                cbd: 0.1,
+                effects: ["Euphoric", "Relaxed", "Happy", "Uplifted"],
+                bestFor: ["Any time", "Social use", "Creativity", "Relaxation"],
+                flavors: ["Sweet candy", "Fruity", "Berry"],
+                medical: ["Stress", "Anxiety", "Depression", "Pain"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Pink Panties x Rainbow Sherbet x Runtz. Cookies Fam genetics. The pink phenotype of Runtz that's even more exclusive."
+            },
+            {
+                name: "Lava Cake",
+                type: "indica",
+                exotic: true,
+                vibe: "Chocolate dessert strain with powerful relaxation – rich, smooth, potent",
+                thc: 21,
+                cbd: 0.1,
+                effects: ["Relaxed", "Euphoric", "Sleepy", "Happy"],
+                bestFor: ["Night time", "Pain relief", "Sleep aid", "Stress relief"],
+                flavors: ["Chocolate", "Nutty", "Vanilla"],
+                medical: ["Pain", "Insomnia", "Stress", "Anxiety"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-5 hits",
+                    experienced: "6-8 hits"
+                },
+                funFact: "Thin Mint GSC x Grape Pie. Cannarado Genetics. Tastes like chocolate lava cake. Dessert strain royalty."
+            },
+            {
+                name: "Candyland",
+                type: "sativa",
+                exotic: false,
+                vibe: "Sweet uplifting sativa – energizing, happy, sugar rush without the crash",
+                thc: 19,
+                cbd: 0.1,
+                effects: ["Energetic", "Uplifted", "Euphoric", "Creative"],
+                bestFor: ["Daytime", "Social events", "Creative work", "Exercise"],
+                flavors: ["Sweet", "Earthy", "Spicy"],
+                medical: ["Depression", "Fatigue", "Stress", "Pain"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7+ hits"
+                },
+                funFact: "Granddaddy Purple x Bay Platinum Cookies. Ken Estes creation. Sweet flavor with energizing effects – best of both worlds."
+            },
+            {
+                name: "Jealousy",
+                type: "hybrid",
+                exotic: true,
+                vibe: "Cookies x Gelato perfection – balanced, potent, increasingly hyped",
+                thc: 25,
+                cbd: 0.1,
+                effects: ["Euphoric", "Relaxed", "Creative", "Happy"],
+                bestFor: ["Any time", "Social use", "Creative work", "Stress relief"],
+                flavors: ["Fruity", "Earthy", "Sweet"],
+                medical: ["Stress", "Depression", "Pain", "Anxiety"],
+                dosage: {
+                    beginner: "1-2 hits",
+                    moderate: "3-4 hits",
+                    experienced: "5-7 hits"
+                },
+                funFact: "Sherbert x Gelato 41. Seed Junky Genetics. Named Jealousy because the effects are so good you'll make others jealous."
+            },
+            {
+                name: "Blackberry Kush",
+                type: "indica",
+                exotic: false,
+                vibe: "Berry flavor with heavy body high – sweet, relaxing, classic indica",
+                thc: 18,
+                cbd: 0.2,
+                effects: ["Relaxed", "Sleepy", "Euphoric", "Happy"],
+                bestFor: ["Night time", "Sleep aid", "Pain relief", "Stress relief"],
+                flavors: ["Blackberry", "Earthy", "Diesel"],
+                medical: ["Insomnia", "Pain", "Stress", "Anxiety"],
+                dosage: {
+                    beginner: "2-3 hits",
+                    moderate: "4-6 hits",
+                    experienced: "7-9 hits"
+                },
+                funFact: "Afghani x Blackberry. Classic indica genetics. Tastes like fresh blackberries with that trademark Kush relaxation."
+            }
+        ];
+
+        function renderStrains() {
+            const grid = document.getElementById('strainsGrid');
+            grid.innerHTML = strains.map((strain, index) => `
+                <div class="strain-card" onclick="openModal(${index})">
+                    <div class="strain-header">
+                        <div class="strain-name">${strain.name}</div>
+                        <div class="badges">
+                            <span class="badge ${strain.type}">${strain.type}</span>
+                            ${strain.exotic ? '<span class="badge exotic">Exotic</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="strain-vibe">${strain.vibe}</div>
+                    <div class="thc-level">
+                        <span>THC: ${strain.thc}%</span>
+                        <div class="thc-bar">
+                            <div class="thc-fill" style="width: ${(strain.thc / 30) * 100}%"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(index) {
+            const strain = strains[index];
+            const modal = document.getElementById('strainModal');
+            
+            document.getElementById('modalTitle').textContent = strain.name;
+            document.getElementById('modalBadges').innerHTML = `
+                <span class="badge ${strain.type}">${strain.type}</span>
+                ${strain.exotic ? '<span class="badge exotic">Exotic</span>' : ''}
+            `;
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="info-section">
+                    <div class="info-title">💊 Potency Levels</div>
+                    <div class="levels-grid">
+                        <div class="level-box">
+                            <div class="level-label">THC</div>
+                            <div class="level-value">${strain.thc}%</div>
+                        </div>
+                        <div class="level-box">
+                            <div class="level-label">CBD</div>
+                            <div class="level-value">${strain.cbd}%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">✨ Effects</div>
+                    <div class="info-content">
+                        <ul>
+                            ${strain.effects.map(effect => `<li>${effect}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">🎯 Best For</div>
+                    <div class="info-content">
+                        <ul>
+                            ${strain.bestFor.map(use => `<li>${use}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">👅 Flavor Profile</div>
+                    <div class="info-content">
+                        ${strain.flavors.join(' • ')}
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">🏥 Medical Benefits</div>
+                    <div class="info-content">
+                        <ul>
+                            ${strain.medical.map(benefit => `<li>${benefit}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">💨 Dosage Guide</div>
+                    <div class="dosage-guide">
+                        <div class="dosage-row">
+                            <span class="dosage-level">🟢 Beginner</span>
+                            <span class="dosage-amount">${strain.dosage.beginner}</span>
+                        </div>
+                        <div class="dosage-row">
+                            <span class="dosage-level">🟡 Moderate</span>
+                            <span class="dosage-amount">${strain.dosage.moderate}</span>
+                        </div>
+                        <div class="dosage-row">
+                            <span class="dosage-level">🔴 Experienced</span>
+                            <span class="dosage-amount">${strain.dosage.experienced}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <strong>💡 Fun Fact:</strong> ${strain.funFact}
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('strainModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('strainModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        renderStrains();
+
+        // Smart search keywords mapping
+        const searchKeywords = {
+            // Activities
+            party: ['energetic', 'uplifted', 'euphoric', 'happy', 'social'],
+            gym: ['energetic', 'focused', 'uplifted'],
+            workout: ['energetic', 'focused', 'uplifted'],
+            exercise: ['energetic', 'focused', 'uplifted'],
+            creative: ['creative', 'euphoric', 'uplifted', 'focused'],
+            gaming: ['focused', 'relaxed', 'happy', 'euphoric'],
+            movies: ['relaxed', 'happy', 'euphoric'],
+            netflix: ['relaxed', 'happy', 'euphoric'],
+            
+            // Times of day
+            morning: ['energetic', 'uplifted', 'focused'],
+            daytime: ['energetic', 'uplifted', 'focused'],
+            day: ['energetic', 'uplifted', 'focused'],
+            night: ['relaxed', 'sleepy', 'euphoric'],
+            evening: ['relaxed', 'happy', 'euphoric'],
+            bedtime: ['sleepy', 'relaxed'],
+            
+            // Moods/Effects
+            sleep: ['sleepy', 'relaxed'],
+            insomnia: ['sleepy', 'relaxed'],
+            energy: ['energetic', 'uplifted', 'focused'],
+            energetic: ['energetic', 'uplifted'],
+            focus: ['focused', 'creative', 'uplifted'],
+            focused: ['focused', 'creative', 'uplifted'],
+            relax: ['relaxed', 'happy', 'euphoric'],
+            chill: ['relaxed', 'happy'],
+            calm: ['relaxed', 'happy'],
+            anxiety: ['relaxed', 'happy', 'euphoric'],
+            stress: ['relaxed', 'euphoric', 'happy'],
+            depression: ['uplifted', 'euphoric', 'happy'],
+            pain: ['relaxed', 'euphoric'],
+            happy: ['happy', 'euphoric', 'uplifted'],
+            euphoric: ['euphoric', 'happy', 'uplifted'],
+            giggly: ['giggly', 'happy', 'euphoric'],
+            
+            // Social contexts
+            social: ['uplifted', 'happy', 'energetic', 'euphoric'],
+            friends: ['uplifted', 'happy', 'energetic', 'euphoric'],
+            conversation: ['uplifted', 'creative', 'focused'],
+            laugh: ['giggly', 'happy', 'euphoric'],
+            
+            // Specific needs
+            productive: ['focused', 'energetic', 'creative'],
+            couch: ['relaxed', 'sleepy', 'euphoric'],
+            lazy: ['relaxed', 'sleepy'],
+            active: ['energetic', 'uplifted', 'focused']
+        };
+
+        let currentFilter = 'all';
+        let filteredStrains = [...strains];
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (query === '') {
+                filteredStrains = applyTypeFilter(strains, currentFilter);
+                renderFilteredStrains();
+                return;
+            }
+
+            // Smart keyword matching
+            let matchedEffects = new Set();
+            
+            // Check each keyword in the search query
+            for (let keyword in searchKeywords) {
+                if (query.includes(keyword)) {
+                    searchKeywords[keyword].forEach(effect => matchedEffects.add(effect.toLowerCase()));
+                }
+            }
+
+            // If no keywords matched, search strain names
+            if (matchedEffects.size === 0) {
+                filteredStrains = strains.filter(strain => 
+                    strain.name.toLowerCase().includes(query) ||
+                    strain.vibe.toLowerCase().includes(query) ||
+                    strain.flavors.some(flavor => flavor.toLowerCase().includes(query))
+                );
+            } else {
+                // Score each strain based on matching effects
+                const scoredStrains = strains.map(strain => {
+                    let score = 0;
+                    strain.effects.forEach(effect => {
+                        if (matchedEffects.has(effect.toLowerCase())) {
+                            score++;
+                        }
+                    });
+                    return { strain, score };
+                });
+
+                // Filter strains with score > 0 and sort by score
+                filteredStrains = scoredStrains
+                    .filter(item => item.score > 0)
+                    .sort((a, b) => b.score - a.score)
+                    .map(item => item.strain);
+            }
+
+            // Apply current type filter on top of search results
+            filteredStrains = applyTypeFilter(filteredStrains, currentFilter);
+            renderFilteredStrains();
+        }
+
+        function applyFilter(filterType) {
+            currentFilter = filterType;
+            
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Get current search query
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            // If there's a search, re-run it with new filter
+            if (query !== '') {
+                handleSearch();
+            } else {
+                filteredStrains = applyTypeFilter(strains, filterType);
+                renderFilteredStrains();
+            }
+        }
+
+        function applyTypeFilter(strainsList, filterType) {
+            if (filterType === 'all') {
+                return strainsList;
+            } else if (filterType === 'exotic') {
+                return strainsList.filter(strain => strain.exotic === true);
+            } else {
+                return strainsList.filter(strain => strain.type === filterType);
+            }
+        }
+
+        function renderFilteredStrains() {
+            const grid = document.getElementById('strainsGrid');
+            const noResults = document.getElementById('noResults');
+            const resultsInfo = document.getElementById('resultsInfo');
+
+            if (filteredStrains.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                resultsInfo.textContent = '';
+            } else {
+                noResults.classList.add('hidden');
+                
+                // Show results count
+                const query = document.getElementById('searchInput').value.trim();
+                if (query !== '') {
+                    resultsInfo.textContent = `Found ${filteredStrains.length} strain${filteredStrains.length !== 1 ? 's' : ''} matching "${query}"`;
+                } else {
+                    resultsInfo.textContent = `Showing ${filteredStrains.length} strain${filteredStrains.length !== 1 ? 's' : ''}`;
+                }
+
+                grid.innerHTML = filteredStrains.map((strain) => {
+                    const index = strains.indexOf(strain);
+                    return `
+                        <div class="strain-card" onclick="openModal(${index})">
+                            <div class="strain-header">
+                                <div class="strain-name">${strain.name}</div>
+                                <div class="badges">
+                                    <span class="badge ${strain.type}">${strain.type}</span>
+                                    ${strain.exotic ? '<span class="badge exotic">Exotic</span>' : ''}
+                                </div>
+                            </div>
+                            <div class="strain-vibe">${strain.vibe}</div>
+                            <div class="thc-level">
+                                <span>THC: ${strain.thc}%</span>
+                                <div class="thc-bar">
+                                    <div class="thc-fill" style="width: ${(strain.thc / 30) * 100}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            currentFilter = 'all';
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+            filteredStrains = [...strains];
+            renderFilteredStrains();
+        }
+    </script>
+</body>
+</html>
