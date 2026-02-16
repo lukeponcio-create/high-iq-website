@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integration & Aftercare Guide 📝</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --mushroom: #C084FC;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 100px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(192, 132, 252, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(135deg, var(--mushroom), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .intro-box {
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+        }
+
+        .section-content strong {
+            color: var(--cyan);
+        }
+
+        .prompt-box {
+            background: rgba(132, 204, 22, 0.05);
+            border-left: 4px solid var(--lime);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .prompt-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .prompt-question {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+        }
+
+        .timeline-marker {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+        }
+
+        .tip-box {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-left: 6px solid var(--cyan);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .tip-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-left: 6px solid #EF4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: #FCA5A5;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .practice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .practice-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .practice-card:hover {
+            border-color: var(--purple);
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .practice-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .practice-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .practice-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .sources {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .sources-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .source {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .source-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .source-link {
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .practice-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="trip-guides.html" class="back-btn">← Back to Guides</a>
+
+    <div class="container">
+        <header>
+            <h1>Integration & Aftercare 📝</h1>
+            <p class="subtitle">
+                The journey doesn't end when the trip does. Integration is where insights become wisdom and experiences become growth.
+            </p>
+        </header>
+
+        <div class="intro-box">
+            <strong>Why Integration Matters:</strong> Research shows that the long-term benefits of psychedelics come from integration, not the trip itself. Without integration, profound insights fade into forgotten memories. With integration, a single experience can catalyze lasting positive change. This is the most important part of your journey.
+        </div>
+
+        <!-- Immediate Aftercare -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🛌</span>
+                <h2 class="section-title">Immediate Aftercare (Hours 0-24)</h2>
+            </div>
+            <div class="section-content">
+                <p>The first 24 hours after your trip are crucial. Your brain and body need time to process what happened.</p>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">💧</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Hydrate & Nourish</div>
+                        <div class="timeline-desc">Drink water, eat something light and nutritious. Your body worked hard during the trip. Fruit, soup, or simple meals are perfect.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">😴</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Rest (Don't Force Sleep)</div>
+                        <div class="timeline-desc">You might feel wired or too activated to sleep immediately. That's normal. Rest your body even if you can't sleep. No screens, just quiet downtime.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">📱</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Avoid Overstimulation</div>
+                        <div class="timeline-desc">No social media, news, or intense content. You're still integrating. Give yourself gentle, peaceful input only. Nature documentaries, calm music, or silence.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">💬</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Process Gently</div>
+                        <div class="timeline-desc">If you feel like talking, share with your sitter or a trusted friend. But don't feel pressured to explain everything immediately. Some insights need time to settle.</div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Don't Make Big Decisions</div>
+                    <div class="warning-content">
+                        DO NOT make major life decisions in the first 48 hours. Don't quit your job, end relationships, or make drastic changes. Psychedelics can give you clarity, but you need time to integrate before acting. Wait at least a week for big decisions.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Journaling -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📖</span>
+                <h2 class="section-title">Journaling: Capturing Insights</h2>
+            </div>
+            <div class="section-content">
+                <p>Journaling is THE most effective integration tool. Write while memories are fresh - insights fade quickly.</p>
+
+                <p><strong>When to Journal:</strong> Wait until you're fully back (6-8 hours after dosing, or the next morning). Don't try to write during the peak - just experience it.</p>
+
+                <p><strong>Journaling Prompts:</strong></p>
+
+                <div class="prompt-box">
+                    <div class="prompt-title">🌟 What did you experience?</div>
+                    <div class="prompt-question">Describe the journey without judgment. What did you see, feel, learn? Don't censor yourself - this is for you only.</div>
+                </div>
+
+                <div class="prompt-box">
+                    <div class="prompt-title">💡 What insights emerged?</div>
+                    <div class="prompt-question">What did you realize about yourself, your life, your relationships? What patterns became clear? What truth revealed itself?</div>
+                </div>
+
+                <div class="prompt-box">
+                    <div class="prompt-title">❤️ What did you feel?</div>
+                    <div class="prompt-question">Beyond thoughts - what emotions came up? Joy? Grief? Love? Fear? All valid. Where did you feel them in your body?</div>
+                </div>
+
+                <div class="prompt-box">
+                    <div class="prompt-title">🔄 What patterns did you notice?</div>
+                    <div class="prompt-question">Did you see recurring themes in your life? Behaviors you want to change? Beliefs that no longer serve you?</div>
+                </div>
+
+                <div class="prompt-box">
+                    <div class="prompt-title">🎯 What wants to change?</div>
+                    <div class="prompt-question">What specific actions could you take? Not "be happier" - what concrete steps? "Call my dad weekly" or "meditate 10 minutes daily" - specific and doable.</div>
+                </div>
+
+                <div class="prompt-box">
+                    <div class="prompt-title">🙏 What are you grateful for?</div>
+                    <div class="prompt-question">What gifts did this experience give you? What do you appreciate more now? Gratitude anchors insights.</div>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Pro Tip: Voice Memos</div>
+                    <div class="tip-content">
+                        If writing feels hard, record voice memos. Speak stream-of-consciousness about your experience. Transcribe later or just keep as audio journal. Sometimes talking flows easier than writing.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration Timeline -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📅</span>
+                <h2 class="section-title">Integration Timeline</h2>
+            </div>
+            <div class="section-content">
+                <p>Integration unfolds over weeks and months. Here's what to expect and do at each stage:</p>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">📝</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Days 1-7: Capture & Reflect</div>
+                        <div class="timeline-desc">Journal extensively. Talk with trusted friends. Let insights settle. Don't rush to implement everything at once. This is the honeymoon period - everything feels possible. Good, but temper with patience.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">🎯</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Weeks 2-4: Start Small Actions</div>
+                        <div class="timeline-desc">Pick ONE small change to implement. Not everything at once - one concrete practice. Meditate 5 minutes daily. Journal before bed. Call that friend you've been avoiding. Small, consistent action > grand plans.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">💬</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Weeks 4-8: Integrate Deeper</div>
+                        <div class="timeline-desc">Consider working with a therapist who understands psychedelics. Join integration circles. Read books related to your insights. The magic fades but the work continues - this is where real growth happens.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-marker">🔄</span>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Months 2-6: Ongoing Practice</div>
+                        <div class="timeline-desc">Review your journal monthly. Track what's changed. What insights stuck? What faded? What new patterns emerged? Integration is ongoing - not a checkbox to complete.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration Practices -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🧘</span>
+                <h2 class="section-title">Integration Practices</h2>
+            </div>
+            <div class="section-content">
+                <p>Concrete practices to help embody your insights:</p>
+
+                <div class="practice-grid">
+                    <div class="practice-card">
+                        <div class="practice-icon">🧘‍♀️</div>
+                        <div class="practice-title">Meditation</div>
+                        <div class="practice-desc">Daily practice helps maintain the expanded awareness you touched. Even 5-10 minutes. Headspace, Waking Up, or simple breath focus.</div>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">🚶</div>
+                        <div class="practice-title">Nature Time</div>
+                        <div class="practice-desc">Reconnect with the natural connection you felt during your journey. Regular walks, hiking, or just sitting outside.</div>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">🎨</div>
+                        <div class="practice-title">Creative Expression</div>
+                        <div class="practice-desc">Art, music, writing, dance - whatever helps you express what words can't capture. Not about skill, about processing.</div>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">💬</div>
+                        <div class="practice-title">Integration Circles</div>
+                        <div class="practice-desc">Find or create groups where people discuss experiences. Shared wisdom and support are powerful. Check MAPS, The Third Wave, or local psychedelic societies.</div>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">📚</div>
+                        <div class="practice-title">Read & Learn</div>
+                        <div class="practice-desc">Books by Pollan, McKenna, Fadiman, Ram Dass. Deepen your understanding of what you experienced and where it fits in human consciousness.</div>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">💊</div>
+                        <div class="practice-title">Microdosing (Optional)</div>
+                        <div class="practice-desc">Some find sub-perceptual doses between trips help maintain connection to insights. Research protocols first. Not for everyone.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Therapy & Professional Support -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🩺</span>
+                <h2 class="section-title">Working with Professionals</h2>
+            </div>
+            <div class="section-content">
+                <p>Integration therapy can be incredibly valuable, especially if difficult material came up.</p>
+
+                <p><strong>Finding Integration Therapists:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Search "psychedelic integration therapist" + your city</li>
+                    <li>MAPS.org therapist directory</li>
+                    <li>Fireside Project (free peer support line: 62-FIRESIDE)</li>
+                    <li>IFS (Internal Family Systems) therapists often understand psychedelic work</li>
+                </ul>
+
+                <p><strong>What to Look For:</strong> Experience with psychedelics (personal or clinical), non-judgmental approach, focus on YOUR integration not their agenda. Good therapists help YOU make sense of it - they don't interpret for you.</p>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Free Support: Fireside Project</div>
+                    <div class="tip-content">
+                        If you need to talk through difficult experiences or need integration support but can't afford therapy, call the Fireside Project hotline: <strong>623-473-7433</strong> (623-FIRESIDE). Free, non-judgmental peer support from trained volunteers.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- When to Trip Again -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⏰</span>
+                <h2 class="section-title">Trip Spacing: When to Journey Again</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>Minimum spacing:</strong> Wait at least 2 weeks between trips for tolerance reset. But tolerance isn't the real concern - integration is.</p>
+
+                <p><strong>Recommended spacing for most people:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li><strong>1-3 months</strong> - Gives time to implement insights</li>
+                    <li><strong>Seasonal</strong> (4 times a year) - Many find this rhythm natural</li>
+                    <li><strong>As-needed</strong> - When you've integrated the last journey and have clear intention for the next</li>
+                </ul>
+
+                <p><strong>Red Flags You're Not Ready:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Using psychedelics to escape problems rather than address them</li>
+                    <li>Haven't journaled or reflected on last experience</li>
+                    <li>No specific intention - just "I want to trip again"</li>
+                    <li>Haven't implemented any insights from last journey</li>
+                    <li>Feel like you "need" another trip (dependency red flag)</li>
+                </ul>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Warning: Integration Over Frequency</div>
+                    <div class="warning-content">
+                        More trips ≠ more growth. One deeply integrated experience is worth ten unintegrated ones. If you're tripping every 2-3 weeks, you're likely bypassing integration. These are tools, not escapes. Space them appropriately.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Integration Challenges -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🤔</span>
+                <h2 class="section-title">Common Integration Challenges</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>"The magic wore off and I'm back to normal"</strong></p>
+                <p>This is THE most common complaint. The afterglow fades. That's normal and expected. The insights remain available if you journal and practice. The feeling fades, but the wisdom doesn't - if you do the work.</p>
+
+                <p style="margin-top: 30px;"><strong>"I had a profound realization but can't remember what it was"</strong></p>
+                <p>Journal IMMEDIATELY after your trip. Insights are slippery. What feels obvious during the trip becomes foggy later. Capture it while fresh. Voice memos during the comedown can help.</p>
+
+                <p style="margin-top: 30px;"><strong>"I saw I need to change my life but feel stuck"</strong></p>
+                <p>Start with ONE SMALL THING. Not "quit my job and move to Costa Rica" - maybe "meditate 5 minutes daily for a month." Small consistent changes compound into transformation. Big changes overwhelm and lead to nothing.</p>
+
+                <p style="margin-top: 30px;"><strong>"My partner/friends don't understand my experience"</strong></p>
+                <p>Find your people who get it. Integration circles, online communities, psychedelic-informed therapists. You can't expect non-users to fully understand. That's okay - find those who do.</p>
+
+                <p style="margin-top: 30px;"><strong>"I want to trip every week now"</strong></p>
+                <p>Red flag. These are tools, not crutches. If you're using them to escape rather than integrate, you're missing the point. Space them out. Do the integration work between journeys.</p>
+            </div>
+        </div>
+
+        <!-- Sources -->
+        <div class="sources">
+            <h3 class="sources-title">Sources & Further Reading</h3>
+            
+            <div class="source">
+                <div class="source-title">MAPS Integration Resources</div>
+                <a href="https://maps.org/resources/integration" target="_blank" class="source-link">maps.org/resources/integration - Comprehensive integration information</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Fireside Project</div>
+                <a href="https://firesideproject.org" target="_blank" class="source-link">firesideproject.org - Free peer support hotline: 623-FIRESIDE</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">The Third Wave - Integration Guide</div>
+                <a href="https://thethirdwave.co/integration" target="_blank" class="source-link">thethirdwave.co/integration - Detailed integration protocols</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Integration Therapy Research</div>
+                <div class="source-link">Carbonaro, T. M., et al. (2016). "Survey study of challenging experiences after ingesting psilocybin mushrooms." Journal of Psychopharmacology - Found integration practices correlate with better long-term outcomes</div>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Recommended Books</div>
+                <div class="source-link">
+                    "How to Change Your Mind" by Michael Pollan<br>
+                    "The Psychedelic Explorer's Guide" by James Fadiman<br>
+                    "Being Ram Dass" - On spiritual integration
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

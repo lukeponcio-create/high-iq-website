@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Guides & Resources - High IQ 🧘</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --mushroom: #C084FC;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(192, 132, 252, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.8; }
+        }
+
+        .particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--cyan);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            background: linear-gradient(135deg, var(--mushroom), var(--pink), var(--cyan));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .guide-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .guide-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .guide-card:hover::before {
+            left: 100%;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(139, 92, 246, 0.4),
+                        inset 0 0 0 2px var(--purple);
+        }
+
+        .guide-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 3s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .guide-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--mushroom), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .guide-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .guide-topics {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .topics-title {
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .topic-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .topic-tag {
+            padding: 5px 12px;
+            background: rgba(192, 132, 252, 0.1);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 15px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .guide-button {
+            display: inline-block;
+            padding: 12px 30px;
+            font-family: 'Righteous', cursive;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            margin-top: 20px;
+        }
+
+        .guide-card:hover .guide-button {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        .coming-soon {
+            opacity: 0.6;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .coming-soon::after {
+            content: 'COMING SOON';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .guide-card {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 6 + 5) + 's';
+            
+            const colors = ['var(--purple)', 'var(--pink)', 'var(--cyan)', 'var(--lime)', 'var(--mushroom)'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <div class="container">
+        <header>
+            <h1>Trip Guides & Resources 🧘</h1>
+            <p class="subtitle">Comprehensive guides for safe, meaningful journeys and integration. Knowledge is preparation.</p>
+        </header>
+
+        <div class="guides-grid">
+            <!-- Preparation Guide -->
+            <a href="prep-guide.html" class="guide-card">
+                <span class="guide-icon">🎒</span>
+                <h2 class="guide-title">Trip Preparation</h2>
+                <p class="guide-description">
+                    Everything you need before your journey. Set and setting, intention-setting, safety checklist, and creating the perfect environment.
+                </p>
+                <div class="guide-topics">
+                    <div class="topics-title">Covers:</div>
+                    <div class="topic-tags">
+                        <span class="topic-tag">Set & Setting</span>
+                        <span class="topic-tag">Safety Checklist</span>
+                        <span class="topic-tag">Intention Setting</span>
+                        <span class="topic-tag">Supplies Needed</span>
+                        <span class="topic-tag">Music Playlists</span>
+                        <span class="topic-tag">Choosing a Sitter</span>
+                    </div>
+                </div>
+                <span class="guide-button">Read Guide →</span>
+            </a>
+
+            <!-- Navigation Guide -->
+            <a href="navigation-guide.html" class="guide-card">
+                <span class="guide-icon">🧭</span>
+                <h2 class="guide-title">Navigating Your Trip</h2>
+                <p class="guide-description">
+                    What to expect during your journey. Timeline, handling difficult moments, surrender techniques, and staying grounded when needed.
+                </p>
+                <div class="guide-topics">
+                    <div class="topics-title">Covers:</div>
+                    <div class="topic-tags">
+                        <span class="topic-tag">Timeline & Phases</span>
+                        <span class="topic-tag">Challenging Moments</span>
+                        <span class="topic-tag">Surrender vs. Control</span>
+                        <span class="topic-tag">Grounding Techniques</span>
+                        <span class="topic-tag">What's Normal</span>
+                        <span class="topic-tag">Ego Death</span>
+                    </div>
+                </div>
+                <span class="guide-button">Read Guide →</span>
+            </a>
+
+            <!-- Integration Guide -->
+            <a href="integration-guide.html" class="guide-card">
+                <span class="guide-icon">📝</span>
+                <h2 class="guide-title">Integration & Aftercare</h2>
+                <p class="guide-description">
+                    The most important part: integrating insights into daily life. Journaling prompts, processing experiences, and applying wisdom.
+                </p>
+                <div class="guide-topics">
+                    <div class="topics-title">Covers:</div>
+                    <div class="topic-tags">
+                        <span class="topic-tag">Journaling Prompts</span>
+                        <span class="topic-tag">Processing Insights</span>
+                        <span class="topic-tag">Making Life Changes</span>
+                        <span class="topic-tag">Trip Spacing</span>
+                        <span class="topic-tag">Therapy Integration</span>
+                        <span class="topic-tag">Afterglow Period</span>
+                    </div>
+                </div>
+                <span class="guide-button">Read Guide →</span>
+            </a>
+
+            <!-- Safety & Emergency -->
+            <a href="safety-guide.html" class="guide-card">
+                <span class="guide-icon">🚨</span>
+                <h2 class="guide-title">Safety & Emergency</h2>
+                <p class="guide-description">
+                    Bad trip de-escalation, when to seek help, helping a struggling friend, and harm reduction essentials. Safety first, always.
+                </p>
+                <div class="guide-topics">
+                    <div class="topics-title">Covers:</div>
+                    <div class="topic-tags">
+                        <span class="topic-tag">Bad Trip Help</span>
+                        <span class="topic-tag">De-escalation</span>
+                        <span class="topic-tag">When to Call 911</span>
+                        <span class="topic-tag">Helping a Friend</span>
+                        <span class="topic-tag">Drug Interactions</span>
+                        <span class="topic-tag">Contraindications</span>
+                    </div>
+                </div>
+                <span class="guide-button">Read Guide →</span>
+            </a>
+
+            <!-- First Timer Guide -->
+            <a href="first-timer-guide.html" class="guide-card">
+                <span class="guide-icon">🌱</span>
+                <h2 class="guide-title">First Timer's Guide</h2>
+                <p class="guide-description">
+                    Never tried psychedelics? Start here. Everything a beginner needs to know for a safe, positive first experience.
+                </p>
+                <div class="guide-topics">
+                    <div class="topics-title">Covers:</div>
+                    <div class="topic-tags">
+                        <span class="topic-tag">What to Expect</span>
+                        <span class="topic-tag">Dosage for Beginners</span>
+                        <span class="topic-tag">Best Starter Strains</span>
+                        <span class="topic-tag">Common Mistakes</span>
+                        <span class="topic-tag">Preparation Tips</span>
+                        <span class="topic-tag">FAQ</span>
+                    </div>
+                </div>
+                <span class="guide-button">Read Guide →</span>
+            </a>
+
+            <!-- Microdosing Guide -->
+            <a href="microdosing-guide.html" class="guide-card">
+                <span class="guide-icon">💊</span>
+                <h2 class="guide-title">Microdosing Protocol</h2>
+                <p class="guide-description">
+                    Sub-perceptual dosing for creativity, focus, and mental health. Protocols, schedules, and tracking your progress.
+                </p>
+                <div class="guide-topics">
+                    <div class="topics-title">Covers:</div>
+                    <div class="topic-tags">
+                        <span class="topic-tag">Dosing Schedules</span>
+                        <span class="topic-tag">Fadiman Protocol</span>
+                        <span class="topic-tag">Stamets Stack</span>
+                        <span class="topic-tag">Tracking Effects</span>
+                        <span class="topic-tag">Benefits & Limits</span>
+                        <span class="topic-tag">Safety</span>
+                    </div>
+                </div>
+                <span class="guide-button">Read Guide →</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

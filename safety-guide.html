@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety & Emergency Guide 🚨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --mushroom: #C084FC;
+            --green: #10B981;
+            --red: #EF4444;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 100px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(192, 132, 252, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .emergency-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));
+            border: 3px solid var(--red);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .emergency-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            color: #FCA5A5;
+            margin-bottom: 20px;
+        }
+
+        .emergency-number {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            color: white;
+            margin: 20px 0;
+            letter-spacing: 3px;
+        }
+
+        .emergency-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+        }
+
+        .section-content strong {
+            color: var(--cyan);
+        }
+
+        .protocol-card {
+            background: rgba(239, 68, 68, 0.05);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-left: 6px solid var(--red);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .protocol-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: #FCA5A5;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .protocol-steps {
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .protocol-steps ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .protocol-steps li {
+            margin: 12px 0;
+        }
+
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .do-card {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .dont-card {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .card-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .do-card .card-title {
+            color: var(--green);
+        }
+
+        .dont-card .card-title {
+            color: #FCA5A5;
+        }
+
+        .card-list {
+            line-height: 2;
+        }
+
+        .card-list li {
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .do-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        .dont-card li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-left: 6px solid #EF4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: #FCA5A5;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .info-box {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-left: 6px solid var(--cyan);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .info-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hotline-card {
+            background: rgba(132, 204, 22, 0.1);
+            border: 2px solid rgba(132, 204, 22, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .hotline-name {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: var(--lime);
+            margin-bottom: 10px;
+        }
+
+        .hotline-number {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .hotline-desc {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .sources {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .sources-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .source {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .source-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .source-link {
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .emergency-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="trip-guides.html" class="back-btn">← Back to Guides</a>
+
+    <div class="container">
+        <header>
+            <h1>Safety & Emergency Guide 🚨</h1>
+            <p class="subtitle">
+                Bad trip de-escalation, crisis intervention, and knowing when to seek medical help. Harm reduction saves lives.
+            </p>
+        </header>
+
+        <div class="emergency-box">
+            <div class="emergency-title">Emergency Crisis Line</div>
+            <div class="emergency-number">911</div>
+            <div class="emergency-text">
+                If someone is having a medical emergency - seizures, unconsciousness, chest pain, extreme hyperthermia, violent behavior - call 911 immediately. Paramedics are trained for this and will not involve law enforcement for drug use alone in most jurisdictions.
+            </div>
+        </div>
+
+        <!-- Bad Trip De-Escalation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🛟</span>
+                <h2 class="section-title">Bad Trip De-Escalation Protocol</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>First, understand:</strong> There's no such thing as a "bad trip" - only difficult experiences. Most "bad trips" are panic attacks or challenging moments that can be navigated with proper support.</p>
+
+                <div class="protocol-card">
+                    <div class="protocol-title">🎯 The Sitter's Role: CALM Protocol</div>
+                    <div class="protocol-steps">
+                        <p>If you're helping someone having a difficult time, follow <strong>C.A.L.M.</strong>:</p>
+                        <ol>
+                            <li><strong>Connect</strong> - Make eye contact, speak gently, be present. "I'm here with you. You're safe."</li>
+                            <li><strong>Anchor</strong> - Ground them in reality. "You took mushrooms. This is temporary. You will return."</li>
+                            <li><strong>Listen</strong> - Let them express fears without judgment. Validate their experience.</li>
+                            <li><strong>Move</strong> - Change environment if needed. Different room, music, lighting. Small changes help.</li>
+                        </ol>
+                        <p style="margin-top: 20px;"><em>Your calm presence is the medicine. Stay centered.</em></p>
+                    </div>
+                </div>
+
+                <div class="protocol-card">
+                    <div class="protocol-title">💬 What to Say (Sitter Scripts)</div>
+                    <div class="protocol-steps">
+                        <p><strong>When they're panicking:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                            <li>"You're safe. I'm here with you."</li>
+                            <li>"You took [substance]. This is temporary. You will return to normal."</li>
+                            <li>"Thousands of people have felt exactly what you're feeling right now, and they're all okay."</li>
+                            <li>"Can you breathe with me? In for 4, out for 6."</li>
+                        </ul>
+
+                        <p style="margin-top: 20px;"><strong>When they think they're dying:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                            <li>"Your ego is dissolving, not your body. This is what ego death feels like."</li>
+                            <li>"You're not dying - you're experiencing a profound state of consciousness. It will pass."</li>
+                            <li>"I'm watching you. Your breathing is fine. Your heart is fine. You're safe."</li>
+                        </ul>
+
+                        <p style="margin-top: 20px;"><strong>When they think it will never end:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                            <li>"Look at me. This will end. Usually in [X] more hours. You will be completely back to normal."</li>
+                            <li>"Your brain is working differently right now, so time feels weird. But it's passing normally."</li>
+                            <li>"I've seen this before. Everyone returns. You will too."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="do-dont-grid">
+                    <div class="do-card">
+                        <div class="card-title">✓ DO THIS</div>
+                        <ul class="card-list">
+                            <li>Stay calm yourself</li>
+                            <li>Maintain gentle eye contact</li>
+                            <li>Speak slowly and clearly</li>
+                            <li>Use their name</li>
+                            <li>Guide breathing exercises</li>
+                            <li>Change music/lighting</li>
+                            <li>Offer water</li>
+                            <li>Physical comfort if wanted</li>
+                            <li>Remind them it's temporary</li>
+                            <li>Validate their experience</li>
+                        </ul>
+                    </div>
+
+                    <div class="dont-card">
+                        <div class="card-title">✗ DON'T DO THIS</div>
+                        <ul class="card-list">
+                            <li>Panic or show fear</li>
+                            <li>Tell them to "calm down"</li>
+                            <li>Argue with their reality</li>
+                            <li>Touch them without permission</li>
+                            <li>Turn on bright lights suddenly</li>
+                            <li>Call police unless medical emergency</li>
+                            <li>Leave them alone</li>
+                            <li>Give them more substances</li>
+                            <li>Restrain them (unless danger)</li>
+                            <li>Mock or minimize their fear</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physical De-Escalation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🤲</span>
+                <h2 class="section-title">Physical Grounding Techniques</h2>
+            </div>
+            <div class="section-content">
+                <p>Physical anchors help bring someone back to their body:</p>
+
+                <div class="protocol-card">
+                    <div class="protocol-title">🤝 Hand Holding</div>
+                    <div class="protocol-steps">
+                        <p>Ask permission first: "Can I hold your hand?"</p>
+                        <p>Hold firmly but gently. The physical connection reminds them they're not alone and anchors them in reality. Some people report this single action saved their experience.</p>
+                    </div>
+                </div>
+
+                <div class="protocol-card">
+                    <div class="protocol-title">🫂 Grounding Touch</div>
+                    <div class="protocol-steps">
+                        <p>With permission, place hand on their shoulder or back. Firm, steady pressure. Say: "Feel my hand. This is real. You are here. You are safe."</p>
+                    </div>
+                </div>
+
+                <div class="protocol-card">
+                    <div class="protocol-title">🧊 Temperature Change</div>
+                    <div class="protocol-steps">
+                        <p>Cold water on face or wrists. Hold ice cubes. Splash cold water. Temperature shock can interrupt panic spirals and bring attention back to body.</p>
+                    </div>
+                </div>
+
+                <div class="protocol-card">
+                    <div class="protocol-title">👃 Smell Something Strong</div>
+                    <div class="protocol-steps">
+                        <p>Peppermint oil, citrus peel, strong tea. Engaging olfactory sense grounds people in present moment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- When to Call 911 -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📞</span>
+                <h2 class="section-title">When to Call 911</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>Call 911 immediately if you observe:</strong></p>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Medical Emergencies</div>
+                    <div class="warning-content">
+                        <strong>Cardiovascular:</strong><br>
+                        - Chest pain or pressure<br>
+                        - Irregular heartbeat that doesn't resolve<br>
+                        - Severe breathing difficulty (not just hyperventilation)<br><br>
+
+                        <strong>Neurological:</strong><br>
+                        - Seizures<br>
+                        - Loss of consciousness<br>
+                        - Unresponsiveness to stimuli<br>
+                        - Severe confusion that doesn't improve<br><br>
+
+                        <strong>Physical:</strong><br>
+                        - Extreme hyperthermia (very high fever + muscle rigidity)<br>
+                        - Uncontrollable vomiting/diarrhea leading to dehydration<br>
+                        - Signs of stroke (facial drooping, slurred speech, weakness)<br><br>
+
+                        <strong>Behavioral:</strong><br>
+                        - Violent behavior toward self or others<br>
+                        - Credible suicide threats<br>
+                        - Psychotic break that persists (rare with mushrooms, possible with higher doses)<br><br>
+
+                        <strong>When in doubt, call.</strong> Better safe than sorry.
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">💡 What to Tell Paramedics</div>
+                    <div class="info-content">
+                        Be honest. Tell them:<br>
+                        - What substance was taken<br>
+                        - How much (if known)<br>
+                        - When it was taken<br>
+                        - Any other substances/medications<br>
+                        - Medical history if known<br><br>
+                        They need this information to help. They deal with this regularly and won't judge. In most jurisdictions, calling for medical help does NOT result in criminal charges for possession/use.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drug Interactions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">💊</span>
+                <h2 class="section-title">Dangerous Drug Interactions</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>NEVER mix psilocybin with:</strong></p>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Critical Interactions</div>
+                    <div class="warning-content">
+                        <strong>SSRIs/SNRIs (antidepressants):</strong><br>
+                        - Significantly reduce psilocybin effects (waste of mushrooms)<br>
+                        - Possible serotonin syndrome at high doses<br>
+                        - Taper off for 2-4 weeks before tripping if safe to do so (with doctor approval)<br><br>
+
+                        <strong>MAOIs:</strong><br>
+                        - DANGEROUS interaction<br>
+                        - Can cause serotonin syndrome<br>
+                        - Never combine<br><br>
+
+                        <strong>Lithium:</strong><br>
+                        - VERY DANGEROUS<br>
+                        - Can cause seizures<br>
+                        - Never mix under any circumstances<br><br>
+
+                        <strong>Tramadol:</strong><br>
+                        - Risk of serotonin syndrome<br>
+                        - Avoid combination<br><br>
+
+                        <strong>Heavy alcohol:</strong><br>
+                        - Increases nausea<br>
+                        - Dulls the experience<br>
+                        - Save the drinking for another day<br><br>
+
+                        <strong>Always check drug interactions if you're on any medications.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crisis Support Hotlines -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">☎️</span>
+                <h2 class="section-title">Crisis Support Hotlines</h2>
+            </div>
+            <div class="section-content">
+                <p>Free, non-judgmental support from trained volunteers:</p>
+
+                <div class="hotline-card">
+                    <div class="hotline-name">Fireside Project</div>
+                    <div class="hotline-number">623-FIRESIDE<br>(623-473-7433)</div>
+                    <div class="hotline-desc">Psychedelic peer support line. Call or text if you're having a difficult experience or need integration support. Trained volunteers who understand psychedelics. Available certain hours - check website for schedule.</div>
+                </div>
+
+                <div class="hotline-card">
+                    <div class="hotline-name">988 Suicide & Crisis Lifeline</div>
+                    <div class="hotline-number">988</div>
+                    <div class="hotline-desc">24/7 support for mental health crises. If someone is having suicidal thoughts during or after a trip. Free, confidential.</div>
+                </div>
+
+                <div class="hotline-card">
+                    <div class="hotline-name">SAMHSA National Helpline</div>
+                    <div class="hotline-number">1-800-662-4357</div>
+                    <div class="hotline-desc">Substance abuse and mental health helpline. 24/7, free, confidential. Can help connect you with local resources.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Serotonin Syndrome -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚠️</span>
+                <h2 class="section-title">Recognizing Serotonin Syndrome</h2>
+            </div>
+            <div class="section-content">
+                <p>Rare but serious condition from too much serotonin. Usually from mixing substances. <strong>Call 911 if suspected.</strong></p>
+
+                <p><strong>Symptoms (usually multiple present):</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Agitation or restlessness</li>
+                    <li>Confusion or disorientation</li>
+                    <li>Rapid heart rate and high blood pressure</li>
+                    <li>Dilated pupils</li>
+                    <li>Loss of muscle coordination or twitching</li>
+                    <li>Muscle rigidity</li>
+                    <li>Heavy sweating</li>
+                    <li>Diarrhea</li>
+                    <li>Fever (high temperature)</li>
+                    <li>Seizures</li>
+                </ul>
+
+                <div class="warning-box">
+                    <div class="warning-title">🚨 This is a Medical Emergency</div>
+                    <div class="warning-content">
+                        Serotonin syndrome can be life-threatening. If you suspect it, call 911 immediately. Tell them about all substances taken. This is most likely to happen when mixing psychedelics with SSRIs, MAOIs, or other serotonergic drugs.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sources -->
+        <div class="sources">
+            <h3 class="sources-title">Sources & Further Reading</h3>
+            
+            <div class="source">
+                <div class="source-title">MAPS - Psychedelic Harm Reduction</div>
+                <a href="https://maps.org" target="_blank" class="source-link">maps.org - Clinical harm reduction protocols</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Zendo Project</div>
+                <a href="https://zendoproject.org" target="_blank" class="source-link">zendoproject.org - Peer support and crisis intervention training</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Fireside Project</div>
+                <a href="https://firesideproject.org" target="_blank" class="source-link">firesideproject.org - Free psychedelic peer support: 623-FIRESIDE</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">DanceSafe - Drug Interaction Checker</div>
+                <a href="https://dancesafe.org" target="_blank" class="source-link">dancesafe.org - Comprehensive drug interaction information</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Serotonin Syndrome Research</div>
+                <div class="source-link">Boyer, E. W., & Shannon, M. (2005). "The serotonin syndrome." New England Journal of Medicine - Clinical identification and management</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

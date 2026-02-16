@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microdosing Protocol Guide 💊</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --mushroom: #C084FC;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 100px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(192, 132, 252, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(135deg, var(--mushroom), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .intro-box {
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+        }
+
+        .section-content strong {
+            color: var(--cyan);
+        }
+
+        .protocol-card {
+            background: rgba(132, 204, 22, 0.05);
+            border: 3px solid rgba(132, 204, 22, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .protocol-name {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            color: var(--lime);
+            margin-bottom: 20px;
+        }
+
+        .protocol-desc {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .schedule-visual {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .day-row {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .day-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .dose-day {
+            background: var(--lime);
+            color: #000;
+        }
+
+        .rest-day {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .benefit-card {
+            background: rgba(6, 182, 212, 0.05);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .benefit-title {
+            font-weight: bold;
+            color: var(--cyan);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .benefit-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .dosage-card {
+            background: rgba(192, 132, 252, 0.05);
+            border-left: 4px solid var(--mushroom);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .dosage-title {
+            font-weight: bold;
+            color: var(--mushroom);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .dosage-desc {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        .tracking-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .tracking-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: var(--lime);
+            margin-bottom: 15px;
+        }
+
+        .tracking-list {
+            line-height: 2;
+            padding-left: 30px;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-left: 6px solid #EF4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: #FCA5A5;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tip-box {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-left: 6px solid var(--cyan);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .tip-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .sources {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .sources-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .source {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .source-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .source-link {
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .day-box {
+                width: 35px;
+                height: 35px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="trip-guides.html" class="back-btn">← Back to Guides</a>
+
+    <div class="container">
+        <header>
+            <h1>Microdosing Protocol Guide 💊</h1>
+            <p class="subtitle">
+                Sub-perceptual dosing for enhanced cognition, creativity, and wellbeing. Science-backed protocols and tracking methods.
+            </p>
+        </header>
+
+        <div class="intro-box">
+            <strong>What is microdosing?</strong> Taking sub-perceptual doses of psychedelics (doses so low you don't "trip") on a regular schedule for cognitive enhancement, mood improvement, and creativity. You function normally - work, drive, socialize - while experiencing subtle benefits. Popular in Silicon Valley, creative industries, and therapeutic contexts.
+        </div>
+
+        <!-- What to Expect -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">✨</span>
+                <h2 class="section-title">What to Expect from Microdosing</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>Microdosing is NOT:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                    <li>A trip or psychedelic experience</li>
+                    <li>Visually noticeable</li>
+                    <li>Impairing or intoxicating</li>
+                    <li>A miracle cure for everything</li>
+                    <li>Perceptible to others</li>
+                </ul>
+
+                <p style="margin-top: 30px;"><strong>Microdosing IS:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                    <li>Subtle mood and cognition enhancement</li>
+                    <li>Typically imperceptible while it's happening</li>
+                    <li>Effects noticed over days/weeks, not hours</li>
+                    <li>Compatible with normal daily life</li>
+                    <li>A tool, not a magic pill</li>
+                </ul>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🧠</div>
+                        <div class="benefit-title">Cognitive Enhancement</div>
+                        <div class="benefit-desc">Improved focus, mental clarity, problem-solving ability, and ability to enter flow states.</div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">😊</div>
+                        <div class="benefit-title">Mood Improvement</div>
+                        <div class="benefit-desc">Reduced anxiety, lifted depression, more emotional resilience, greater sense of wellbeing.</div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎨</div>
+                        <div class="benefit-title">Enhanced Creativity</div>
+                        <div class="benefit-desc">New perspectives, divergent thinking, ability to make novel connections, artistic expression.</div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">❤️</div>
+                        <div class="benefit-title">Social Connection</div>
+                        <div class="benefit-desc">Increased empathy, better communication, more presence in interactions, reduced social anxiety.</div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚡</div>
+                        <div class="benefit-title">Energy & Motivation</div>
+                        <div class="benefit-desc">More drive, reduced procrastination, sustained energy throughout the day, motivation to pursue goals.</div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🧘</div>
+                        <div class="benefit-title">Mindfulness</div>
+                        <div class="benefit-desc">Greater present-moment awareness, appreciation for small things, reduced rumination on past/future.</div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Important Reality Check</div>
+                    <div class="warning-content">
+                        Microdosing research is still early. While many report benefits, it's not a substitute for therapy, medication, or addressing root causes of problems. Placebo effects are real and powerful. Some people feel nothing. Others experience negative effects. Track carefully and be honest with yourself about what's working.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dosage Guidelines -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚖️</span>
+                <h2 class="section-title">Microdose Amounts</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>General guideline: 1/10th to 1/20th of a recreational dose.</strong></p>
+
+                <div class="dosage-card">
+                    <div class="dosage-title">Psilocybin Mushrooms</div>
+                    <div class="dosage-desc">
+                        <strong>Typical range:</strong> 0.05g - 0.3g dried<br>
+                        <strong>Start with:</strong> 0.1g (100mg)<br>
+                        <strong>Adjust:</strong> Increase by 0.05g if you feel nothing. Decrease if you feel too much (tingling, mild visuals, distraction).
+                    </div>
+                </div>
+
+                <div class="dosage-card">
+                    <div class="dosage-title">LSD</div>
+                    <div class="dosage-desc">
+                        <strong>Typical range:</strong> 5-20 micrograms (μg)<br>
+                        <strong>Start with:</strong> 10μg<br>
+                        <strong>Note:</strong> Requires volumetric dosing (dissolving in distilled water for accurate measurement)
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Finding Your Sweet Spot</div>
+                    <div class="tip-content">
+                        The goal is to feel <strong>nothing</strong> in the moment. Effects should be <strong>sub-perceptual</strong> - only noticeable when you reflect on your day. If you feel high, distracted, or have visuals, you took too much. That's a mini-dose, not a microdose. Lower it next time.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fadiman Protocol -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📅</span>
+                <h2 class="section-title">Fadiman Protocol (Most Popular)</h2>
+            </div>
+            <div class="section-content">
+                <div class="protocol-card">
+                    <div class="protocol-name">The Fadiman Protocol</div>
+                    <div class="protocol-desc">
+                        Developed by Dr. James Fadiman, psychedelic researcher. The most widely used and researched protocol. Simple, effective, sustainable.
+                    </div>
+
+                    <p style="margin: 20px 0;"><strong>Schedule:</strong> Dose every 3rd day</p>
+
+                    <div class="schedule-visual">
+                        <p style="margin-bottom: 15px; color: var(--lime); font-weight: bold;">Fadiman Protocol - 10 Day Example</p>
+                        <div class="day-row">
+                            <div class="day-box dose-day">Day 1<br>DOSE</div>
+                            <div class="day-box rest-day">Day 2<br>Rest</div>
+                            <div class="day-box rest-day">Day 3<br>Rest</div>
+                            <div class="day-box dose-day">Day 4<br>DOSE</div>
+                            <div class="day-box rest-day">Day 5<br>Rest</div>
+                            <div class="day-box rest-day">Day 6<br>Rest</div>
+                            <div class="day-box dose-day">Day 7<br>DOSE</div>
+                            <div class="day-box rest-day">Day 8<br>Rest</div>
+                            <div class="day-box rest-day">Day 9<br>Rest</div>
+                            <div class="day-box dose-day">Day 10<br>DOSE</div>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">Dose → Rest → Rest → Repeat</p>
+                    </div>
+
+                    <p style="margin: 20px 0;"><strong>How it works:</strong></p>
+                    <ul style="padding-left: 30px; line-height: 2;">
+                        <li><strong>Day 1 (Dose day):</strong> Take your microdose in the morning. Go about your day normally. Track your experience.</li>
+                        <li><strong>Day 2 (Transition day):</strong> No dose. You may still feel residual effects. Some report this is the best day.</li>
+                        <li><strong>Day 3 (Normal day):</strong> No dose. Back to baseline. Compare how you feel to dose days.</li>
+                        <li><strong>Day 4:</strong> Dose again. Repeat the cycle.</li>
+                    </ul>
+
+                    <p style="margin-top: 20px;"><strong>Duration:</strong> Try for 4-8 weeks, then take a 2-4 week break to reset tolerance and assess long-term effects.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stamets Stack -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🍄</span>
+                <h2 class="section-title">Stamets Stack (Advanced)</h2>
+            </div>
+            <div class="section-content">
+                <div class="protocol-card">
+                    <div class="protocol-name">The Stamets Stack</div>
+                    <div class="protocol-desc">
+                        Created by mycologist Paul Stamets. Combines psilocybin with Lion's Mane mushroom and niacin for enhanced neurogenesis (brain growth). More complex but potentially more powerful for cognitive benefits.
+                    </div>
+
+                    <p style="margin: 20px 0;"><strong>The Stack:</strong></p>
+                    <ul style="padding-left: 30px; line-height: 2;">
+                        <li><strong>Psilocybin mushrooms:</strong> 0.1-0.3g</li>
+                        <li><strong>Lion's Mane:</strong> 500-1000mg (promotes neurogenesis)</li>
+                        <li><strong>Niacin (Vitamin B3):</strong> 100-200mg (causes temporary flushing, increases circulation)</li>
+                    </ul>
+
+                    <p style="margin: 20px 0;"><strong>Schedule:</strong> 4 days on, 3 days off</p>
+
+                    <div class="schedule-visual">
+                        <p style="margin-bottom: 15px; color: var(--lime); font-weight: bold;">Stamets Stack - Weekly Schedule</p>
+                        <div class="day-row">
+                            <div class="day-box dose-day">Mon<br>DOSE</div>
+                            <div class="day-box dose-day">Tue<br>DOSE</div>
+                            <div class="day-box dose-day">Wed<br>DOSE</div>
+                            <div class="day-box dose-day">Thu<br>DOSE</div>
+                            <div class="day-box rest-day">Fri<br>Rest</div>
+                            <div class="day-box rest-day">Sat<br>Rest</div>
+                            <div class="day-box rest-day">Sun<br>Rest</div>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">4 days dosing → 3 days rest → Repeat</p>
+                    </div>
+
+                    <p style="margin-top: 20px;"><strong>Duration:</strong> 4 weeks on, 2-4 weeks off</p>
+
+                    <div class="warning-box">
+                        <div class="warning-title">⚠️ About Niacin Flushing</div>
+                        <div class="warning-content">
+                            Niacin causes temporary skin flushing (redness, tingling, warmth) for 20-30 minutes. This is normal and harmless, but uncomfortable for some. Start with lower dose (50-100mg) to test your tolerance. Do NOT use "no-flush" niacin - the flush is part of the protocol (increases blood flow to brain).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking & Journaling -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2 class="section-title">Tracking Your Progress</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>Tracking is ESSENTIAL.</strong> Without it, you won't know if microdosing is actually helping or if it's placebo. Be scientific about this.</p>
+
+                <div class="tracking-section">
+                    <div class="tracking-title">Daily Journal Template</div>
+                    <p style="margin-bottom: 15px;">Track these daily (dose days and rest days):</p>
+                    <ul class="tracking-list">
+                        <li><strong>Date & Dose:</strong> Did you dose today? How much?</li>
+                        <li><strong>Mood (1-10):</strong> How do you feel overall?</li>
+                        <li><strong>Energy (1-10):</strong> Physical and mental energy levels</li>
+                        <li><strong>Focus (1-10):</strong> Ability to concentrate</li>
+                        <li><strong>Creativity (1-10):</strong> Novel ideas, problem-solving</li>
+                        <li><strong>Social (1-10):</strong> Quality of interactions, empathy</li>
+                        <li><strong>Notable effects:</strong> Anything different about today?</li>
+                        <li><strong>Side effects:</strong> Any negatives? (stomach, anxiety, etc.)</li>
+                        <li><strong>Sleep quality:</strong> How did you sleep?</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Tracking Methods</div>
+                    <div class="tip-content">
+                        <strong>Apps:</strong> Mindbloom, Notion templates, habit tracking apps<br>
+                        <strong>Spreadsheet:</strong> Simple Google Sheet with daily entries<br>
+                        <strong>Journal:</strong> Physical notebook works great<br>
+                        <strong>Voice memos:</strong> Quick daily check-ins<br><br>
+                        The key is <strong>consistency</strong>. Track every day for at least 4 weeks before deciding if it's working.
+                    </div>
+                </div>
+
+                <p style="margin-top: 30px;"><strong>After 4-8 weeks, ask yourself:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                    <li>Are dose days noticeably better than rest days?</li>
+                    <li>Has my baseline improved overall?</li>
+                    <li>Are the benefits worth the effort and cost?</li>
+                    <li>Am I experiencing any negative side effects?</li>
+                    <li>Do I feel dependent on it? (red flag)</li>
+                </ul>
+
+                <p>Be honest. If you're not seeing real benefits, it's okay to stop. Microdosing isn't for everyone.</p>
+            </div>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2 class="section-title">Best Practices & Tips</h2>
+            </div>
+            <div class="section-content">
+                <ul style="line-height: 2; padding-left: 30px;">
+                    <li><strong>Dose in the morning:</strong> Avoid sleep disruption. Take with or after breakfast to reduce nausea.</li>
+                    <li><strong>Use a scale:</strong> Precision matters. Get a 0.001g scale for accurate dosing.</li>
+                    <li><strong>Grind it up:</strong> Mushroom potency varies cap to cap. Grind and mix for consistency.</li>
+                    <li><strong>Capsule it:</strong> Pre-fill capsules for convenience and consistency.</li>
+                    <li><strong>Start low:</strong> You can always increase. Hard to decrease mid-day.</li>
+                    <li><strong>Track honestly:</strong> Don't fool yourself. Be objective about effects.</li>
+                    <li><strong>Take breaks:</strong> 4-8 weeks on, 2-4 weeks off minimum. Tolerance builds.</li>
+                    <li><strong>Combine with healthy habits:</strong> Meditation, exercise, good sleep amplify benefits.</li>
+                    <li><strong>Don't dose every day:</strong> You'll build tolerance fast and stop noticing effects.</li>
+                    <li><strong>Tell someone:</strong> Partner, close friend. Accountability and outside perspective help.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- When to Stop -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🛑</span>
+                <h2 class="section-title">When to Stop Microdosing</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>Stop immediately if:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Increased anxiety or paranoia</li>
+                    <li>Feeling emotionally numb or disconnected</li>
+                    <li>Sleep problems that don't resolve</li>
+                    <li>Heart palpitations or chest discomfort</li>
+                    <li>Feeling dependent on it</li>
+                    <li>Worsening of pre-existing mental health conditions</li>
+                    <li>Persistent negative side effects</li>
+                </ul>
+
+                <p style="margin-top: 30px;"><strong>Take a break if:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>You've been microdosing for 8+ weeks straight</li>
+                    <li>Effects have diminished (tolerance)</li>
+                    <li>You're not seeing benefits anymore</li>
+                    <li>Life circumstances change (pregnancy, new meds, etc.)</li>
+                    <li>You want to assess if the benefits were real</li>
+                </ul>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Not for Everyone</div>
+                    <div class="warning-content">
+                        Microdosing doesn't work for everyone. 20-30% of people report no benefits. Others experience negative effects. If you're in that group, that's okay. Psychedelics aren't the only tool for growth and healing. Don't force it.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sources -->
+        <div class="sources">
+            <h3 class="sources-title">Sources & Further Reading</h3>
+            
+            <div class="source">
+                <div class="source-title">James Fadiman - The Psychedelic Explorer's Guide</div>
+                <div class="source-link">Fadiman, J. (2011). "The Psychedelic Explorer's Guide" - Original microdosing protocol and research</div>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Paul Stamets - Stamets Stack</div>
+                <a href="https://paulstamets.com" target="_blank" class="source-link">paulstamets.com - Mycologist's neurogenesis stack with Lion's Mane</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Imperial College London - Microdosing Research</div>
+                <div class="source-link">Prochazkova, L., et al. (2018). "Exploring the effect of microdosing psychedelics on creativity in an open-label natural setting." Psychopharmacology - Found increases in convergent and divergent thinking</div>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Johns Hopkins - Placebo Controlled Study</div>
+                <div class="source-link">Szigeti, B., et al. (2021). "Self-blinding citizen science to explore psychedelic microdosing." eLife - Largest placebo-controlled citizen science study on microdosing</div>
+            </div>
+
+            <div class="source">
+                <div class="source-title">The Third Wave - Microdosing Resources</div>
+                <a href="https://thethirdwave.co/microdosing" target="_blank" class="source-link">thethirdwave.co/microdosing - Comprehensive guides and community</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

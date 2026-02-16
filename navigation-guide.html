@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigating Your Trip Guide 🧭</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --mushroom: #C084FC;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 100px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(192, 132, 252, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(135deg, var(--mushroom), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .intro-box {
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+        }
+
+        .section-content strong {
+            color: var(--cyan);
+        }
+
+        .phase-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 6px solid var(--lime);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .phase-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.4rem;
+            color: var(--lime);
+        }
+
+        .phase-time {
+            background: rgba(132, 204, 22, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--lime);
+            font-weight: bold;
+        }
+
+        .phase-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .phase-content ul {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .phase-content li {
+            margin: 8px 0;
+        }
+
+        .mantra-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+            border: 2px solid var(--purple);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .mantra-text {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            color: var(--purple);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .mantra-subtext {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+        }
+
+        .technique-card {
+            background: rgba(6, 182, 212, 0.05);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .technique-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .technique-steps {
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .technique-steps ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .technique-steps li {
+            margin: 10px 0;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-left: 6px solid #EF4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: #FCA5A5;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tip-box {
+            background: rgba(132, 204, 22, 0.1);
+            border: 2px solid rgba(132, 204, 22, 0.3);
+            border-left: 6px solid var(--lime);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .tip-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--lime);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .sources {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .sources-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .source {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .source-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .source-link {
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .phase-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .mantra-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="trip-guides.html" class="back-btn">← Back to Guides</a>
+
+    <div class="container">
+        <header>
+            <h1>Navigating Your Trip 🧭</h1>
+            <p class="subtitle">
+                What to expect during your journey, how to navigate challenges, and techniques for staying grounded when reality bends.
+            </p>
+        </header>
+
+        <div class="intro-box">
+            <strong>The Golden Rule:</strong> Whatever happens, it's temporary. You took a substance, it will wear off, you will return. This knowledge is your anchor when things get intense. Remember it, trust it, surrender to it.
+        </div>
+
+        <!-- The Mantra -->
+        <div class="mantra-box">
+            <div class="mantra-text">"Let Go or Be Dragged"</div>
+            <div class="mantra-subtext">Ancient wisdom for psychedelic journeys. Resistance creates suffering. Surrender creates flow.</div>
+        </div>
+
+        <!-- Timeline & Phases -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⏰</span>
+                <h2 class="section-title">Timeline: What to Expect</h2>
+            </div>
+            <div class="section-content">
+                <p>Every trip has predictable phases. Knowing what's coming reduces anxiety.</p>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 1: Onset</div>
+                        <div class="phase-time">0-45 minutes</div>
+                    </div>
+                    <div class="phase-content">
+                        <p><strong>What's happening:</strong> The substance is beginning to take effect. Your body is processing it.</p>
+                        <p><strong>Physical sensations:</strong></p>
+                        <ul>
+                            <li>Stomach butterflies or mild nausea (normal)</li>
+                            <li>Body feeling lighter or heavier</li>
+                            <li>Temperature fluctuations</li>
+                            <li>Yawning, restlessness, or nervous energy</li>
+                        </ul>
+                        <p><strong>Mental state:</strong> Anticipation, maybe some anxiety. Thoughts might start moving faster. Colors may seem brighter.</p>
+                        <p><strong>What to do:</strong> Stay calm, breathe, trust your preparation. Play your music. Get comfortable. This is just the beginning - don't judge the whole trip by the come-up.</p>
+                    </div>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 2: Come Up</div>
+                        <div class="phase-time">45min - 1.5 hours</div>
+                    </div>
+                    <div class="phase-content">
+                        <p><strong>What's happening:</strong> Effects are intensifying rapidly. This is often the most challenging phase.</p>
+                        <p><strong>What you might experience:</strong></p>
+                        <ul>
+                            <li>Visual distortions starting - patterns, breathing walls</li>
+                            <li>Time dilation (minutes feel like hours)</li>
+                            <li>Anxiety or "oh shit, this is really happening" feeling</li>
+                            <li>Difficulty focusing or following conversations</li>
+                            <li>Laughter or emotional waves</li>
+                        </ul>
+                        <p><strong>Common thought:</strong> "Did I take too much?" (Probably not - this is normal intensity building)</p>
+                        <p><strong>What to do:</strong> SURRENDER. Don't fight it. Lie down, close your eyes, breathe. Let the music carry you. If you resist, you'll have a harder time. This phase passes - you're heading to the peak.</p>
+                    </div>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 3: Peak</div>
+                        <div class="phase-time">1.5 - 4 hours</div>
+                    </div>
+                    <div class="phase-content">
+                        <p><strong>What's happening:</strong> You're at maximum effect. Reality is fully transformed.</p>
+                        <p><strong>Common experiences:</strong></p>
+                        <ul>
+                            <li>Intense visuals - geometric patterns, fractals, entities (if eyes closed)</li>
+                            <li>Ego dissolution - boundaries between self and universe blur</li>
+                            <li>Profound insights about life, death, existence</li>
+                            <li>Deep emotional releases - crying, laughing, awe</li>
+                            <li>Time stops having meaning</li>
+                            <li>Feeling of unity with everything</li>
+                        </ul>
+                        <p><strong>What to do:</strong> BE. Don't try to control or direct the experience. Observe. Experience. Trust. This is why you're here. Surrender completely. Let the mushrooms/substance show you what they want to show you.</p>
+                        <p><strong>Note:</strong> You likely won't want to do anything during this phase. Don't force yourself to. Just experience.</p>
+                    </div>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 4: Plateau & Come Down</div>
+                        <div class="phase-time">4 - 6 hours</div>
+                    </div>
+                    <div class="phase-content">
+                        <p><strong>What's happening:</strong> Effects are gradually decreasing. You're returning.</p>
+                        <p><strong>What you might notice:</strong></p>
+                        <ul>
+                            <li>Visuals fading but still present</li>
+                            <li>Ability to think more clearly returning</li>
+                            <li>Insights still flowing but more grounded</li>
+                            <li>Emotional afterglow - peace, gratitude, love</li>
+                            <li>Ability to communicate improving</li>
+                        </ul>
+                        <p><strong>What to do:</strong> Good time to journal (voice memos if writing is hard). Talk with your sitter. Process what you experienced. Hydrate. Eat something light if you're hungry. Reflect gently.</p>
+                    </div>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 5: Return</div>
+                        <div class="phase-time">6 - 8+ hours</div>
+                    </div>
+                    <div class="phase-content">
+                        <p><strong>What's happening:</strong> You're mostly back to baseline. Some residual effects may linger.</p>
+                        <p><strong>Common feelings:</strong></p>
+                        <ul>
+                            <li>Exhaustion but difficulty sleeping</li>
+                            <li>Afterglow - everything feels profound and beautiful</li>
+                            <li>Desire to integrate and make sense of it all</li>
+                            <li>Gratitude or emotional sensitivity</li>
+                        </ul>
+                        <p><strong>What to do:</strong> Rest. Don't fight sleep if it comes. Journal more. Avoid overstimulation (no intense TV, news, social media). Process gently. Take care of your body - water, light food, comfort.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Handling Challenging Moments -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⛰️</span>
+                <h2 class="section-title">Navigating Challenging Moments</h2>
+            </div>
+            <div class="section-content">
+                <p>Difficult moments happen. They're not "bad trips" - they're challenging parts of the journey. Here's how to navigate them:</p>
+
+                <div class="technique-card">
+                    <div class="technique-title">🌊 The WAVE Technique</div>
+                    <div class="technique-steps">
+                        <p>When anxiety or fear arises, remember: <strong>W.A.V.E.</strong></p>
+                        <ol>
+                            <li><strong>Welcome</strong> the feeling - Don't fight it. Say "okay, I see you"</li>
+                            <li><strong>Accept</strong> it's temporary - This will pass, it always does</li>
+                            <li><strong>Visualize</strong> it as a wave - It rises, peaks, and falls away</li>
+                            <li><strong>Exhale</strong> deeply - Long, slow breaths anchor you</li>
+                        </ol>
+                        <p style="margin-top: 15px;"><em>Resistance = Suffering. Acceptance = Flow.</em></p>
+                    </div>
+                </div>
+
+                <div class="technique-card">
+                    <div class="technique-title">🧘 Breath Anchoring</div>
+                    <div class="technique-steps">
+                        <p>When you feel ungrounded or panicky:</p>
+                        <ol>
+                            <li>Place one hand on your chest, one on your belly</li>
+                            <li>Breathe in slowly for 4 counts</li>
+                            <li>Hold for 4 counts</li>
+                            <li>Exhale for 6 counts</li>
+                            <li>Repeat until you feel more centered</li>
+                        </ol>
+                        <p style="margin-top: 15px;">Your breath is always with you. It's your lifeline back to safety.</p>
+                    </div>
+                </div>
+
+                <div class="technique-card">
+                    <div class="technique-title">🎵 Music Change</div>
+                    <div class="technique-steps">
+                        <p>Music profoundly affects your journey. If things feel dark or heavy:</p>
+                        <ul>
+                            <li>Switch to something lighter, more uplifting</li>
+                            <li>Nature sounds (rain, ocean, forest)</li>
+                            <li>Familiar music you love and feel safe with</li>
+                            <li>Ask your sitter to change it if you can't</li>
+                        </ul>
+                        <p style="margin-top: 15px;">Music guides the journey. Changing the soundtrack changes the experience.</p>
+                    </div>
+                </div>
+
+                <div class="technique-card">
+                    <div class="technique-title">👁️ Eyes Open/Closed Switching</div>
+                    <div class="technique-steps">
+                        <p>Toggle between internal and external focus:</p>
+                        <ul>
+                            <li><strong>Eyes closed:</strong> Deep introspection, intense visuals, inner work</li>
+                            <li><strong>Eyes open:</strong> Grounding in physical reality, less intensity</li>
+                        </ul>
+                        <p style="margin-top: 15px;">If internal space feels too intense, open your eyes and look at something calming. If external world is overwhelming, close your eyes and go inward.</p>
+                    </div>
+                </div>
+
+                <div class="technique-card">
+                    <div class="technique-title">💬 Talk to Your Sitter</div>
+                    <div class="technique-steps">
+                        <p>Your sitter is there for this moment:</p>
+                        <ul>
+                            <li>Tell them you're feeling scared/overwhelmed</li>
+                            <li>Ask them to remind you that you're safe and this is temporary</li>
+                            <li>Request physical grounding - hand holding, hug</li>
+                            <li>Have them guide you through breathing</li>
+                        </ul>
+                        <p style="margin-top: 15px;">Don't suffer in silence. That's literally why the sitter is there.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What's Normal vs What's Not -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2 class="section-title">What's Normal vs What's Concerning</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>These are NORMAL and not dangerous:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Feeling like you're dying or losing your mind (ego death - uncomfortable but safe)</li>
+                    <li>Intense emotions - crying, laughing, fear, awe</li>
+                    <li>Nausea or stomach discomfort (especially first hour)</li>
+                    <li>Feeling cold or hot (temperature regulation gets weird)</li>
+                    <li>Inability to speak coherently</li>
+                    <li>Complete loss of time sense</li>
+                    <li>Feeling like the trip will never end (it will)</li>
+                    <li>Thinking you've broken your brain (you haven't)</li>
+                </ul>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ When to Get Help</div>
+                    <div class="warning-content">
+                        Seek medical help if:<br><br>
+                        - Chest pain or difficulty breathing (not just rapid breathing)<br>
+                        - Seizures<br>
+                        - Loss of consciousness<br>
+                        - Extreme hyperthermia (very high fever, not just feeling warm)<br>
+                        - Violent behavior toward self or others<br>
+                        - Signs of serotonin syndrome (if mixed with SSRIs: confusion, rapid heart rate, high blood pressure, dilated pupils, muscle rigidity)<br><br>
+                        <strong>Call 911 if genuinely concerned.</strong> Paramedics deal with this regularly and won't judge.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ego Death -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🌀</span>
+                <h2 class="section-title">Understanding Ego Death</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>What is ego death?</strong> The temporary dissolution of your sense of self. You forget who you are, where you are, that you took a substance. "You" disappear.</p>
+
+                <p><strong>What it feels like:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Complete loss of identity and boundaries</li>
+                    <li>Feeling of dying or ceasing to exist</li>
+                    <li>Merging with the universe/everything</li>
+                    <li>No distinction between self and other</li>
+                    <li>Terror or bliss (or both)</li>
+                </ul>
+
+                <p><strong>Important truths:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>You are not actually dying. Your ego is temporarily dissolving.</li>
+                    <li>This is considered a peak mystical experience</li>
+                    <li>It's temporary - your ego reassembles as you come down</li>
+                    <li>Many report it as the most meaningful experience of their life</li>
+                    <li>Resisting makes it terrifying. Surrendering makes it transcendent.</li>
+                </ul>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 If Ego Death Happens</div>
+                    <div class="tip-content">
+                        Surrender completely. You cannot fight this and win. Let go. Trust. The universe is not trying to kill you - it's showing you that you are more than your ego. This is the gift. Breathe and let it happen. You will return.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thought Loops -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔄</span>
+                <h2 class="section-title">Breaking Thought Loops</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>What are thought loops?</strong> Getting stuck on the same thought/realization over and over. "Oh wow, I just realized..." then forgetting, then realizing again, repeat infinitely.</p>
+
+                <p><strong>How to break them:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li><strong>Change your environment</strong> - Move to a different room</li>
+                    <li><strong>Change the music</strong> - New stimulus breaks the loop</li>
+                    <li><strong>Physical action</strong> - Stand up, stretch, walk</li>
+                    <li><strong>Engage senses differently</strong> - Drink water, feel a texture, smell something</li>
+                    <li><strong>Ask sitter for help</strong> - External voice can interrupt the loop</li>
+                </ul>
+
+                <p>Thought loops are harmless but uncomfortable. They always end. Don't panic - just change something in your environment.</p>
+            </div>
+        </div>
+
+        <!-- Sources -->
+        <div class="sources">
+            <h3 class="sources-title">Sources & Further Reading</h3>
+            
+            <div class="source">
+                <div class="source-title">MAPS - Managing Difficult Psychedelic Experiences</div>
+                <a href="https://maps.org" target="_blank" class="source-link">maps.org - Clinical protocols for navigating challenging moments</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Zendo Project - Psychedelic Harm Reduction</div>
+                <a href="https://zendoproject.org" target="_blank" class="source-link">zendoproject.org - Peer support and de-escalation techniques</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Research on Challenging Experiences</div>
+                <div class="source-link">Carbonaro, T. M., et al. (2016). "Survey study of challenging experiences after ingesting psilocybin mushrooms." Journal of Psychopharmacology - Found that challenging experiences often lead to positive long-term outcomes when navigated properly</div>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Ego Death Research</div>
+                <div class="source-link">Nour, M. M., et al. (2016). "Ego-Dissolution and Psychedelics: Validation of the Ego-Dissolution Inventory." Frontiers in Human Neuroscience - Validation of ego dissolution as a core psychedelic experience</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

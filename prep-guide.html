@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Preparation Guide 🎒</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --mushroom: #C084FC;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 100px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(192, 132, 252, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(135deg, var(--mushroom), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .intro-box {
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+        }
+
+        .section-content strong {
+            color: var(--cyan);
+        }
+
+        .checklist {
+            margin: 25px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(132, 204, 22, 0.05);
+            border-left: 4px solid var(--lime);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checklist-item:hover {
+            background: rgba(132, 204, 22, 0.1);
+            transform: translateX(5px);
+        }
+
+        .checklist-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .checklist-content {
+            flex: 1;
+        }
+
+        .checklist-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .checklist-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-left: 6px solid #EF4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: #FCA5A5;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tip-box {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-left: 6px solid var(--cyan);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .tip-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .supplies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .supply-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .supply-item:hover {
+            border-color: var(--purple);
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .supply-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .supply-name {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .supply-desc {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .sources {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .sources-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .source {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .source-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .source-link {
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .supplies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="trip-guides.html" class="back-btn">← Back to Guides</a>
+
+    <div class="container">
+        <header>
+            <h1>Trip Preparation Guide 🎒</h1>
+            <p class="subtitle">
+                Proper preparation is the foundation of a safe, meaningful psychedelic experience. This guide covers everything you need before your journey.
+            </p>
+        </header>
+
+        <div class="intro-box">
+            <strong>Why Preparation Matters:</strong> Research from Johns Hopkins and MAPS consistently shows that set (mindset), setting (environment), and preparation dramatically impact psychedelic experiences. Taking time to prepare can be the difference between a transformative journey and an overwhelming one.
+        </div>
+
+        <!-- Set: Your Mindset -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🧠</span>
+                <h2 class="section-title">Set: Your Mindset</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>"Set"</strong> refers to your mental and emotional state going into the experience. Your mindset shapes the journey.</p>
+
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Choose the Right Day</div>
+                            <div class="checklist-desc">Pick a day when you're feeling emotionally stable, well-rested, and have nothing stressful scheduled for 24-48 hours. Don't trip to escape problems.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Set Your Intention</div>
+                            <div class="checklist-desc">What do you hope to explore or learn? Not required, but having a gentle intention (not rigid expectation) can guide your experience. Examples: "I want to understand myself better" or "I want to feel more connected to nature."</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Mental Health Check</div>
+                            <div class="checklist-desc">If you're dealing with active psychosis, severe depression, or unprocessed trauma, work with a therapist first. Psychedelics amplify your current state.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Let Go of Control</div>
+                            <div class="checklist-desc">The biggest mistake is trying to control the experience. Go in with openness and surrender. "Let go or be dragged" - ancient wisdom applies here.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Don't Trip If:</div>
+                    <div class="warning-content">
+                        - You're under 21 (brain still developing)<br>
+                        - You have personal or family history of schizophrenia/psychosis<br>
+                        - You're taking certain medications (SSRIs, lithium, tramadol - check interactions)<br>
+                        - You're pregnant or breastfeeding<br>
+                        - You're in a bad mental state or facing a crisis
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Setting: Your Environment -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🏡</span>
+                <h2 class="section-title">Setting: Your Environment</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>"Setting"</strong> is your physical environment. Create a space that feels safe, comfortable, and supports your journey.</p>
+
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Choose Your Location Wisely</div>
+                            <div class="checklist-desc">Ideally: A comfortable, familiar space where you won't be interrupted. Nature is beautiful but save it for when you're experienced. Avoid public places your first time.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Clear Your Schedule</div>
+                            <div class="checklist-desc">Block out 8-10 hours for the experience, plus the next day for rest and integration. Turn off notifications. Tell roommates/family you need privacy.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Have a Trip Sitter (First Time)</div>
+                            <div class="checklist-desc">Someone sober, experienced, and trustworthy who can stay with you. They don't need to talk much - just be present and help if needed. CRITICAL for first-timers or high doses.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Control the Vibe</div>
+                            <div class="checklist-desc">Dim lighting (no harsh fluorescents), comfortable temperature, soft blankets, pillows. Make it cozy. You want to feel like you're in a safe nest.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Pro Tip: The Comfort Test</div>
+                    <div class="tip-content">
+                        Before your trip, spend 30 minutes in your chosen space just sitting quietly. Does it feel peaceful? Are there distractions? Adjust until it feels right. Trust your gut.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Essential Supplies -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎒</span>
+                <h2 class="section-title">Essential Supplies</h2>
+            </div>
+            <div class="section-content">
+                <p>Having these items ready eliminates stress during your journey. Prepare everything before you dose.</p>
+
+                <div class="supplies-grid">
+                    <div class="supply-item">
+                        <div class="supply-icon">💧</div>
+                        <div class="supply-name">Water</div>
+                        <div class="supply-desc">Stay hydrated. Room temp is easier on the stomach.</div>
+                    </div>
+
+                    <div class="supply-item">
+                        <div class="supply-icon">🍊</div>
+                        <div class="supply-name">Light Snacks</div>
+                        <div class="supply-desc">Fruit, crackers. You might not be hungry but have options.</div>
+                    </div>
+
+                    <div class="supply-item">
+                        <div class="supply-icon">🎵</div>
+                        <div class="supply-name">Music Playlist</div>
+                        <div class="supply-desc">6-8 hours of calming, instrumental music. See playlist section below.</div>
+                    </div>
+
+                    <div class="supply-item">
+                        <div class="supply-icon">🛋️</div>
+                        <div class="supply-name">Blankets</div>
+                        <div class="supply-desc">For comfort and warmth. Weighted blankets are amazing.</div>
+                    </div>
+
+                    <div class="supply-item">
+                        <div class="supply-icon">🪣</div>
+                        <div class="supply-name">Bucket</div>
+                        <div class="supply-desc">Nausea can happen. Better safe than sorry.</div>
+                    </div>
+
+                    <div class="supply-item">
+                        <div class="supply-icon">📔</div>
+                        <div class="supply-name">Journal & Pen</div>
+                        <div class="supply-desc">For post-trip integration. Not during - wait until after.</div>
+                    </div>
+
+                    <div class="supply-item">
+                        <div class="supply-icon">📱</div>
+                        <div class="supply-name">Phone (Off)</div>
+                        <div class="supply-desc">Turn it off or airplane mode. But keep nearby for emergencies.</div>
+                    </div>
+
+                    <div class="supply-item">
+                        <div class="supply-icon">😎</div>
+                        <div class="supply-name">Eye Mask</div>
+                        <div class="supply-desc">For deeper introspection. Blocks visual distractions.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Music & Playlists -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎧</span>
+                <h2 class="section-title">Music & Playlists</h2>
+            </div>
+            <div class="section-content">
+                <p>Music profoundly shapes psychedelic experiences. Johns Hopkins uses specific playlists in their research for a reason.</p>
+
+                <p><strong>What Works Best:</strong></p>
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Instrumental music (no lyrics to get stuck on)</li>
+                    <li>Classical, ambient, nature sounds</li>
+                    <li>Music that builds and releases (matches the trip arc)</li>
+                    <li>Familiar music you love, or discovery mode</li>
+                </ul>
+
+                <p><strong>Avoid:</strong> Heavy metal, aggressive rap, anything jarring or anxiety-inducing. Save experimental music for later trips.</p>
+
+                <div class="tip-box">
+                    <div class="tip-title">🎵 Recommended Playlists</div>
+                    <div class="tip-content">
+                        - <strong>Johns Hopkins Psilocybin Playlist</strong> (the official research playlist)<br>
+                        - <strong>Wavepaths</strong> (AI-generated psychedelic music)<br>
+                        - <strong>Jon Hopkins - Music for Psychedelic Therapy</strong><br>
+                        - Nature sounds: Rain, ocean waves, forest ambience<br>
+                        - Classical: Beethoven, Debussy, Satie
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day-Of Checklist -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📋</span>
+                <h2 class="section-title">Day-Of Checklist</h2>
+            </div>
+            <div class="section-content">
+                <p>Final preparations before you begin your journey:</p>
+
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Eat Light (or Fast)</div>
+                            <div class="checklist-desc">Empty or light stomach reduces nausea. Some people fast 4-6 hours before. Others eat lightly. No heavy meals.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Confirm Your Sitter</div>
+                            <div class="checklist-desc">Double-check they're available and committed. Go over their role: stay calm, don't interfere unless asked, be present.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Test Your Dose</div>
+                            <div class="checklist-desc">Use a scale. Know exactly how much you're taking. Start low - you can always try more another time.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">Set Up Your Space</div>
+                            <div class="checklist-desc">Everything in place: water, snacks, blankets, music queued up, phone off. Nothing to do but experience.</div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <span class="checklist-icon">✓</span>
+                        <div class="checklist-content">
+                            <div class="checklist-title">One Last Reminder</div>
+                            <div class="checklist-desc">Whatever happens, it's temporary. You will return. Surrender and trust the process. You've prepared well.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What Not To Do -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🚫</span>
+                <h2 class="section-title">Common Mistakes to Avoid</h2>
+            </div>
+            <div class="section-content">
+                <ul style="line-height: 2; padding-left: 30px;">
+                    <li><strong>Taking too much your first time</strong> - Start low, be patient</li>
+                    <li><strong>Mixing substances</strong> - No alcohol, weed (for first-timers), or other drugs</li>
+                    <li><strong>Tripping in public</strong> - Wait until you're experienced</li>
+                    <li><strong>Not having a sitter</strong> - First-timers need support</li>
+                    <li><strong>Fighting the experience</strong> - Surrender is key</li>
+                    <li><strong>Looking at screens</strong> - Social media can be jarring and anxious</li>
+                    <li><strong>Having expectations</strong> - Let it unfold naturally</li>
+                    <li><strong>Tripping when stressed</strong> - It amplifies everything</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sources -->
+        <div class="sources">
+            <h3 class="sources-title">Sources & Further Reading</h3>
+            
+            <div class="source">
+                <div class="source-title">MAPS (Multidisciplinary Association for Psychedelic Studies)</div>
+                <a href="https://maps.org" target="_blank" class="source-link">maps.org - Harm reduction resources and research</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Johns Hopkins Center for Psychedelic Research</div>
+                <a href="https://hopkinspsychedelic.org" target="_blank" class="source-link">hopkinspsychedelic.org - Clinical research and safety guidelines</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Erowid</div>
+                <a href="https://www.erowid.org" target="_blank" class="source-link">erowid.org - Comprehensive substance database and trip reports</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">The Third Wave</div>
+                <a href="https://thethirdwave.co" target="_blank" class="source-link">thethirdwave.co - Psychedelic education and integration</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Harm Reduction Research</div>
+                <div class="source-link">Johnson, M. W., Richards, W. A., & Griffiths, R. R. (2008). "Human hallucinogen research: guidelines for safety." Journal of Psychopharmacology.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

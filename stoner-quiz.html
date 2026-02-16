@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Type of Stoner Are You? 🌿</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Psychedelic background animation */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(251, 191, 36, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating particles */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--cyan);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            background: linear-gradient(135deg, var(--purple), var(--pink), var(--cyan), var(--lime));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.9;
+        }
+
+        .start-screen, .quiz-screen, .results-screen {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .start-btn, .next-btn, .restart-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 18px 50px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before, .next-btn::before, .restart-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .start-btn:hover::before, .next-btn:hover::before, .restart-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .start-btn:hover, .next-btn:hover, .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        .quiz-screen {
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple), var(--pink), var(--cyan));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+        }
+
+        .question-container {
+            margin-bottom: 40px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-number {
+            color: var(--lime);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            line-height: 1.4;
+            color: #fff;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            padding: 20px 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--purple);
+            transform: translateX(5px);
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+            border-color: var(--pink);
+            box-shadow: 0 5px 20px rgba(236, 72, 153, 0.4);
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-title {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .strains-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .strains-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            color: var(--lime);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .strain {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(132, 204, 22, 0.1);
+            border-left: 4px solid var(--lime);
+            border-radius: 10px;
+        }
+
+        .strain-name {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: var(--lime);
+            margin-bottom: 8px;
+        }
+
+        .strain-type {
+            font-size: 0.9rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .strain-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .emoji {
+            display: inline-block;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @media (max-width: 768px) {
+            .start-screen, .quiz-screen, .results-screen {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .question-text {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <script>
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <div class="container">
+        <header>
+            <h1>What Type of Stoner Are You? <span class="emoji">🌿</span></h1>
+            <div class="subtitle">Discover Your High Personality</div>
+        </header>
+
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <div class="intro-text">
+                <p>Ever wondered what your personality says about your perfect high? <span class="emoji">✨</span></p>
+                <p style="margin-top: 20px;">This isn't just another quiz – we're diving deep into who you are sober AND elevated to figure out your unique stoner archetype and the strains that'll vibe with your energy.</p>
+                <p style="margin-top: 20px;">15 questions. No judgment. Just good vibes. <span class="emoji">🍃</span></p>
+            </div>
+            <button class="start-btn" onclick="startQuiz()">Let's Get Elevated <span class="emoji">🚀</span></button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="question-container" id="questionContainer">
+                <!-- Questions will be inserted here -->
+            </div>
+            <button class="next-btn hidden" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="results-screen" id="resultsScreen">
+            <div class="result-icon" id="resultIcon"></div>
+            <h2 class="result-title" id="resultTitle"></h2>
+            <p class="result-description" id="resultDescription"></p>
+            
+            <div class="strains-section">
+                <h3 class="strains-title">Your Perfect Strains <span class="emoji">🌱</span></h3>
+                <div id="strainsContainer"></div>
+            </div>
+
+            <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again <span class="emoji">🔄</span></button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "How would you describe your everyday personality?",
+                options: [
+                    { text: "Analytical and thoughtful - I live in my head", type: "cerebral" },
+                    { text: "Social butterfly - I thrive around people", type: "social" },
+                    { text: "Creative dreamer - always imagining new ideas", type: "creative" },
+                    { text: "Chill and go-with-the-flow", type: "zen" },
+                    { text: "High energy - always doing something", type: "active" }
+                ]
+            },
+            {
+                question: "When you have free time, you're most likely to...",
+                options: [
+                    { text: "Binge a new series or movie marathon", type: "zen" },
+                    { text: "Create something (art, music, writing, etc.)", type: "creative" },
+                    { text: "Hit the gym or go on an adventure", type: "active" },
+                    { text: "Deep dive into a rabbit hole of research", type: "cerebral" },
+                    { text: "Hang with friends or meet new people", type: "social" }
+                ]
+            },
+            {
+                question: "Pick your ideal Friday night:",
+                options: [
+                    { text: "House party with a big group", type: "social" },
+                    { text: "Cozy night in with snacks and entertainment", type: "zen" },
+                    { text: "Late night jam session or art project", type: "creative" },
+                    { text: "Concert, club, or some kind of adventure", type: "active" },
+                    { text: "Deep conversations with close friends", type: "cerebral" }
+                ]
+            },
+            {
+                question: "What's your relationship with anxiety/stress?",
+                options: [
+                    { text: "I overthink everything constantly", type: "cerebral" },
+                    { text: "I need to stay busy or I get restless", type: "active" },
+                    { text: "Pretty chill, not much bothers me", type: "zen" },
+                    { text: "I channel it into creative outlets", type: "creative" },
+                    { text: "Talking it out with people helps me", type: "social" }
+                ]
+            },
+            {
+                question: "How do you prefer to consume?",
+                options: [
+                    { text: "Classic joint or blunt - keep it traditional", type: "zen" },
+                    { text: "Bong rips - maximum efficiency", type: "active" },
+                    { text: "Edibles - the slow, intense journey", type: "cerebral" },
+                    { text: "Vape pen - clean and convenient", type: "social" },
+                    { text: "Whatever's around - I'm experimental", type: "creative" }
+                ]
+            },
+            {
+                question: "What's your ideal smoking environment?",
+                options: [
+                    { text: "Nature - parks, beaches, mountains", type: "zen" },
+                    { text: "My room/apartment - safe space vibes", type: "cerebral" },
+                    { text: "At a party or social gathering", type: "social" },
+                    { text: "Studio/creative space while working", type: "creative" },
+                    { text: "Somewhere active - before hiking, sports, etc.", type: "active" }
+                ]
+            },
+            {
+                question: "When you're high, what activity calls to you?",
+                options: [
+                    { text: "Netflix and absolutely nothing else", type: "zen" },
+                    { text: "Making art, music, or writing", type: "creative" },
+                    { text: "Laughing and talking with friends", type: "social" },
+                    { text: "Going on a walk or doing something physical", type: "active" },
+                    { text: "Contemplating life and the universe", type: "cerebral" }
+                ]
+            },
+            {
+                question: "Your munchies style is:",
+                options: [
+                    { text: "Full meal prep - I'm cooking something elaborate", type: "creative" },
+                    { text: "Whatever's easiest - chips, candy, done", type: "zen" },
+                    { text: "Gourmet snacks - I curate the experience", type: "cerebral" },
+                    { text: "Social eating - ordering food with friends", type: "social" },
+                    { text: "Healthy snacks - fruits, nuts, staying active", type: "active" }
+                ]
+            },
+            {
+                question: "How do you handle being too high?",
+                options: [
+                    { text: "Embrace it and ride the wave", type: "zen" },
+                    { text: "Start moving - walk it off", type: "active" },
+                    { text: "Call a friend for grounding", type: "social" },
+                    { text: "Channel it into something creative", type: "creative" },
+                    { text: "Analyze the experience logically", type: "cerebral" }
+                ]
+            },
+            {
+                question: "What's your favorite music vibe while elevated?",
+                options: [
+                    { text: "Chill beats, lo-fi, ambient sounds", type: "zen" },
+                    { text: "Psychedelic rock, experimental stuff", type: "creative" },
+                    { text: "Deep house, EDM, dance music", type: "active" },
+                    { text: "Hip-hop, rap with clever lyrics", type: "cerebral" },
+                    { text: "Whatever the group's vibing to", type: "social" }
+                ]
+            },
+            {
+                question: "Solo sesh or group smoke?",
+                options: [
+                    { text: "Definitely solo - my time to introspect", type: "cerebral" },
+                    { text: "Group always - it's a social experience", type: "social" },
+                    { text: "Solo for creativity, group for fun", type: "creative" },
+                    { text: "Solo chill sessions are the best", type: "zen" },
+                    { text: "Either works, depends on the mood", type: "active" }
+                ]
+            },
+            {
+                question: "How important is the ritual/aesthetic of smoking?",
+                options: [
+                    { text: "Super important - nice pieces, good vibes", type: "creative" },
+                    { text: "Somewhat - I like a clean setup", type: "cerebral" },
+                    { text: "Not really - function over form", type: "active" },
+                    { text: "Love the social ritual of passing", type: "social" },
+                    { text: "Whatever's easy and chill", type: "zen" }
+                ]
+            },
+            {
+                question: "What makes a strain 'good' to you?",
+                options: [
+                    { text: "Creative boost and inspiration", type: "creative" },
+                    { text: "Energy without anxiety", type: "active" },
+                    { text: "Deep relaxation and peace", type: "zen" },
+                    { text: "Enhances social connection", type: "social" },
+                    { text: "Interesting headspace and thoughts", type: "cerebral" }
+                ]
+            },
+            {
+                question: "How do you feel about mixing substances? (alcohol, caffeine, etc.)",
+                options: [
+                    { text: "Love a crossfade - controlled chaos", type: "social" },
+                    { text: "Coffee + weed = perfect productivity", type: "active" },
+                    { text: "Rather keep it pure and simple", type: "zen" },
+                    { text: "Experimentally yes, for new experiences", type: "creative" },
+                    { text: "Carefully calculated combinations", type: "cerebral" }
+                ]
+            },
+            {
+                question: "Last one: What's your ultimate high goal?",
+                options: [
+                    { text: "Complete mental relaxation and no stress", type: "zen" },
+                    { text: "Unlock creativity and new perspectives", type: "creative" },
+                    { text: "Deep bonding and laughter with people", type: "social" },
+                    { text: "Enhanced physical activity and adventure", type: "active" },
+                    { text: "Profound thoughts and self-discovery", type: "cerebral" }
+                ]
+            }
+        ];
+
+        const stonerTypes = {
+            cerebral: {
+                icon: "🧠",
+                title: "The Philosopher",
+                description: "You're the deep thinker of the smoking circle. When you get high, it's not just about the buzz – it's about unlocking new dimensions of thought. You're the one asking 'but what IS reality?' at 2am, journaling your revelations, or having mind-bending conversations that your friends will remember forever. You probably have a favorite podcast to listen to while elevated and you've definitely watched Cosmos high. Your sessions are introspective journeys, and you emerge with new perspectives on life, consciousness, and everything in between.",
+                strains: [
+                    {
+                        name: "Blue Dream",
+                        type: "Sativa-Dominant Hybrid",
+                        description: "Perfect for creative thinking without overwhelming anxiety. Keeps your mind sharp and curious while maintaining a gentle, euphoric body high."
+                    },
+                    {
+                        name: "Jack Herer",
+                        type: "Sativa",
+                        description: "Named after the cannabis activist, this strain delivers clear-headed cerebral effects perfect for deep thoughts and philosophical exploration."
+                    },
+                    {
+                        name: "Headband",
+                        type: "Hybrid",
+                        description: "Creates a pressure sensation around your crown (hence the name) that many describe as focusing and contemplative. Great for introspection."
+                    }
+                ]
+            },
+            social: {
+                icon: "🎉",
+                title: "The Social Butterfly",
+                description: "For you, weed is a social lubricant that makes good times even better. You're the person who brings the vibe to any session, makes everyone laugh, and somehow knows exactly what music to play. You thrive in group settings – whether it's a smoke circle with close friends or a party where you're meeting new people. You probably have the best high stories, you're always down to match, and your friends know that smoking with you means a guaranteed good time. Your laugh is probably contagious when you're elevated.",
+                strains: [
+                    {
+                        name: "Durban Poison",
+                        type: "Pure Sativa",
+                        description: "Uplifting and energetic without paranoia. Perfect for staying social, chatty, and engaged in group settings without couch-lock."
+                    },
+                    {
+                        name: "Pineapple Express",
+                        type: "Sativa-Dominant Hybrid",
+                        description: "Brings creative energy and euphoria while keeping you functional and social. Great for parties and hangouts."
+                    },
+                    {
+                        name: "Super Lemon Haze",
+                        type: "Sativa",
+                        description: "Citrusy, uplifting, and energizing. Keeps conversations flowing and laughter coming without overwhelming intensity."
+                    }
+                ]
+            },
+            creative: {
+                icon: "🎨",
+                title: "The Creative",
+                description: "Cannabis isn't just recreational for you – it's a key to unlock your creative potential. You're the one painting at 3am, producing music with newfound inspiration, writing poetry that actually makes sense, or seeing artistic connections everywhere you look. Your high sessions are productive in the best way. You probably have a dedicated creative space, your best work has definitely come to you while elevated, and you understand that some of the greatest artists throughout history were inspired by cannabis. You see the world differently when you're high, and you capture that vision.",
+                strains: [
+                    {
+                        name: "Tangie",
+                        type: "Sativa",
+                        description: "Bursting with creative energy and euphoria. The citrus terpenes are known to boost mood and inspire artistic flow."
+                    },
+                    {
+                        name: "Space Queen",
+                        type: "Hybrid",
+                        description: "Provides a cerebral, uplifting high that many artists and musicians swear by for inspiration and creative problem-solving."
+                    },
+                    {
+                        name: "Green Crack",
+                        type: "Sativa",
+                        description: "Despite the intense name, it's all about sharp focus and energizing creativity. Perfect for long creative sessions without burnout."
+                    }
+                ]
+            },
+            zen: {
+                icon: "🧘",
+                title: "The Zen Master",
+                description: "You smoke to disconnect from the chaos and just... be. For you, getting high is about maximum relaxation and minimal stress. You're the friend with the comfiest couch, the best blankets, and probably a playlist called 'chill vibes only.' You don't need to be doing anything – in fact, you prefer not to. Your ideal high involves zero responsibilities, quality entertainment (or no entertainment, just vibing), and the freedom to exist in a state of pure contentment. You've mastered the art of doing absolutely nothing, and honestly? That's beautiful.",
+                strains: [
+                    {
+                        name: "Northern Lights",
+                        type: "Indica",
+                        description: "The classic relaxation strain. Pure body bliss and mental peace. Perfect for melting into the couch and letting the world fade away."
+                    },
+                    {
+                        name: "Granddaddy Purple",
+                        type: "Indica",
+                        description: "Deep relaxation with a berry flavor that tastes like vacation. Ultimate stress relief and physical calm."
+                    },
+                    {
+                        name: "Bubba Kush",
+                        type: "Indica",
+                        description: "Heavy, sedating, and wonderfully peaceful. Great for complete mental and physical relaxation without overwhelming drowsiness at first."
+                    }
+                ]
+            },
+            active: {
+                icon: "⚡",
+                title: "The Active Adventurer",
+                description: "Most people get couch-locked when they smoke. Not you. You're the rare breed that gets ENERGIZED. You're hitting the gym, going for runs, exploring nature, or finding adventure while elevated. For you, cannabis enhances the physical world and makes activities more engaging and fun. You probably scandalize people by telling them you work out high, but they don't understand – you're in the zone. You know exactly which strains won't make you lazy, and you've probably had some of your best outdoor experiences while elevated. You're proof that stoner stereotypes are outdated.",
+                strains: [
+                    {
+                        name: "Sour Diesel",
+                        type: "Sativa",
+                        description: "Energizing, motivating, and uplifting. Provides focus and drive without sedation – perfect for pre-workout or outdoor activities."
+                    },
+                    {
+                        name: "Durban Poison",
+                        type: "Pure Sativa",
+                        description: "Clean energy and mental clarity. Great for daytime activities, exercise, and staying productive while elevated."
+                    },
+                    {
+                        name: "Super Silver Haze",
+                        type: "Sativa",
+                        description: "Long-lasting energetic high that won't leave you tired. Perfect for hiking, biking, or any adventure you're planning."
+                    }
+                ]
+            }
+        };
+
+        let currentQuestion = 0;
+        let answers = {
+            cerebral: 0,
+            social: 0,
+            creative: 0,
+            zen: 0,
+            active: 0
+        };
+
+        function startQuiz() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('quizScreen').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                <h3 class="question-text">${question.question}</h3>
+                <div class="options">
+                    ${question.options.map((option, index) => `
+                        <div class="option" onclick="selectOption(${index})">
+                            ${option.text}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            updateProgress();
+            document.getElementById('nextBtn').classList.add('hidden');
+        }
+
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[index].classList.add('selected');
+
+            const selectedType = questions[currentQuestion].options[index].type;
+            answers[selectedType]++;
+
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+
+            // Find the dominant type
+            let maxScore = 0;
+            let dominantType = '';
+            
+            for (let type in answers) {
+                if (answers[type] > maxScore) {
+                    maxScore = answers[type];
+                    dominantType = type;
+                }
+            }
+
+            const result = stonerTypes[dominantType];
+
+            document.getElementById('resultIcon').textContent = result.icon;
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultDescription').textContent = result.description;
+
+            // Display strains
+            const strainsContainer = document.getElementById('strainsContainer');
+            strainsContainer.innerHTML = result.strains.map(strain => `
+                <div class="strain">
+                    <div class="strain-name">${strain.name}</div>
+                    <div class="strain-type">${strain.type}</div>
+                    <div class="strain-description">${strain.description}</div>
+                </div>
+            `).join('');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = {
+                cerebral: 0,
+                social: 0,
+                creative: 0,
+                zen: 0,
+                active: 0
+            };
+            
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

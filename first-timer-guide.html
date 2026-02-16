@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Timer's Guide 🌱</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --mushroom: #C084FC;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 100px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(192, 132, 252, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(135deg, var(--green), var(--lime));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .intro-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+        }
+
+        .section-content strong {
+            color: var(--cyan);
+        }
+
+        .dosage-table {
+            width: 100%;
+            margin: 25px 0;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .dosage-table th,
+        .dosage-table td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dosage-table th {
+            background: rgba(132, 204, 22, 0.2);
+            color: var(--lime);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .dosage-table td {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .dosage-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .recommended-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--green);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .strain-card {
+            background: rgba(132, 204, 22, 0.05);
+            border: 2px solid rgba(132, 204, 22, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .strain-name {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--lime);
+            margin-bottom: 10px;
+        }
+
+        .strain-desc {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        .mistake-card {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid var(--pink);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .mistake-title {
+            font-weight: bold;
+            color: var(--pink);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .mistake-desc {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        .tip-box {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-left: 6px solid var(--cyan);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .tip-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-left: 6px solid #EF4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: #FCA5A5;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .faq-question {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+        }
+
+        .faq-answer {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+        }
+
+        .sources {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .sources-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .source {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .source-title {
+            font-weight: bold;
+            color: var(--lime);
+            margin-bottom: 5px;
+        }
+
+        .source-link {
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dosage-table {
+                font-size: 0.9rem;
+            }
+
+            .dosage-table th,
+            .dosage-table td {
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="trip-guides.html" class="back-btn">← Back to Guides</a>
+
+    <div class="container">
+        <header>
+            <h1>First Timer's Guide 🌱</h1>
+            <p class="subtitle">
+                Everything you need to know for your first psychedelic experience. Start here if you've never tripped before.
+            </p>
+        </header>
+
+        <div class="intro-box">
+            <strong>Welcome!</strong> You're about to embark on one of the most profound experiences available to human consciousness. This guide will help you have a safe, positive first trip. Read everything carefully, follow the recommendations, and trust the process. You've got this.
+        </div>
+
+        <!-- Should You Trip? -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🤔</span>
+                <h2 class="section-title">Are You Ready?</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>Answer these honestly:</strong></p>
+
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>Are you at least 21 years old? (Brain development matters)</li>
+                    <li>Are you in a stable mental state right now?</li>
+                    <li>No personal or family history of schizophrenia or psychosis?</li>
+                    <li>Not currently taking SSRIs, lithium, or MAOIs?</li>
+                    <li>Can you dedicate a full day with no responsibilities?</li>
+                    <li>Do you have a trusted sober sitter available?</li>
+                    <li>Are you doing this for curiosity/growth, not to escape problems?</li>
+                </ul>
+
+                <p><strong>If you answered YES to all:</strong> Great! You're ready. Keep reading.</p>
+                <p><strong>If you answered NO to any:</strong> Wait. Address those concerns first. Psychedelics will still be here when the time is right.</p>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Don't Trip If:</div>
+                    <div class="warning-content">
+                        - You're under 21 (seriously, your brain is still developing)<br>
+                        - You're in active crisis or severe depression<br>
+                        - You have schizophrenia or strong family history of it<br>
+                        - You're on certain medications (SSRIs reduce effects, lithium is dangerous)<br>
+                        - You're pregnant or breastfeeding<br>
+                        - You don't have a trusted sitter for your first time<br>
+                        - You're trying to escape problems rather than face them
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beginner Dosages -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚖️</span>
+                <h2 class="section-title">Beginner Dosages</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>The #1 rule for first-timers: START LOW.</strong> You can always take more next time. You can't undo taking too much.</p>
+
+                <table class="dosage-table">
+                    <tr>
+                        <th>Dose Level</th>
+                        <th>Dried Mushrooms</th>
+                        <th>What to Expect</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Microdose</strong></td>
+                        <td>0.1-0.3g</td>
+                        <td>Subtle mood lift, no visuals. Not a "trip." Good for first exposure to the substance.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Threshold</strong></td>
+                        <td>0.5-1g</td>
+                        <td>Mild effects, slight visuals, enhanced colors. Clear-headed. Very manageable.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Light/Low</strong> <span class="recommended-badge">Recommended for First-Timers</span></td>
+                        <td>1-1.5g</td>
+                        <td>Noticeable visuals, euphoria, some introspection. Still very controllable. Perfect introduction.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Moderate</strong></td>
+                        <td>2-2.5g</td>
+                        <td>Full psychedelic experience. Strong visuals, deep thoughts. Only if you feel ready after researching.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Strong</strong></td>
+                        <td>3.5g+</td>
+                        <td>Intense, potentially overwhelming for first-timers. Save this for later trips.</td>
+                    </tr>
+                </table>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Our Recommendation</div>
+                    <div class="tip-content">
+                        For your first time: <strong>1-1.5 grams of dried psilocybin mushrooms.</strong> This is the sweet spot - enough to experience the magic without being overwhelming. You'll get visuals, euphoria, and insights, but you'll still feel in control. You can always explore higher doses later once you know how you respond.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Best Starter Strains -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🍄</span>
+                <h2 class="section-title">Best Strains for Beginners</h2>
+            </div>
+            <div class="section-content">
+                <p>Not all mushroom strains are equal. These are the most forgiving for first-timers:</p>
+
+                <div class="strain-card">
+                    <div class="strain-name">Golden Teacher (Best for First-Timers)</div>
+                    <div class="strain-desc">Named for its gentle, teaching nature. Provides a balanced, manageable experience with mild visuals and deep introspection. Most recommended strain for beginners. Moderate potency (0.6-0.8% psilocybin).</div>
+                </div>
+
+                <div class="strain-card">
+                    <div class="strain-name">B+ (Be Positive)</div>
+                    <div class="strain-desc">Known for consistently positive experiences. Uplifting, social, less intense than average. Great if you want something gentle and fun. Moderate potency (0.6-0.7%).</div>
+                </div>
+
+                <div class="strain-card">
+                    <div class="strain-name">Mazatapec</div>
+                    <div class="strain-desc">Ancient shamanic strain. Very gentle, spiritual, and forgiving. Lowest intensity of common strains. Perfect for those who want a mild, healing experience. Lower potency (0.4-0.6%).</div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Avoid These for Your First Time</div>
+                    <div class="warning-content">
+                        <strong>Penis Envy, Albino Penis Envy, McKennaii:</strong> These are 50-100% more potent than average strains. Wait until you have experience. Starting with these is like learning to drive in a Ferrari - technically possible, but not recommended.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What Will It Feel Like? -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">✨</span>
+                <h2 class="section-title">What Will It Actually Feel Like?</h2>
+            </div>
+            <div class="section-content">
+                <p>At a beginner dose (1-1.5g), here's what to expect:</p>
+
+                <p><strong>Physical sensations:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                    <li>Body feeling lighter or slightly heavy</li>
+                    <li>Mild stomach butterflies (first 30 mins, then fades)</li>
+                    <li>Enhanced sense of touch</li>
+                    <li>Maybe some yawning</li>
+                    <li>Everything feels more tactile and interesting</li>
+                </ul>
+
+                <p><strong>Visual changes:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                    <li>Colors become more vibrant and saturated</li>
+                    <li>Patterns in textures (wood grain, carpet) seem to move or breathe</li>
+                    <li>Mild geometric patterns with eyes closed</li>
+                    <li>Enhanced appreciation for nature and art</li>
+                    <li>NOT like cartoon hallucinations - you won't see things that aren't there</li>
+                </ul>
+
+                <p><strong>Mental/emotional:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 30px; line-height: 2;">
+                    <li>Sense of wonder and childlike curiosity</li>
+                    <li>Thoughts flowing differently - creative connections</li>
+                    <li>Laughing at things that aren't usually funny</li>
+                    <li>Feeling connected to people/nature</li>
+                    <li>Maybe some introspective realizations</li>
+                    <li>Sense that everything is profoundly meaningful</li>
+                </ul>
+
+                <p><strong>Duration: 4-6 hours</strong> from dose to mostly back to normal.</p>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Managing Expectations</div>
+                    <div class="tip-content">
+                        At a beginner dose, you'll be surprised how "normal" you still feel. You won't lose touch with reality. You'll know you took mushrooms. You can have conversations. It's intense but manageable - that's the point. Higher doses are where things get wild.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common First-Timer Mistakes -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🚫</span>
+                <h2 class="section-title">Common First-Timer Mistakes</h2>
+            </div>
+            <div class="section-content">
+                <p>Learn from others' mistakes:</p>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Taking Too Much</div>
+                    <div class="mistake-desc">Ego says "I can handle it." But intensity isn't the goal. Start low. You can always go higher next time. Too much your first time can be traumatic and turn you off psychedelics forever.</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Not Having a Sitter</div>
+                    <div class="mistake-desc">"I'll be fine alone." Maybe. But what if you're not? Having a trusted person there eliminates 90% of potential bad experiences. First-timers NEED a sitter. Non-negotiable.</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Bad Setting</div>
+                    <div class="mistake-desc">Tripping at a party, in public, or somewhere you might be interrupted. Your first time should be in a safe, comfortable, private space. Save adventures for later.</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Fighting the Experience</div>
+                    <div class="mistake-desc">Trying to stay in control, resisting the effects, panicking when things get weird. Surrender is key. If you fight it, you'll have a hard time. Let go and flow with it.</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">No Preparation</div>
+                    <div class="mistake-desc">Just winging it without research, planning, or supplies. Preparation reduces anxiety. Read this guide, get your space ready, have everything you need. Don't improvise your first time.</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Mixing Substances</div>
+                    <div class="mistake-desc">Adding alcohol, weed, or other drugs to the mix. Keep it pure your first time. Learn how mushrooms affect YOU before adding variables. Alcohol dulls the experience anyway.</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Ignoring Set and Setting</div>
+                    <div class="mistake-desc">Going in with a bad mindset or in a chaotic environment. Your mental state and surroundings MASSIVELY impact the experience. Wait for the right time and place.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">❓</span>
+                <h2 class="section-title">First-Timer FAQ</h2>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question">Will I lose control and do something crazy?</div>
+                    <div class="faq-answer">At a beginner dose? No. You'll be conscious and aware. You might feel silly or emotional, but you won't lose your mind. That's Hollywood nonsense. You can still think, talk, and make decisions.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I die from mushrooms?</div>
+                    <div class="faq-answer">Psilocybin itself has an extremely high safety profile - there's never been a documented fatal overdose from psilocybin alone. The lethal dose is hundreds of times higher than an active dose. The real risks are behavioral (doing something unsafe while tripping) or mixing with other substances. This is why you need a sitter.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What if I have a bad trip?</div>
+                    <div class="faq-answer">With proper preparation, good set/setting, a beginner dose, and a sitter, bad trips are rare. If you do have difficult moments (more likely), they pass. Breathe, surrender, change the music, talk to your sitter. It's temporary. Read our Safety guide for de-escalation techniques.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Will it change me permanently?</div>
+                    <div class="faq-answer">Psychedelics can shift perspectives, but you're still you. Many report positive lasting changes - more appreciation for life, less anxiety, better relationships. But you won't become a different person. Integration (journaling, processing) helps make changes stick.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do I know my mushrooms are real/safe?</div>
+                    <div class="faq-answer">Ideally, know your source. Psilocybin mushrooms have distinctive features (blue bruising, purple-brown spore prints). If uncertain, start with a very small amount to test. There are also test kits available. Never buy random mushrooms from strangers.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I work/drive the next day?</div>
+                    <div class="faq-answer">Clear your schedule for the day after too. You'll likely feel fine but might be emotionally sensitive or tired. Don't plan anything important. Give yourself integration time.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do I need to fast before?</div>
+                    <div class="faq-answer">Not required, but eating light or fasting 4-6 hours reduces nausea. Empty stomach = faster onset, possibly more intensity. Light stomach = gentler come-up. Your choice.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Your First Trip Checklist -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2 class="section-title">First Trip Checklist</h2>
+            </div>
+            <div class="section-content">
+                <p>Before you take mushrooms, make sure you have:</p>
+
+                <ul style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                    <li>✓ Read this entire guide</li>
+                    <li>✓ Read the Preparation guide</li>
+                    <li>✓ Chosen a beginner-friendly strain (Golden Teacher, B+, or Mazatapec)</li>
+                    <li>✓ Measured out 1-1.5 grams (use a scale)</li>
+                    <li>✓ Confirmed a trusted sitter is available</li>
+                    <li>✓ Cleared your schedule (day of + day after)</li>
+                    <li>✓ Prepared your space (comfortable, safe, private)</li>
+                    <li>✓ Made a 6-8 hour music playlist</li>
+                    <li>✓ Gathered supplies (water, blankets, snacks, journal)</li>
+                    <li>✓ Checked you're in a good mental state</li>
+                    <li>✓ Set an intention (optional but recommended)</li>
+                    <li>✓ Told yourself you'll surrender and trust the process</li>
+                </ul>
+
+                <p style="margin-top: 30px;"><strong>All checked? You're ready. Take a deep breath. You've got this. 🍄</strong></p>
+            </div>
+        </div>
+
+        <!-- Sources -->
+        <div class="sources">
+            <h3 class="sources-title">Sources & Further Reading</h3>
+            
+            <div class="source">
+                <div class="source-title">Johns Hopkins Psilocybin Research</div>
+                <a href="https://hopkinspsychedelic.org" target="_blank" class="source-link">hopkinspsychedelic.org - Clinical research on safe dosing protocols</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">MAPS - First Time Guide</div>
+                <a href="https://maps.org" target="_blank" class="source-link">maps.org - Evidence-based beginner information</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">The Third Wave - Beginner's Guide</div>
+                <a href="https://thethirdwave.co/psychedelics/shrooms" target="_blank" class="source-link">thethirdwave.co - Comprehensive first-timer resources</a>
+            </div>
+
+            <div class="source">
+                <div class="source-title">Psilocybin Safety Profile</div>
+                <div class="source-link">Johnson, M. W., Griffiths, R. R., et al. (2008). "Human hallucinogen research: guidelines for safety." Journal of Psychopharmacology - Established that psilocybin has one of the highest safety profiles of any psychoactive substance</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
