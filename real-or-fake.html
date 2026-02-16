@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real or Fake Strain Names? 🤔</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --green: #10B981;
+            --red: #EF4444;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(251, 191, 36, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 15px 30px;
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            color: var(--lime);
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .strain-name {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 6vw, 4rem);
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 30px 0;
+            line-height: 1.2;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .game-button {
+            padding: 20px 40px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            min-width: 180px;
+        }
+
+        .game-button.real {
+            background: linear-gradient(135deg, var(--lime), var(--green));
+        }
+
+        .game-button.fake {
+            background: linear-gradient(135deg, var(--orange), var(--red));
+        }
+
+        .game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+        }
+
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .result-overlay.show {
+            display: flex;
+        }
+
+        .result-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            max-width: 500px;
+            border: 3px solid;
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-content.correct {
+            border-color: var(--green);
+        }
+
+        .result-content.wrong {
+            border-color: var(--red);
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .result-text {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .result-text.correct {
+            color: var(--green);
+        }
+
+        .result-text.wrong {
+            color: var(--red);
+        }
+
+        .result-details {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .continue-btn {
+            padding: 15px 40px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .game-over {
+            display: none;
+            text-align: center;
+        }
+
+        .game-over.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .game-over-title {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .final-score {
+            font-family: 'Righteous', cursive;
+            font-size: 5rem;
+            color: var(--lime);
+            margin: 30px 0;
+        }
+
+        .game-over-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .play-again-btn {
+            padding: 20px 50px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--lime), var(--green));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-again-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(132, 204, 22, 0.5);
+        }
+
+        .start-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .start-title {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .start-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            padding: 20px 50px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .game-card {
+                padding: 40px 25px;
+            }
+
+            .strain-name {
+                font-size: 2rem;
+                min-height: 80px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .game-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <div class="container">
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <h1 class="start-title">Real or Fake Strain Names? 🤔</h1>
+            <p class="start-description">
+                Some strain names are so ridiculous they sound fake. Others are completely made up. Can you tell the difference? 
+                Test your cannabis knowledge and try not to laugh at how absurd some of these real names are.
+            </p>
+            <button class="start-btn" onclick="startGame()">Let's Play! 🌿</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="hidden">
+            <header>
+                <h1>Real or Fake? 🤔</h1>
+                <p class="subtitle">Is this a real strain name?</p>
+            </header>
+
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="score-label">Current Streak</div>
+                    <div class="score-value" id="currentScore">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Best Streak</div>
+                    <div class="score-value" id="highScore">0</div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="strain-name" id="strainName"></div>
+                
+                <div class="button-group">
+                    <button class="game-button real" onclick="makeGuess(true)">
+                        ✓ REAL
+                    </button>
+                    <button class="game-button fake" onclick="makeGuess(false)">
+                        ✗ FAKE
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div class="game-over" id="gameOver">
+            <h2 class="game-over-title">Game Over! 😂</h2>
+            <div class="final-score" id="finalScore">0</div>
+            <p class="game-over-text" id="gameOverMessage"></p>
+            <button class="play-again-btn" onclick="startGame()">Play Again 🔄</button>
+        </div>
+    </div>
+
+    <!-- Result Overlay -->
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-content" id="resultContent">
+            <div class="result-icon" id="resultIcon"></div>
+            <h2 class="result-text" id="resultText"></h2>
+            <p class="result-details" id="resultDetails"></p>
+            <button class="continue-btn" onclick="nextRound()">Continue →</button>
+        </div>
+    </div>
+
+    <script>
+        const strains = [
+            // REAL strains (these are all 100% real)
+            { name: "Cat Piss", isReal: true, fact: "Yes, really. It's sativa-dominant and smells exactly like its name." },
+            { name: "Alaskan Thunder Fuck", isReal: true, fact: "Legendary sativa from Alaska's Matanuska Valley. Also called ATF or Matanuska Thunder Fuck." },
+            { name: "Green Crack", isReal: true, fact: "Renamed by Snoop Dogg. Previously called 'Cush' or 'Green Cush'." },
+            { name: "Gorilla Glue", isReal: true, fact: "So sticky it was named after the adhesive. Now called GG4 for legal reasons." },
+            { name: "Girl Scout Cookies", isReal: true, fact: "One of the most popular strains ever. Not affiliated with actual Girl Scouts." },
+            { name: "Granddaddy Purple", isReal: true, fact: "Classic indica with purple buds. Created by Ken Estes in 2003." },
+            { name: "Hippie Chicken", isReal: true, fact: "Rare strain from the 1970s. Yes, someone really named it that." },
+            { name: "Purple Monkey Balls", isReal: true, fact: "A real strain. Growers have no shame naming these things." },
+            { name: "Unicorn Poop", isReal: true, fact: "Bred by ThugPug Genetics. Because why not?" },
+            { name: "Obama Kush", isReal: true, fact: "Named after the 44th president. Created in Michigan." },
+            { name: "Bruce Banner", isReal: true, fact: "Named after the Hulk's alter ego. Incredibly potent hybrid." },
+            { name: "Death Star", isReal: true, fact: "Star Wars-inspired indica. That's no moon..." },
+            { name: "ChemDawg", isReal: true, fact: "One of the most influential strains. Parent of OG Kush and Sour Diesel." },
+            { name: "AK-47", isReal: true, fact: "Award-winning strain. Named for its one-hit-wonder potency, not violence." },
+            { name: "WiFi OG", isReal: true, fact: "Named White Fire OG. Abbreviated to WiFi. Clever marketing." },
+            { name: "Jesus OG", isReal: true, fact: "Supposedly so good it's divine. Created in California." },
+            { name: "Lamb's Bread", isReal: true, fact: "Bob Marley's favorite strain. Also called Lamb's Breath." },
+            { name: "Trainwreck", isReal: true, fact: "Legend says it was named after growers had to move plants due to a nearby train crash." },
+            { name: "Golden Goat", isReal: true, fact: "Accidentally created in Kansas. Happy little accident." },
+            { name: "Strawberry Cough", isReal: true, fact: "Makes you cough but tastes like strawberries. Fair trade." },
+            { name: "Alaskan Ice", isReal: true, fact: "Won Cannabis Cup. Not actually made of ice." },
+            { name: "Afgoo", isReal: true, fact: "Short for 'Afghan Goo'. Sticky and sedating." },
+            { name: "Cat's Meow", isReal: true, fact: "Real strain with a weird name. Cats were not consulted." },
+            { name: "Chernobyl", isReal: true, fact: "Named after the nuclear disaster. Glows green but not radioactive." },
+            { name: "Brain Damage", isReal: true, fact: "Real strain. Ironically, cannabis doesn't cause brain damage." },
+            
+            // FAKE strains (completely made up)
+            { name: "Dragon's Breath", isReal: false, fact: "Made up! Though it sounds cool enough to be real." },
+            { name: "Wizard's Whisper", isReal: false, fact: "Fake! But we might start seeing it after this game." },
+            { name: "Presidential Kush", isReal: false, fact: "Not real! Though Obama Kush, Reagan OG, and Trump OG all exist." },
+            { name: "Cosmic Brownie", isReal: false, fact: "Fake! But someone should make this asap." },
+            { name: "Velvet Thunder", isReal: false, fact: "Made up! Sounds like an 80s hair metal band." },
+            { name: "Sasquatch Sweat", isReal: false, fact: "Fake! Though with names like Cat Piss, who knows anymore." },
+            { name: "Ninja Turtles", isReal: false, fact: "Not real! But there is a strain called Turtle Power." },
+            { name: "Unicorn Tears", isReal: false, fact: "Fake! But Unicorn Poop is real. Go figure." },
+            { name: "Electric Lettuce", isReal: false, fact: "Made up! Though it's a common slang term for weed." },
+            { name: "Grandma's Cookies", isReal: false, fact: "Fake! But Girl Scout Cookies is very real." },
+            { name: "Moon Rocks OG", isReal: false, fact: "Not a strain! Moon Rocks are bud dipped in hash oil and kief." },
+            { name: "Bigfoot's Breath", isReal: false, fact: "Fake! Though Lamb's Breath (Marley's favorite) is real." },
+            { name: "Phoenix Rising", isReal: false, fact: "Made up! Sounds like it should be in a fantasy game." },
+            { name: "Sherlock's Delight", isReal: false, fact: "Fake! Though Sherlock Holmes definitely would have enjoyed some strains." },
+            { name: "Gandalf's Pipe", isReal: false, fact: "Not real! Though Tolkien allegedly based pipe-weed on tobacco, not cannabis." },
+            { name: "Mermaid Scales", isReal: false, fact: "Fake! But honestly, it fits right in with real names." },
+            { name: "Polar Bear Paws", isReal: false, fact: "Made up! Though Grizzly's Breath is a real strain." },
+            { name: "Thunder Lizard", isReal: false, fact: "Not real! But sounds metal enough to exist." },
+            { name: "Alien Autopsy", isReal: false, fact: "Fake! Though Alien OG and Alien Dawg are both real." },
+            { name: "Captain's Log", isReal: false, fact: "Made up! Star Trek fans, make this happen." },
+            { name: "Pirate's Booty", isReal: false, fact: "Fake! The snack is real though." },
+            { name: "Yeti Sweat", isReal: false, fact: "Not real! Sounds gross but so does Cat Piss (which IS real)." },
+            { name: "Buddha's Hand", isReal: false, fact: "Fake! Though Buddha's Sister is a real strain." },
+            { name: "Ninja Assassin", isReal: false, fact: "Made up! But Killer Queen and Agent Orange are real." },
+            { name: "Wizard of Oz", isReal: false, fact: "Not a strain! Though there's a strain called Emerald OG." }
+        ];
+
+        let currentScore = 0;
+        let highScore = localStorage.getItem('realFakeHighScore') || 0;
+        let usedStrains = [];
+        let currentStrain = null;
+
+        document.getElementById('highScore').textContent = highScore;
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameOver').classList.remove('show');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            
+            currentScore = 0;
+            usedStrains = [];
+            document.getElementById('currentScore').textContent = currentScore;
+            
+            loadNewStrain();
+        }
+
+        function getRandomStrain() {
+            const available = strains.filter(s => !usedStrains.includes(s.name));
+            if (available.length === 0) {
+                usedStrains = [];
+                return strains[Math.floor(Math.random() * strains.length)];
+            }
+            return available[Math.floor(Math.random() * available.length)];
+        }
+
+        function loadNewStrain() {
+            currentStrain = getRandomStrain();
+            usedStrains.push(currentStrain.name);
+            document.getElementById('strainName').textContent = currentStrain.name;
+        }
+
+        function makeGuess(guessedReal) {
+            const isCorrect = guessedReal === currentStrain.isReal;
+            showResult(isCorrect);
+        }
+
+        function showResult(isCorrect) {
+            const overlay = document.getElementById('resultOverlay');
+            const content = document.getElementById('resultContent');
+            const icon = document.getElementById('resultIcon');
+            const text = document.getElementById('resultText');
+            const details = document.getElementById('resultDetails');
+
+            if (isCorrect) {
+                currentScore++;
+                document.getElementById('currentScore').textContent = currentScore;
+                
+                if (currentScore > highScore) {
+                    highScore = currentScore;
+                    localStorage.setItem('realFakeHighScore', highScore);
+                    document.getElementById('highScore').textContent = highScore;
+                }
+
+                content.className = 'result-content correct';
+                icon.textContent = '🎉';
+                text.textContent = 'CORRECT!';
+                text.className = 'result-text correct';
+                details.textContent = currentStrain.fact;
+            } else {
+                content.className = 'result-content wrong';
+                icon.textContent = '😂';
+                text.textContent = 'NOPE!';
+                text.className = 'result-text wrong';
+                details.textContent = currentStrain.fact;
+            }
+
+            overlay.classList.add('show');
+
+            if (!isCorrect) {
+                setTimeout(() => {
+                    overlay.classList.remove('show');
+                    endGame();
+                }, 3000);
+            }
+        }
+
+        function nextRound() {
+            document.getElementById('resultOverlay').classList.remove('show');
+            loadNewStrain();
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('gameOver').classList.add('show');
+            document.getElementById('finalScore').textContent = currentScore;
+
+            let message = '';
+            if (currentScore === 0) {
+                message = "Yikes! These names are wild, huh? Try again! 😅";
+            } else if (currentScore < 5) {
+                message = "Not bad! Some of these real names are absolutely ridiculous. 🌿";
+            } else if (currentScore < 10) {
+                message = "Nice work! You know your strains pretty well. 🔥";
+            } else if (currentScore < 15) {
+                message = "Damn! You're a cannabis naming expert! 🏆";
+            } else {
+                message = "LEGENDARY! You can't be fooled by fake strain names! 👑";
+            }
+
+            document.getElementById('gameOverMessage').textContent = message;
+        }
+    </script>
+</body>
+</html>

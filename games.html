@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - High IQ 🎮</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 50%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(139, 92, 246, 0.1) 0%, 
+                rgba(236, 72, 153, 0.1) 25%,
+                rgba(6, 182, 212, 0.1) 50%,
+                rgba(132, 204, 22, 0.1) 75%,
+                rgba(251, 191, 36, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            display: block;
+            border: 3px solid;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .game-card.higher-lower {
+            border-color: var(--lime);
+        }
+
+        .game-card.higher-lower:hover {
+            box-shadow: 0 30px 80px rgba(132, 204, 22, 0.4),
+                        inset 0 0 0 2px var(--lime);
+        }
+
+        .game-card.real-fake {
+            border-color: var(--yellow);
+        }
+
+        .game-card.real-fake:hover {
+            box-shadow: 0 30px 80px rgba(251, 191, 36, 0.4),
+                        inset 0 0 0 2px var(--yellow);
+        }
+
+        .game-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .game-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .game-card.higher-lower .game-title {
+            background: linear-gradient(135deg, var(--lime), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-card.real-fake .game-title {
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 25px;
+        }
+
+        .game-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .meta-badge {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .game-card.higher-lower .meta-badge {
+            border-color: rgba(132, 204, 22, 0.4);
+            background: rgba(132, 204, 22, 0.1);
+            color: var(--lime);
+        }
+
+        .game-card.real-fake .meta-badge {
+            border-color: rgba(251, 191, 36, 0.4);
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--yellow);
+        }
+
+        .game-button {
+            display: inline-block;
+            padding: 15px 40px;
+            font-family: 'Righteous', cursive;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .game-card.higher-lower .game-button {
+            background: linear-gradient(135deg, var(--lime), var(--green));
+            box-shadow: 0 10px 30px rgba(132, 204, 22, 0.4);
+        }
+
+        .game-card.real-fake .game-button {
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.4);
+        }
+
+        .game-card:hover .game-button {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-card {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <div class="container">
+        <header>
+            <h1>Games 🎮</h1>
+            <p class="subtitle">Test your cannabis knowledge with these fun games!</p>
+        </header>
+
+        <div class="games-grid">
+            <!-- Higher or Lower Game -->
+            <a href="higher-lower.html" class="game-card higher-lower">
+                <span class="game-icon">📈</span>
+                <h2 class="game-title">Higher or Lower: THC</h2>
+                <p class="game-description">
+                    Two strains. One mission. Guess if the mystery strain has higher or lower THC%. How many can you get right in a row?
+                </p>
+                <div class="game-meta">
+                    <span class="meta-badge">🌿 50 Strains</span>
+                    <span class="meta-badge">⚡ Quick Rounds</span>
+                    <span class="meta-badge">🏆 Track High Score</span>
+                </div>
+                <span class="game-button">Play Now →</span>
+            </a>
+
+            <!-- Real or Fake Game -->
+            <a href="real-or-fake.html" class="game-card real-fake">
+                <span class="game-icon">🤔</span>
+                <h2 class="game-title">Real or Fake Strain Names?</h2>
+                <p class="game-description">
+                    Some strain names are hilariously absurd. But are they real? Test your knowledge and prepare to laugh at how ridiculous some real names are.
+                </p>
+                <div class="game-meta">
+                    <span class="meta-badge">😂 50 Names</span>
+                    <span class="meta-badge">🎯 True/False</span>
+                    <span class="meta-badge">🤯 Mind-Blowing Facts</span>
+                </div>
+                <span class="game-button">Play Now →</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
