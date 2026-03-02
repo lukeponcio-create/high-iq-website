@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHB / GBL — High IQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Space Mono', monospace;
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            z-index: 100;
+        }
+        .back-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            background: linear-gradient(180deg, color-mix(in srgb, #fbbf24 6%, transparent) 0%, transparent 100%);
+        }
+        .hero-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .hero-top {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .hero-icon {
+            font-size: 3rem;
+            width: 72px; height: 72px;
+            background: color-mix(in srgb, #fbbf24 15%, transparent);
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            color: #fbbf24;
+            letter-spacing: 0.03em;
+            line-height: 1;
+        }
+        .hero-aka {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+        .hero-tagline {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.6);
+            max-width: 620px;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .meta-pill {
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .safe-low { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+        .safe-mod { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+        .safe-high { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+        .safe-critical { background: rgba(239,68,68,0.25); color: #ef4444; border: 1px solid rgba(239,68,68,0.5); }
+        .meta-neutral { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.1); }
+
+        /* Main layout */
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 52px 32px 120px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .full { grid-column: 1 / -1; }
+
+        /* Section cards */
+        .section-card {
+            background: #0f0f18;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            padding: 28px;
+        }
+        .section-card:hover { border-color: rgba(255,255,255,0.12); }
+        .section-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #fbbf24;
+            opacity: 0.8;
+            margin-bottom: 14px;
+        }
+        .section-text {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.85;
+        }
+
+        /* Dose table */
+        .dose-table { width: 100%; border-collapse: collapse; }
+        .dose-tier-cell {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.3);
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            width: 30%;
+        }
+        .dose-amt-cell {
+            font-size: 0.88rem;
+            color: #fff;
+            font-weight: 700;
+            padding: 9px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .dose-note-cell {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.35);
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            text-align: right;
+        }
+        tr:last-child td { border-bottom: none; }
+
+        /* Tips */
+        .tip-row {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .tip-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .tip-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+        .tip-title {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .tip-desc {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.65;
+        }
+
+        /* Withdrawal */
+        .withdrawal-card {
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.25);
+            border-radius: 14px;
+            padding: 28px;
+            grid-column: 1 / -1;
+        }
+        .withdrawal-card .section-label { color: #fca5a5; opacity: 1; }
+        .withdrawal-text {
+            font-size: 0.85rem;
+            color: #fca5a5;
+            line-height: 1.8;
+            opacity: 0.85;
+        }
+
+        @media (max-width: 700px) {
+            .main { grid-template-columns: 1fr; }
+            .full { grid-column: 1; }
+            .withdrawal-card { grid-column: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="depressants.html" class="back-btn">← Depressants</a>
+
+    <div class="hero">
+        <div class="hero-inner">
+            <div class="hero-eyebrow">High IQ · Depressants · Substance Guide</div>
+            <div class="hero-top">
+                <div class="hero-icon">💛</div>
+                <h1>GHB / GBL</h1>
+            </div>
+            <div class="hero-aka">Gamma-Hydroxybutyrate · Liquid Ecstasy · G</div>
+            <div class="hero-tagline">An endogenous neurotransmitter with a recreational dose window so narrow it has killed people at amounts barely above the recreational range. The no-alcohol rule is absolute.</div>
+            <div class="hero-meta">
+                <span class="meta-pill safe-critical">Critical Risk</span>
+                <span class="meta-pill meta-neutral">Onset: 20–45 min (slow — the main redose trap)</span>
+                <span class="meta-pill meta-neutral">Duration: 1.5–3 hours</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div class="section-card full">
+            <div class="section-label">How It Works</div>
+            <div class="section-text">GHB is actually produced naturally in the human brain in small amounts. Recreationally, it acts primarily on GABA-B receptors (similar to baclofen) and dedicated GHB receptors. At 1–2g it produces euphoria, reduced inhibition, and increased sociability. At 3–4g it causes heavy sedation and memory loss. At 4g+ it causes unconsciousness. The danger is that this entire spectrum spans less than 2–3g — a difference measurable in drops of liquid GBL.</div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-label">Dosing</div>
+            <table class="dose-table">
+                
+                <tr>
+                    <td class="dose-tier-cell">Threshold</td>
+                    <td class="dose-amt-cell">0.5–1g</td>
+                    <td class="dose-note-cell">Mild relaxation, warmth</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">Recreational</td>
+                    <td class="dose-amt-cell">1–2.5g</td>
+                    <td class="dose-note-cell">Euphoria, sociability, disinhibition</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">Strong</td>
+                    <td class="dose-amt-cell">2.5–4g</td>
+                    <td class="dose-note-cell">Heavy sedation, memory impairment</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">Overdose zone</td>
+                    <td class="dose-amt-cell">4g+</td>
+                    <td class="dose-note-cell">Unconsciousness, vomiting, respiratory risk</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">GBL equiv.</td>
+                    <td class="dose-amt-cell">~0.75x GHB dose</td>
+                    <td class="dose-note-cell">More potent, faster onset — dose lower</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="section-label">Dangerous Interactions</div>
+            
+            <div class="interaction-row" style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">☠️</span>
+                    <div>
+                        <div style="color:#ef4444; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Alcohol — NEVER</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Even 1–2 drinks exponentially increases OD risk. Responsible for the majority of GHB-related deaths. This is not a 'be careful' situation — it's a hard no.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">☠️</span>
+                    <div>
+                        <div style="color:#ef4444; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Benzos</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Triply sedating. Respiratory arrest risk.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">☠️</span>
+                    <div>
+                        <div style="color:#ef4444; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Opioids</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Severe CNS depression. Fatal combinations have occurred at doses that would be safe separately.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">☠️</span>
+                    <div>
+                        <div style="color:#ef4444; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Ketamine</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Both dissociative/sedating. Unpredictable and dangerous interaction.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">⚠️</span>
+                    <div>
+                        <div style="color:#fbbf24; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">MDMA</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Popular combination but MDMA masks GHB's warning signs — you may not realize you're approaching overdose.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card full">
+            <div class="section-label">Harm Reduction Tips</div>
+            
+            <div class="tip-row">
+                <div class="tip-icon">⚖️</div>
+                <div>
+                    <div class="tip-title">Weigh every dose</div>
+                    <div class="tip-desc">Use a precise scale or oral syringe. Never eyeball GHB/GBL — concentration varies and the margin for error is measured in fractions of a ml.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">⏱️</div>
+                <div>
+                    <div class="tip-title">2-hour redose timer</div>
+                    <div class="tip-desc">Set it before you take the first dose. GHB's slow onset causes people to redose thinking it's not working — then both doses hit simultaneously.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">🏷️</div>
+                <div>
+                    <div class="tip-title">Label everything</div>
+                    <div class="tip-desc">People have accidentally drunk GHB thinking it was water. Every container, always.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">👥</div>
+                <div>
+                    <div class="tip-title">Never use alone</div>
+                    <div class="tip-desc">If someone loses consciousness, put them in the recovery position and monitor breathing. Call 911 if breathing slows.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">🚫</div>
+                <div>
+                    <div class="tip-title">Zero alcohol rule</div>
+                    <div class="tip-desc">The interaction is exponential not additive. Not 'less alcohol' — zero alcohol on GHB nights.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="withdrawal-card">
+            <div class="section-label">Withdrawal</div>
+            <div class="withdrawal-text">SEVERE: GHB withdrawal in daily heavy users can be worse than alcohol withdrawal — psychosis, severe anxiety, tremors, and potentially fatal seizures. Daily use for weeks creates physical dependence. Medical detox is essential. This is one of the most dangerous drug withdrawals that exists.</div>
+        </div>
+
+        <div class="section-card full">
+            <div class="section-label">Addiction & Dependence</div>
+            <div class="section-text">GHB's short duration (1.5–3 hrs) means heavy users need to dose every few hours including through the night, which rapidly leads to physical dependence. The combination of high addiction potential, narrow dose window, and severe withdrawal makes GHB one of the highest-risk recreational drugs available.</div>
+        </div>
+
+    </div>
+
+</body>
+</html>

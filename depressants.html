@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depressants — High IQ 🧠</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0f;
+            --card: #0f0f18;
+            --border: rgba(255,255,255,0.08);
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--bg);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            z-index: 100;
+        }
+        .back-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 80px 24px 120px;
+        }
+
+        header {
+            margin-bottom: 56px;
+        }
+
+        .header-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(4rem, 12vw, 8rem);
+            line-height: 0.88;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+
+        h1 .line1 { color: rgba(255,255,255,0.9); }
+        h1 .line2 {
+            background: linear-gradient(90deg, #818cf8, #a78bfa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-sub {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.35);
+            max-width: 480px;
+            line-height: 1.8;
+        }
+
+        /* combo warning */
+        .combo-warning {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.25);
+            border-radius: 8px;
+            margin-bottom: 52px;
+            font-size: 0.75rem;
+            color: #fca5a5;
+            letter-spacing: 0.03em;
+        }
+
+        /* Grid of cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        /* Each substance card */
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Colored top bar */
+        .card-bar {
+            height: 4px;
+            width: 100%;
+        }
+
+        .card-main {
+            padding: 24px;
+        }
+
+        /* Top row: icon + name + safety badge */
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .card-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.9rem;
+            letter-spacing: 0.04em;
+            line-height: 1;
+            flex: 1;
+        }
+
+        .safety-badge {
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .safe-low { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+        .safe-mod { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+        .safe-high { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+        .safe-critical { background: rgba(239,68,68,0.25); color: #ef4444; border: 1px solid rgba(239,68,68,0.5); }
+
+        /* Quick stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            padding: 10px 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.3;
+        }
+
+        /* Dose strip */
+        .dose-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .dose-cell {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 9px 8px;
+            text-align: center;
+        }
+
+        .dose-tier {
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 4px;
+        }
+
+        .dose-amt {
+            font-size: 0.82rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Danger combos */
+        .combos {
+            margin-bottom: 18px;
+        }
+
+        .combos-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 8px;
+        }
+
+        .combo-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .combo-pill {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .danger-pill { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+        .caution-pill { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+
+        /* #1 tip */
+        .tip-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid rgba(255,255,255,0.15);
+            border-radius: 0 8px 8px 0;
+            padding: 11px 14px;
+            font-size: 0.76rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .tip-box strong { color: rgba(255,255,255,0.8); }
+
+        /* Expand button */
+        .expand-btn {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 9px;
+            color: rgba(255,255,255,0.3);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .expand-btn:hover {
+            color: rgba(255,255,255,0.7);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* Expanded section */
+        .expanded {
+            display: none;
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .card.open .expanded { display: block; }
+        .card.open .expand-btn::after { content: ' ▲'; }
+        .expand-btn::after { content: ' ▼'; }
+
+        .exp-section { margin-bottom: 18px; }
+
+        .exp-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 8px;
+        }
+
+        .exp-text {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+        }
+
+        .withdrawal-box {
+            padding: 12px 16px;
+            background: rgba(239,68,68,0.07);
+            border: 1px solid rgba(239,68,68,0.2);
+            border-radius: 8px;
+            font-size: 0.76rem;
+            color: #fca5a5;
+            line-height: 1.7;
+        }
+
+        .withdrawal-box strong { color: #ef4444; }
+
+        .good-box {
+            padding: 12px 16px;
+            background: rgba(34,197,94,0.06);
+            border: 1px solid rgba(34,197,94,0.15);
+            border-radius: 8px;
+            font-size: 0.76rem;
+            color: #86efac;
+            line-height: 1.7;
+        }
+
+        /* color themes per card */
+        .c-alcohol { --accent: #60a5fa; }
+        .c-kratom  { --accent: #4ade80; }
+        .c-ghb     { --accent: #fbbf24; }
+        .c-benzo   { --accent: #c084fc; }
+        .c-phenibut{ --accent: #f87171; }
+        .c-kava    { --accent: #2dd4bf; }
+
+        .card { border-top: 3px solid var(--accent, rgba(255,255,255,0.1)); }
+        .card:hover { border-color: var(--accent, rgba(255,255,255,0.3)); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+        .card-icon { background: color-mix(in srgb, var(--accent) 15%, transparent); }
+        .card-name { color: var(--accent); }
+        .tip-box { border-left-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+
+        @media (max-width: 600px) {
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← Back</a>
+
+    <div class="container">
+        <header>
+            <div class="header-eyebrow">High IQ · Harm Reduction</div>
+            <h1>
+                <span class="line1">DOWN</span><br>
+                <span class="line2">WARDS</span>
+            </h1>
+            <p class="header-sub">CNS depressants — what they do, how much, and what'll ruin your night (or worse).</p>
+        </header>
+
+        <div class="combo-warning">
+            ⚠️ &nbsp;<strong>Mixing two depressants can stop your breathing.</strong> Alcohol + benzos, alcohol + opioids, GHB + anything. Read the combos section on each card.
+        </div>
+
+        <div class="cards-grid">
+
+            <!-- ALCOHOL -->
+            <div class="card c-alcohol" onclick="location.href='depressants-alcohol.html'" style="cursor:pointer">
+                <div class="card-main">
+                    <div class="card-top">
+                        <div class="card-icon">🍺</div>
+                        <div class="card-name">Alcohol</div>
+                        <span class="safety-badge safe-high">High Risk</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">Addiction</div>
+                            <div class="stat-value">High</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Withdrawal</div>
+                            <div class="stat-value" style="color:#f87171">Can Kill</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Hangover</div>
+                            <div class="stat-value">Brutal</div>
+                        </div>
+                    </div>
+
+                    <div class="dose-strip">
+                        <div class="dose-cell"><div class="dose-tier">Buzz</div><div class="dose-amt">1–2 drinks</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Drunk</div><div class="dose-amt">4–6 drinks</div></div>
+                        <div class="dose-cell"><div class="dose-cell-inner"><div class="dose-tier">Blackout</div><div class="dose-amt" style="color:#f87171">8+</div></div></div>
+                    </div>
+
+                    <div class="combos">
+                        <div class="combos-label">☠ Never mix with</div>
+                        <div class="combo-pills">
+                            <span class="combo-pill danger-pill">Benzos</span>
+                            <span class="combo-pill danger-pill">Opioids</span>
+                            <span class="combo-pill danger-pill">GHB</span>
+                            <span class="combo-pill caution-pill">Coke (masks drunk)</span>
+                        </div>
+                    </div>
+
+                    <div class="tip-box"><strong>#1 tip:</strong> One water per drink. B1 + NAC before bed cuts hangover in half.</div>
+
+                    <button class="expand-btn" onclick="toggle(this)">More info</button>
+                </div>
+                <div class="expanded">
+                    <div class="exp-section">
+                        <div class="exp-label">How it works</div>
+                        <div class="exp-text">Boosts GABA (inhibitory) and suppresses glutamate (excitatory). Brain physically adapts to this — which is why stopping suddenly after heavy daily use causes seizures.</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-label">Hangover help</div>
+                        <div class="exp-text">DHM (dihydromyricetin) before bed, electrolytes on waking, B vitamins. Greasy food is a myth — eat before drinking, not after.</div>
+                    </div>
+                    <div class="withdrawal-box">
+                        <strong>Withdrawal can be fatal.</strong> Heavy daily drinkers who stop cold turkey risk seizures and delirium. Taper slowly or get medical help — do not white-knuckle it.
+                    </div>
+                </div>
+            </div>
+
+            <!-- KRATOM -->
+            <div class="card c-kratom" onclick="location.href='depressants-kratom.html'" style="cursor:pointer">
+                <div class="card-main">
+                    <div class="card-top">
+                        <div class="card-icon">🌿</div>
+                        <div class="card-name">Kratom</div>
+                        <span class="safety-badge safe-mod">Mod Risk</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">Addiction</div>
+                            <div class="stat-value">Moderate</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Withdrawal</div>
+                            <div class="stat-value">Flu-like</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Mechanism</div>
+                            <div class="stat-value">Opioid-like</div>
+                        </div>
+                    </div>
+
+                    <div class="dose-strip">
+                        <div class="dose-cell"><div class="dose-tier">Stimulating</div><div class="dose-amt">1–3g</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Sweet Spot</div><div class="dose-amt">3–5g</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Too Much</div><div class="dose-amt" style="color:#fbbf24">6g+</div></div>
+                    </div>
+
+                    <div class="combos">
+                        <div class="combos-label">☠ Never mix with</div>
+                        <div class="combo-pills">
+                            <span class="combo-pill danger-pill">Other Opioids</span>
+                            <span class="combo-pill danger-pill">Alcohol</span>
+                            <span class="combo-pill caution-pill">Benzos</span>
+                        </div>
+                    </div>
+
+                    <div class="tip-box"><strong>#1 tip:</strong> Max 3x/week. Daily use will create dependence faster than you expect.</div>
+
+                    <button class="expand-btn" onclick="toggle(this)">More info</button>
+                </div>
+                <div class="expanded">
+                    <div class="exp-section">
+                        <div class="exp-label">How it works</div>
+                        <div class="exp-text">Binds mu-opioid receptors — same as heroin and oxycodone, just weaker. Low dose is energizing and focusing. High dose is sedating and euphoric. This dual nature is what makes it popular and dangerous.</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-label">Strains 101</div>
+                        <div class="exp-text">White vein = stimulating. Green vein = balanced. Red vein = sedating/pain relief. Rotate them to slow tolerance buildup.</div>
+                    </div>
+                    <div class="withdrawal-box">
+                        Not life-threatening but genuinely miserable — restless legs, anxiety, insomnia, sweating. Taper slowly rather than stopping cold. Worst of it usually passes in 5–7 days.
+                    </div>
+                </div>
+            </div>
+
+            <!-- GHB -->
+            <div class="card c-ghb" onclick="location.href='depressants-ghb.html'" style="cursor:pointer">
+                <div class="card-main">
+                    <div class="card-top">
+                        <div class="card-icon">💛</div>
+                        <div class="card-name">GHB / GBL</div>
+                        <span class="safety-badge safe-critical">Critical Risk</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">Dose Window</div>
+                            <div class="stat-value" style="color:#ef4444">Tiny</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Onset</div>
+                            <div class="stat-value">20–45 min</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Addiction</div>
+                            <div class="stat-value" style="color:#f87171">Very High</div>
+                        </div>
+                    </div>
+
+                    <div class="dose-strip">
+                        <div class="dose-cell"><div class="dose-tier">Recreational</div><div class="dose-amt">1–2.5g</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Too Much</div><div class="dose-amt" style="color:#fbbf24">3–4g</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Overdose</div><div class="dose-amt" style="color:#ef4444">4g+</div></div>
+                    </div>
+
+                    <div class="combos">
+                        <div class="combos-label">☠ Never mix with</div>
+                        <div class="combo-pills">
+                            <span class="combo-pill danger-pill">Alcohol — EVER</span>
+                            <span class="combo-pill danger-pill">Benzos</span>
+                            <span class="combo-pill danger-pill">Opioids</span>
+                            <span class="combo-pill danger-pill">Ketamine</span>
+                        </div>
+                    </div>
+
+                    <div class="tip-box"><strong>#1 tip:</strong> Onset is slow. Set a 2-hour timer before even thinking about redosing. This is how most ODs happen.</div>
+
+                    <button class="expand-btn" onclick="toggle(this)">More info</button>
+                </div>
+                <div class="expanded">
+                    <div class="exp-section">
+                        <div class="exp-label">Why it's uniquely dangerous</div>
+                        <div class="exp-text">The gap between a good time and unconscious is less than 0.5ml. GBL is even more potent and faster-acting. Always weigh doses — never eyeball. Label every container clearly. People have died drinking it by accident.</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-label">If someone overdoses</div>
+                        <div class="exp-text">Recovery position (on their side). Monitor breathing. Call 911 if breathing slows or stops. GHB overdose looks like deep sleep — do not leave them alone.</div>
+                    </div>
+                    <div class="withdrawal-box">
+                        <strong>GHB withdrawal can be worse than alcohol.</strong> Daily heavy users risk psychosis, seizures, and death on withdrawal. This is not an exaggeration. Medical detox required if physically dependent.
+                    </div>
+                </div>
+            </div>
+
+            <!-- BENZOS -->
+            <div class="card c-benzo" onclick="location.href='depressants-benzos.html'" style="cursor:pointer">
+                <div class="card-main">
+                    <div class="card-top">
+                        <div class="card-icon">💜</div>
+                        <div class="card-name">Benzos</div>
+                        <span class="safety-badge safe-critical">Critical Risk</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">Addiction</div>
+                            <div class="stat-value" style="color:#f87171">Very High</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Withdrawal</div>
+                            <div class="stat-value" style="color:#ef4444">Can Kill</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Street Pills</div>
+                            <div class="stat-value" style="color:#ef4444">Fentanyl Risk</div>
+                        </div>
+                    </div>
+
+                    <div class="dose-strip">
+                        <div class="dose-cell"><div class="dose-tier">Xanax</div><div class="dose-amt">0.25–1mg</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Valium</div><div class="dose-amt">5–15mg</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Street</div><div class="dose-amt" style="color:#ef4444">Test First</div></div>
+                    </div>
+
+                    <div class="combos">
+                        <div class="combos-label">☠ Never mix with</div>
+                        <div class="combo-pills">
+                            <span class="combo-pill danger-pill">Alcohol</span>
+                            <span class="combo-pill danger-pill">Opioids</span>
+                            <span class="combo-pill danger-pill">GHB</span>
+                            <span class="combo-pill caution-pill">Kratom</span>
+                        </div>
+                    </div>
+
+                    <div class="tip-box"><strong>#1 tip:</strong> Any street pressed pill — fentanyl test strip before touching it. Fake Xanax has killed a lot of people.</div>
+
+                    <button class="expand-btn" onclick="toggle(this)">More info</button>
+                </div>
+                <div class="expanded">
+                    <div class="exp-section">
+                        <div class="exp-label">Tolerance timeline</div>
+                        <div class="exp-text">Physical dependence can form in as little as 2 weeks of daily use. Recreational use: max once every 2 weeks, no exceptions. The euphoria fades fast but dependence doesn't.</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-label">Blackout risk</div>
+                        <div class="exp-text">Benzos cause anterograde amnesia — you'll function and seem fine while having zero memory formation. People redose not remembering they already did. Never use alone.</div>
+                    </div>
+                    <div class="withdrawal-box">
+                        <strong>Benzo withdrawal can cause fatal seizures.</strong> If you've been using daily for weeks, do NOT stop cold turkey. Taper with long-acting diazepam (Valium) slowly over months. Protracted withdrawal can last a year+.
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHENIBUT -->
+            <div class="card c-phenibut" onclick="location.href='depressants-phenibut.html'" style="cursor:pointer">
+                <div class="card-main">
+                    <div class="card-top">
+                        <div class="card-icon">🔴</div>
+                        <div class="card-name">Phenibut</div>
+                        <span class="safety-badge safe-critical">Critical Risk</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">Tolerance</div>
+                            <div class="stat-value" style="color:#ef4444">Instant</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Onset</div>
+                            <div class="stat-value">2–4 hours</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Legal?</div>
+                            <div class="stat-value">Yes / OTC</div>
+                        </div>
+                    </div>
+
+                    <div class="dose-strip">
+                        <div class="dose-cell"><div class="dose-tier">Anxiolytic</div><div class="dose-amt">250–500mg</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Recreational</div><div class="dose-amt">750–1500mg</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Too Much</div><div class="dose-amt" style="color:#fbbf24">2000mg+</div></div>
+                    </div>
+
+                    <div class="combos">
+                        <div class="combos-label">☠ Never mix with</div>
+                        <div class="combo-pills">
+                            <span class="combo-pill danger-pill">Alcohol</span>
+                            <span class="combo-pill danger-pill">Benzos</span>
+                            <span class="combo-pill danger-pill">Opioids</span>
+                            <span class="combo-pill caution-pill">GHB</span>
+                        </div>
+                    </div>
+
+                    <div class="tip-box"><strong>#1 tip:</strong> Once per week maximum. This rule is not optional — the dependency trap is one of the fastest of any legal substance.</div>
+
+                    <button class="expand-btn" onclick="toggle(this)">More info</button>
+                </div>
+                <div class="expanded">
+                    <div class="exp-section">
+                        <div class="exp-label">The redose trap</div>
+                        <div class="exp-text">2–4 hour onset means people think it's not working and redose. Then everything hits at once. Set a timer. Do not touch it again until the timer goes off regardless of what you feel.</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-label">The day after</div>
+                        <div class="exp-text">Flat mood, anxiety, low energy for 1–2 days after. This rebound is the brain recalibrating. Do not redose to fix it — that's the start of the dependency spiral.</div>
+                    </div>
+                    <div class="withdrawal-box">
+                        <strong>Withdrawal is brutal and prolonged.</strong> Severe anxiety, insomnia, psychosis, and suicidal ideation reported. The once-per-week rule isn't about being cautious — it's how you actually avoid this outcome.
+                    </div>
+                </div>
+            </div>
+
+            <!-- KAVA -->
+            <div class="card c-kava" onclick="location.href='depressants-kava.html'" style="cursor:pointer">
+                <div class="card-main">
+                    <div class="card-top">
+                        <div class="card-icon">🥥</div>
+                        <div class="card-name">Kava</div>
+                        <span class="safety-badge safe-low">Low Risk</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">Addiction</div>
+                            <div class="stat-value" style="color:#4ade80">Low</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Withdrawal</div>
+                            <div class="stat-value" style="color:#4ade80">Minimal</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Legal?</div>
+                            <div class="stat-value" style="color:#4ade80">Everywhere</div>
+                        </div>
+                    </div>
+
+                    <div class="dose-strip">
+                        <div class="dose-cell"><div class="dose-tier">Mild</div><div class="dose-amt">70–150mg KL</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Good</div><div class="dose-amt">150–300mg KL</div></div>
+                        <div class="dose-cell"><div class="dose-tier">Heavy</div><div class="dose-amt">300mg+ KL</div></div>
+                    </div>
+
+                    <div class="combos">
+                        <div class="combos-label">⚠ Be cautious with</div>
+                        <div class="combo-pills">
+                            <span class="combo-pill danger-pill">Alcohol (liver)</span>
+                            <span class="combo-pill caution-pill">Tylenol</span>
+                            <span class="combo-pill caution-pill">Benzos</span>
+                        </div>
+                    </div>
+
+                    <div class="tip-box"><strong>#1 tip:</strong> Empty stomach only — food kills absorption. If you feel nothing the first time, keep trying on separate days (reverse tolerance is real).</div>
+
+                    <button class="expand-btn" onclick="toggle(this)">More info</button>
+                </div>
+                <div class="expanded">
+                    <div class="exp-section">
+                        <div class="exp-label">How it works</div>
+                        <div class="exp-text">Kavalactones modulate GABA-A receptors and block voltage-gated ion channels. Produces relaxation and mild euphoria without significant respiratory depression — much safer than other depressants. Used ceremonially in Pacific Island cultures for centuries.</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-label">Buying guide</div>
+                        <div class="exp-text">Noble kava strains only. Look for "KL" (kavalactone) content on the label — that's what actually matters. Avoid "tudei" kava which causes harsh side effects.</div>
+                    </div>
+                    <div class="good-box">
+                        Genuinely the safest option on this page. No respiratory depression, no meaningful withdrawal, low addiction potential. Main concern with heavy chronic use is liver enzymes — take breaks and don't combine with alcohol.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggle(btn) { event.stopPropagation();
+            const card = btn.closest('.card');
+            card.classList.toggle('open');
+            btn.textContent = card.classList.contains('open') ? 'Less info ▲' : 'More info ▼';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kava — High IQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Space Mono', monospace;
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            z-index: 100;
+        }
+        .back-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            background: linear-gradient(180deg, color-mix(in srgb, #2dd4bf 6%, transparent) 0%, transparent 100%);
+        }
+        .hero-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .hero-top {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .hero-icon {
+            font-size: 3rem;
+            width: 72px; height: 72px;
+            background: color-mix(in srgb, #2dd4bf 15%, transparent);
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            color: #2dd4bf;
+            letter-spacing: 0.03em;
+            line-height: 1;
+        }
+        .hero-aka {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+        .hero-tagline {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.6);
+            max-width: 620px;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .meta-pill {
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .safe-low { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+        .safe-mod { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+        .safe-high { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+        .safe-critical { background: rgba(239,68,68,0.25); color: #ef4444; border: 1px solid rgba(239,68,68,0.5); }
+        .meta-neutral { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.1); }
+
+        /* Main layout */
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 52px 32px 120px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .full { grid-column: 1 / -1; }
+
+        /* Section cards */
+        .section-card {
+            background: #0f0f18;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            padding: 28px;
+        }
+        .section-card:hover { border-color: rgba(255,255,255,0.12); }
+        .section-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #2dd4bf;
+            opacity: 0.8;
+            margin-bottom: 14px;
+        }
+        .section-text {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.85;
+        }
+
+        /* Dose table */
+        .dose-table { width: 100%; border-collapse: collapse; }
+        .dose-tier-cell {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.3);
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            width: 30%;
+        }
+        .dose-amt-cell {
+            font-size: 0.88rem;
+            color: #fff;
+            font-weight: 700;
+            padding: 9px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .dose-note-cell {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.35);
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            text-align: right;
+        }
+        tr:last-child td { border-bottom: none; }
+
+        /* Tips */
+        .tip-row {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .tip-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .tip-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+        .tip-title {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .tip-desc {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.65;
+        }
+
+        /* Withdrawal */
+        .withdrawal-card {
+            background: rgba(34,197,94,0.06);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 14px;
+            padding: 28px;
+            grid-column: 1 / -1;
+        }
+        .withdrawal-card .section-label { color: #86efac; opacity: 1; }
+        .withdrawal-text {
+            font-size: 0.85rem;
+            color: #86efac;
+            line-height: 1.8;
+            opacity: 0.85;
+        }
+
+        @media (max-width: 700px) {
+            .main { grid-template-columns: 1fr; }
+            .full { grid-column: 1; }
+            .withdrawal-card { grid-column: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="depressants.html" class="back-btn">← Depressants</a>
+
+    <div class="hero">
+        <div class="hero-inner">
+            <div class="hero-eyebrow">High IQ · Depressants · Substance Guide</div>
+            <div class="hero-top">
+                <div class="hero-icon">🥥</div>
+                <h1>KAVA</h1>
+            </div>
+            <div class="hero-aka">Piper methysticum · Kava Kava · Yaqona</div>
+            <div class="hero-tagline">A Pacific Island ceremonial plant used safely for thousands of years. The lowest-risk recreational depressant on this page — no respiratory depression, no meaningful withdrawal, low addiction potential.</div>
+            <div class="hero-meta">
+                <span class="meta-pill safe-low">Low Risk</span>
+                <span class="meta-pill meta-neutral">Onset: 15–30 min</span>
+                <span class="meta-pill meta-neutral">Duration: 2–4 hours</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div class="section-card full">
+            <div class="section-label">How It Works</div>
+            <div class="section-text">Kava's active compounds (kavalactones) work through multiple mechanisms: they modulate GABA-A receptors (weakly), block voltage-gated sodium and calcium channels, and interact with dopamine receptors. Crucially, unlike benzos and alcohol, kava does not cause significant respiratory depression even at high doses. This makes it genuinely safer. Effects are muscle relaxation, reduced anxiety, and mild euphoria without significant cognitive impairment at moderate doses.</div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-label">Dosing</div>
+            <table class="dose-table">
+                
+                <tr>
+                    <td class="dose-tier-cell">Mild</td>
+                    <td class="dose-amt-cell">70–150mg KL</td>
+                    <td class="dose-note-cell">Light relaxation, slightly numbed tongue</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">Moderate</td>
+                    <td class="dose-amt-cell">150–300mg KL</td>
+                    <td class="dose-note-cell">Calm euphoria, muscle relaxation, social ease</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">Strong</td>
+                    <td class="dose-amt-cell">300–500mg KL</td>
+                    <td class="dose-note-cell">'Kava drunk' — heavy relaxation, sedation</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">Traditional</td>
+                    <td class="dose-amt-cell">2–4 shells</td>
+                    <td class="dose-note-cell">One shell ≈ 250ml prepared kava drink</td>
+                </tr>
+                <tr>
+                    <td class="dose-tier-cell">Note</td>
+                    <td class="dose-amt-cell">Empty stomach</td>
+                    <td class="dose-note-cell">Food significantly reduces absorption — wait 3+ hrs</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="section-label">Dangerous Interactions</div>
+            
+            <div class="interaction-row" style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">☠️</span>
+                    <div>
+                        <div style="color:#ef4444; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Alcohol</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Both metabolized by the liver. Increased hepatotoxicity risk. Also additive sedation. Avoid combining.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">⚠️</span>
+                    <div>
+                        <div style="color:#fbbf24; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Acetaminophen / Tylenol</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Both processed by the liver. Avoid taking together.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">⚠️</span>
+                    <div>
+                        <div style="color:#fbbf24; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Benzos / opioids</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Additive sedation. Not as dangerous as other combos but worth caution.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">⚠️</span>
+                    <div>
+                        <div style="color:#fbbf24; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Any medications</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Kava inhibits CYP450 liver enzymes — can affect how many medications are metabolized. Check interactions.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-row" style="background:rgba(96,165,250,0.08); border:1px solid rgba(96,165,250,0.15); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <span style="font-size:1rem; flex-shrink:0; margin-top:1px;">ℹ️</span>
+                    <div>
+                        <div style="color:#60a5fa; font-size:0.82rem; font-weight:700; margin-bottom:4px; letter-spacing:0.03em;">Cannabis</div>
+                        <div style="color:rgba(255,255,255,0.55); font-size:0.8rem; line-height:1.6;">Popular and generally safe combination. Both enhance relaxation. Can be quite sedating together.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card full">
+            <div class="section-label">Harm Reduction Tips</div>
+            
+            <div class="tip-row">
+                <div class="tip-icon">🍽️</div>
+                <div>
+                    <div class="tip-title">Empty stomach only</div>
+                    <div class="tip-desc">Eat at least 3 hours before. This is the single biggest factor in whether kava works for you.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">🔁</div>
+                <div>
+                    <div class="tip-title">Reverse tolerance</div>
+                    <div class="tip-desc">First few sessions may feel nothing — this is normal. Keep trying on separate days. Once it 'clicks' it works reliably.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">🌿</div>
+                <div>
+                    <div class="tip-title">Noble strains only</div>
+                    <div class="tip-desc">Look for 'noble kava' designation. 'Tudei' kava causes harsher side effects and worse hangovers. Vendor research matters.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">🏷️</div>
+                <div>
+                    <div class="tip-title">Check KL content</div>
+                    <div class="tip-desc">Kavalactone percentage on the label tells you actual potency — more useful than grams of powder.</div>
+                </div>
+            </div>
+            <div class="tip-row">
+                <div class="tip-icon">💊</div>
+                <div>
+                    <div class="tip-title">Check drug interactions</div>
+                    <div class="tip-desc">If you take regular medications, look up CYP450 interactions with kava before using.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="withdrawal-card">
+            <div class="section-label">Withdrawal</div>
+            <div class="withdrawal-text">Minimal to none for typical recreational use. Heavy chronic daily users may experience mild rebound anxiety and insomnia for a few days. Nothing comparable to other depressants on this page.</div>
+        </div>
+
+        <div class="section-card full">
+            <div class="section-label">Addiction & Dependence</div>
+            <div class="section-text">Low addiction potential with recreational use. Some heavy daily users develop habitual use but physical dependence is rare. 'Kava dermopathy' (dry scaly skin) develops with chronic heavy use and resolves when use stops. Liver enzyme elevation is possible with very heavy chronic use — take regular breaks.</div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nootropics Database - High IQ 🧠</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --lime: #84CC16;
+            --orange: #F97316;
+            --yellow: #FBBF24;
+            --gold: #F59E0B;
+            --gold-light: #FDE68A;
+            --gold-dark: #B45309;
+            --red: #EF4444;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #1a0a00 0%, #0d0d1a 50%, #001a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg,
+                rgba(245,158,11,0.07) 0%, rgba(251,191,36,0.05) 50%, rgba(245,158,11,0.07) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        .particle {
+            position: fixed; width: 5px; height: 5px;
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .back-btn:hover {
+            background: rgba(245,158,11,0.3);
+            border-color: var(--gold);
+            transform: translateX(-5px);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            background: linear-gradient(135deg, var(--gold), var(--yellow), var(--gold-light));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 35px 0 45px;
+        }
+
+        .filter-btn {
+            padding: 10px 22px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 30px;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(245,158,11,0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Category sections */
+        .category-section {
+            margin-bottom: 60px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(245,158,11,0.2);
+        }
+
+        .category-emoji { font-size: 2rem; }
+
+        .category-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            color: var(--gold);
+        }
+
+        .category-count {
+            padding: 5px 14px;
+            background: rgba(245,158,11,0.15);
+            border: 1px solid rgba(245,158,11,0.3);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--gold);
+        }
+
+        /* Substance cards grid */
+        .substances-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .substance-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 22px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .substance-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(245,158,11,0.5);
+            box-shadow: 0 20px 50px rgba(245,158,11,0.15);
+            background: rgba(245,158,11,0.05);
+        }
+
+        .substance-card.expanded {
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(245,158,11,0.2);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .substance-name {
+            font-family: 'Righteous', cursive;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .substance-aka {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.45);
+        }
+
+        /* Evidence rating */
+        .evidence-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .evidence-high { background: rgba(16,185,129,0.2); color: #10B981; border: 1px solid rgba(16,185,129,0.4); }
+        .evidence-moderate { background: rgba(245,158,11,0.2); color: var(--gold); border: 1px solid rgba(245,158,11,0.4); }
+        .evidence-low { background: rgba(239,68,68,0.15); color: #EF4444; border: 1px solid rgba(239,68,68,0.3); }
+        .evidence-mixed { background: rgba(139,92,246,0.15); color: #A78BFA; border: 1px solid rgba(139,92,246,0.3); }
+
+        .substance-tagline {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        /* Metric bars */
+        .metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .metric-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .metric-bar {
+            flex: 1;
+            height: 5px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+
+        .fill-potency { background: linear-gradient(90deg, var(--gold-dark), var(--gold)); }
+        .fill-safety { background: linear-gradient(90deg, #10B981, #34D399); }
+        .fill-cost { background: linear-gradient(90deg, #06B6D4, #67E8F9); }
+
+        .metric-value {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            width: 25px;
+            text-align: right;
+        }
+
+        /* Tags */
+        .substance-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+        }
+
+        .tag-focus { background: rgba(6,182,212,0.15); color: var(--cyan); border: 1px solid rgba(6,182,212,0.3); }
+        .tag-memory { background: rgba(139,92,246,0.15); color: #A78BFA; border: 1px solid rgba(139,92,246,0.3); }
+        .tag-mood { background: rgba(236,72,153,0.15); color: #F472B6; border: 1px solid rgba(236,72,153,0.3); }
+        .tag-energy { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+        .tag-neuro { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); }
+        .tag-anxiety { background: rgba(251,191,36,0.15); color: var(--yellow); border: 1px solid rgba(251,191,36,0.3); }
+        .tag-beginner { background: rgba(132,204,22,0.15); color: var(--lime); border: 1px solid rgba(132,204,22,0.3); }
+        .tag-advanced { background: rgba(239,68,68,0.15); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.3); }
+
+        /* Expand button */
+        .expand-btn {
+            width: 100%;
+            padding: 10px;
+            background: rgba(245,158,11,0.08);
+            border: 1px solid rgba(245,158,11,0.2);
+            border-radius: 12px;
+            color: var(--gold);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .expand-btn:hover {
+            background: rgba(245,158,11,0.18);
+        }
+
+        /* Expanded details */
+        .expanded-details {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(245,158,11,0.15);
+        }
+
+        .substance-card.expanded .expanded-details {
+            display: block;
+        }
+
+        .detail-section {
+            margin-bottom: 18px;
+        }
+
+        .detail-label {
+            font-size: 0.72rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .detail-text {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+        }
+
+        .dosing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .dose-box {
+            padding: 10px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .dose-level {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .dose-amount {
+            font-size: 0.85rem;
+            color: var(--gold-light);
+            font-weight: bold;
+        }
+
+        .warning-box {
+            padding: 12px 15px;
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.25);
+            border-radius: 10px;
+            font-size: 0.82rem;
+            color: #FCA5A5;
+            line-height: 1.6;
+        }
+
+        .stack-suggestion {
+            padding: 10px 14px;
+            background: rgba(6,182,212,0.08);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 10px;
+            font-size: 0.82rem;
+            color: var(--cyan);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .substances-grid { grid-template-columns: 1fr; }
+            .dosing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const colors = ['#F59E0B','#FBBF24','#FDE68A','#06B6D4','#F97316'];
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 8 + 's';
+            p.style.animationDuration = (Math.random() * 6 + 5) + 's';
+            p.style.background = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(p);
+        }
+    </script>
+
+    <a href="nootropics.html" class="back-btn">← Back to IQmaxx</a>
+
+    <div class="container">
+        <header>
+            <h1>⚗️ Nootropics Database</h1>
+            <p class="subtitle">42+ substances with evidence ratings, dosing protocols, and safety profiles. Click any card to expand full details.</p>
+        </header>
+
+        <!-- Filter bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterCategory('all')">🔬 All</button>
+            <button class="filter-btn" onclick="filterCategory('racetam')">🧪 Racetams</button>
+            <button class="filter-btn" onclick="filterCategory('choline')">🧠 Cholinergics</button>
+            <button class="filter-btn" onclick="filterCategory('adaptogen')">🌿 Adaptogens</button>
+            <button class="filter-btn" onclick="filterCategory('stimulant')">⚡ Stimulants</button>
+            <button class="filter-btn" onclick="filterCategory('natural')">🌱 Natural &amp; OTC</button>
+            <button class="filter-btn" onclick="filterCategory('amino')">🔗 Amino Acids</button>
+            <button class="filter-btn" onclick="filterCategory('vitamin')">💊 Vitamins &amp; Minerals</button>
+            <button class="filter-btn" onclick="filterCategory('peptide')">💉 Peptides</button>
+        </div>
+
+
+        <!-- ===== RACETAMS ===== -->
+        <div class="category-section" data-cat="racetam">
+            <div class="category-header">
+                <span class="category-emoji">🧪</span>
+                <h2 class="category-title">Racetams</h2>
+                <span class="category-count">8 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Piracetam</div><div class="substance-aka">The Original Nootropic</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">The granddaddy of all nootropics, synthesized in 1964. Decades of research, extremely safe, and a solid foundation for any racetam stack.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:50%"></div></div><span class="metric-value">5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:95%"></div></div><span class="metric-value">9.5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:90%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-focus">Focus</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Modulates AMPA receptors and increases neuronal membrane fluidity. Enhances acetylcholine transmission and cerebral blood flow. Effects build over weeks — requires consistent dosing.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">800mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">1600mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">4800mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Always stack with a choline source (Alpha-GPC or CDP-Choline) to prevent headaches. Takes 2-4 weeks to feel full effects. Cycle 8 weeks on / 2 weeks off.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ May cause headaches without adequate choline. Avoid with blood thinners — mild anticoagulant effects.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Aniracetam</div><div class="substance-aka">The Creative Racetam</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Fat-soluble racetam with anxiolytic and creativity-boosting effects. Preferred by artists and writers. Faster acting than Piracetam with added mood benefits.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:80%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-mood">Mood</span><span class="tag tag-focus">Creativity</span><span class="tag tag-anxiety">Anti-Anxiety</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Modulates AMPA and mGluR receptors. Activates D2/D3 dopamine receptors for mood enhancement. Unique anxiolytic mechanism via mGluR5 modulation makes it stand out from other racetams.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">400mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">750mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">1500mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Fat-soluble — take with food containing fat. Short half-life (~2hrs) means 2-3 doses/day. Classic stack: Aniracetam + Alpha-GPC + Lion's Mane.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Oxiracetam</div><div class="substance-aka">The Logic Racetam</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Stimulating racetam favored for logical thinking, math, and technical tasks. Slightly energizing without jitteriness. Strong focus without the creativity angle of Aniracetam.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:70%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:85%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:72%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-memory">Memory</span><span class="tag tag-energy">Stimulating</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Potentiates AMPA receptors more strongly than Piracetam. Enhances both acetylcholine and glutamate activity. Mildly stimulating — avoid taking in the evening.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">600mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">1200mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">2400mg</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Don't take after 4pm — can disrupt sleep. Always pair with choline source.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Pramiracetam</div><div class="substance-aka">The Memory Specialist</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">One of the most potent racetams for pure memory and learning consolidation. Used clinically for cognitive impairment. Less mood/creativity effects, more focused on raw memory.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:80%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:82%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:40%"></div></div><span class="metric-value">💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-focus">Focus</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Dramatically increases high-affinity choline uptake in the hippocampus. Shown in clinical trials to improve memory in patients with brain injuries and cognitive decline. Fat-soluble.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">200mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">400mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">800mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Fat-soluble — take with fatty meal. Expensive but effective. Best stacked with Alpha-GPC and Bacopa for a dedicated memory stack.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Noopept</div><div class="substance-aka">N-phenylacetyl-L-prolylglycine ethyl ester</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Often grouped with racetams. Up to 1000x more potent than Piracetam by weight. Fast-acting — effects felt within 15–30 min, unlike most racetams that take weeks.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:85%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:75%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:85%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-focus">Focus</span><span class="tag tag-neuro">Neuroprotective</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Stimulates BDNF and NGF expression. Modulates AMPA receptors and improves acetylcholine transmission. Unlike most racetams that take weeks, effects are felt quickly.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">10mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">20mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">30mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Sublingual absorption is faster than oral. Always pair with a choline source. Works well with Aniracetam for focus + creativity.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Brain fog and irritability with overuse. Keep doses low — more is not better. Cycle 2 months on / 2 weeks off.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Phenylpiracetam</div><div class="substance-aka">Phenotropil</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Most stimulating racetam — 30-60x more potent than Piracetam. Used by athletes for performance. Banned by WADA. Rapid tolerance means max 2x/week use.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:92%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:70%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:55%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-energy">Stimulating</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Phenyl group addition allows it to modulate dopamine and norepinephrine in addition to AMPA effects. Increases cold resistance and physical endurance. Stimulant-like effects distinguishing it from other racetams.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">50mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">100mg</div></div><div class="dose-box"><div class="dose-level">Max Freq</div><div class="dose-amount">2x/week</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Rapid tolerance — loses effectiveness quickly with frequent use. Do not take daily. Avoid in the afternoon — insomnia risk.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Coluracetam</div><div class="substance-aka">MKC-231</div></div><span class="evidence-badge evidence-low">Low Evidence</span></div>
+                    <p class="substance-tagline">Unique mechanism — enhances high-affinity choline uptake (HACU). Known for improving visual acuity and color enhancement. Originally developed for Alzheimer's.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:60%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:75%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:25%"></div></div><span class="metric-value">💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-mood">Mood</span><span class="tag tag-focus">Focus</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Potentiates HACU — the process neurons use to pull choline from the synapse. Works even when choline levels are depleted. Some users report vivid colors and enhanced visual detail.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">3mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">10mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">20mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Fat-soluble — take with food. Pairs well with Fasoracetam for mood support.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Very limited human research. Expensive and hard to source reliably. Not for beginners.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="racetam">
+                    <div class="card-top"><div><div class="substance-name">Fasoracetam</div><div class="substance-aka">NS-105</div></div><span class="evidence-badge evidence-low">Low Evidence</span></div>
+                    <p class="substance-tagline">Anxiolytic racetam that upregulates GABA-B receptors. Particularly useful for restoring GABA receptor sensitivity after phenibut use.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:55%"></div></div><span class="metric-value">5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:72%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:25%"></div></div><span class="metric-value">💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-mood">Mood</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Upregulates GABA-B receptors and enhances HACU. Was in clinical trials for ADHD. Known for reversing phenibut tolerance by restoring GABA-B receptor density.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">10mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">20mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">50mg</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Minimal human data. Most evidence is anecdotal. Source carefully.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== CHOLINERGICS ===== -->
+        <div class="category-section" data-cat="choline">
+            <div class="category-header">
+                <span class="category-emoji">🧠</span>
+                <h2 class="category-title">Cholinergics</h2>
+                <span class="category-count">6 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="choline">
+                    <div class="card-top"><div><div class="substance-name">Alpha-GPC</div><div class="substance-aka">Alpha-Glycerophosphocholine</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Premium choline source — highest bioavailability for brain use. The gold standard choline supplement. Also boosts HGH and athletic performance.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:90%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:55%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-focus">Focus</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Converts to acetylcholine and phosphatidylcholine in the brain with exceptional efficiency. Clinical evidence for Alzheimer's and age-related cognitive decline. Enhances power output when taken before exercise.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">150mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">300mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">600mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Pair with any racetam to prevent headaches and enhance effects. Morning dosing recommended.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="choline">
+                    <div class="card-top"><div><div class="substance-name">CDP-Choline</div><div class="substance-aka">Citicoline</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Provides choline plus uridine — a nootropic in its own right. Builds acetylcholine AND dopamine receptors. Slightly different profile from Alpha-GPC with added mood benefits.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:82%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:92%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:58%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-mood">Mood</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Splits into choline and uridine in the body. Uridine is a key component of the "stack" for dopamine receptor synthesis. Different and complementary to Alpha-GPC — some users alternate between them.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">125mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">250mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">500mg</div></div></div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="choline">
+                    <div class="card-top"><div><div class="substance-name">Huperzine A</div><div class="substance-aka">Hup-A</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Potent acetylcholinesterase inhibitor — blocks the enzyme that breaks down acetylcholine. Extremely small effective dose. Requires cycling due to buildup.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:82%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:75%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:92%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-focus">Focus</span><span class="tag tag-neuro">Neuroprotective</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Reversible AChE inhibitor — same mechanism as Alzheimer's drugs like Donepezil. Also acts as an NMDA receptor antagonist providing neuroprotection. Very long half-life (~10-14 hours).</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">50mcg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">100mcg</div></div><div class="dose-box"><div class="dose-level">Cycle</div><div class="dose-amount">2wk on/off</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Must cycle — accumulates in the body. Don't stack with other cholinergics without experience. Too much ACh causes nausea, muscle cramps, brain fog.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="choline">
+                    <div class="card-top"><div><div class="substance-name">Choline Bitartrate</div><div class="substance-aka">The Budget Choline</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Cheapest and most widely available choline source. Less bioavailable than Alpha-GPC or CDP-Choline, but perfectly adequate for preventing racetam headaches.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:40%"></div></div><span class="metric-value">4/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:95%"></div></div><span class="metric-value">9.5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:97%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Provides raw choline as a precursor to acetylcholine. Doesn't cross the BBB as efficiently as Alpha-GPC or CDP-Choline, but at higher doses still raises brain choline levels adequately.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">500mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">1000mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">2000mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Use on a tight budget. Upgrade to Alpha-GPC or CDP-Choline when possible.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="choline">
+                    <div class="card-top"><div><div class="substance-name">DMAE</div><div class="substance-aka">Dimethylaminoethanol</div></div><span class="evidence-badge evidence-mixed">Mixed Evidence</span></div>
+                    <p class="substance-tagline">Choline precursor with a stimulating edge. Improves mood and clarity for some — but may paradoxically worsen choline availability for others. Highly individual.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:45%"></div></div><span class="metric-value">4/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:70%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:88%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-mood">Mood</span><span class="tag tag-focus">Focus</span><span class="tag tag-energy">Energy</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">May act as a choline antagonist in the brain — trapping choline in a form that can't be used for ACh synthesis. Effects are highly individual; some users love it, others feel foggy.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">100mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">250mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">500mg</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Avoid during pregnancy — teratogenic in animal studies. Not recommended as primary choline source.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="choline">
+                    <div class="card-top"><div><div class="substance-name">Acetyl-L-Carnitine</div><div class="substance-aka">ALCAR</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Mitochondrial energizer that also boosts acetylcholine. Crosses the blood-brain barrier and acts as both a cholinergic and powerful neuroprotective agent.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:90%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:72%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-energy">Energy</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-memory">Memory</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Transports fatty acids into mitochondria for energy and provides acetyl groups for ACh synthesis. Strong clinical evidence for age-related cognitive decline, depression, and neuropathy. Also helps reverse oxidative damage from drug use.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">500mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">1000mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">2000mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Pairs well with Alpha-Lipoic Acid for neuroprotection. Take in the morning.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Can cause fishy body odor. May worsen hypothyroid symptoms.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== ADAPTOGENS ===== -->
+        <div class="category-section" data-cat="adaptogen">
+            <div class="category-header">
+                <span class="category-emoji">🌿</span>
+                <h2 class="category-title">Adaptogens</h2>
+                <span class="category-count">8 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Lion's Mane</div><div class="substance-aka">Hericium erinaceus</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">The only known food that stimulates NGF (Nerve Growth Factor) production. The premier long-term brain health mushroom. Takes weeks to feel full effects.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:97%"></div></div><span class="metric-value">9.7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:75%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-neuro">Neurogenesis</span><span class="tag tag-memory">Memory</span><span class="tag tag-mood">Mood</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Hericenones and erinacines stimulate NGF synthesis in the brain. NGF promotes neuronal growth, repair, and maintenance. Human trials show improvements in mild cognitive impairment after 16 weeks.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">500mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">1000mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">3000mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Use dual-extract (water + alcohol) for full spectrum of active compounds. Takes 4-8 weeks for full effects. One of the best long-term daily nootropics.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Rhodiola Rosea</div><div class="substance-aka">Arctic Root / Golden Root</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Elite anti-fatigue adaptogen. Reduces mental and physical fatigue within hours of dosing. Strong evidence for performance under stress and burnout prevention.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:75%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:90%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:82%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-energy">Anti-Fatigue</span><span class="tag tag-mood">Mood</span><span class="tag tag-focus">Focus</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Salidroside and rosavins inhibit catechol-O-methyltransferase (COMT), increasing dopamine and serotonin availability. Activates stress-response proteins that reduce cortisol damage. Effects felt acutely within hours unlike most adaptogens.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">100mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">300mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">600mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Standardized to 3% rosavins / 1% salidroside. Take on empty stomach 30min before demanding work. Cycle 5 days on / 2 days off.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Can be mildly stimulating — avoid late in the day. May cause irritability at high doses.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Ashwagandha</div><div class="substance-aka">Withania somnifera / KSM-66</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">The gold-standard cortisol reducer. Powerful anxiolytic and testosterone booster. Multiple RCTs confirm stress reduction, improved sleep quality, and cognitive benefits.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:78%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:82%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-mood">Mood</span><span class="tag tag-energy">Hormonal</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Withanolides modulate HPA axis function, reducing cortisol by up to 30% in clinical trials. Also shown to increase testosterone by 10-22% and improve VO2 max. Takes 4-8 weeks for full hormonal effects.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">300mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">600mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">1200mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 KSM-66 and Sensoril are the best-researched extracts. Take at night for sleep benefits. Cycle 3 months on / 1 month off.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Avoid with thyroid medications — can alter thyroid hormone levels. Not for pregnant women.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Bacopa Monnieri</div><div class="substance-aka">Brahmi</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Ayurvedic memory herb with the most robust human research of any adaptogen. Specifically improves long-term memory consolidation. Takes 8-12 weeks for full effect.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:70%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:85%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Bacosides enhance synaptic communication in the hippocampus. Also inhibits AChE (like Huperzine A, but more gently). Multiple double-blind trials in healthy adults show improved memory recall and reduced anxiety.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">150mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">300mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">450mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Fat-soluble — always take with food. Use standardized extract (45% bacosides). Best long-term memory supplement with consistent evidence.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ May cause nausea if taken without food. Can feel slightly sedating — many prefer evening dosing.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Panax Ginseng</div><div class="substance-aka">Asian / Korean Ginseng</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">One of the most studied herbs on earth. Improves working memory, reaction time, and mental fatigue — especially under stress.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:82%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:82%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-energy">Energy</span><span class="tag tag-memory">Memory</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Ginsenosides modulate dopamine, serotonin, and acetylcholine systems. Multiple RCTs show improved working memory and reduced mental fatigue in healthy adults.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">200mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">400mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">800mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Look for standardized extract (≥7% ginsenosides). Classic combo: Ginseng + Ginkgo Biloba.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Cycle 3 months on / 1 month off. Can interact with blood thinners and diabetes medications.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Mucuna Pruriens</div><div class="substance-aka">Velvet Bean / Natural L-DOPA</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Contains L-DOPA — the direct precursor to dopamine. The most natural way to boost dopamine available OTC.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:78%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:72%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:82%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-mood">Mood</span><span class="tag tag-energy">Motivation</span><span class="tag tag-anxiety">Anti-Anxiety</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">L-DOPA crosses the blood-brain barrier and converts directly to dopamine. Significant clinical evidence for Parkinson's. Also reduces cortisol and increases testosterone.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing (standardized to 15% L-DOPA)</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">250mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">500mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">1000mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Take on empty stomach. Don't take with protein — amino acids compete for transport.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Don't use daily — downregulates dopamine receptors. 2-3x/week max. Avoid with MAOIs or antipsychotics.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Ginkgo Biloba</div><div class="substance-aka">Maidenhair Tree Extract</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Ancient tree extract with strong evidence for memory and cerebral blood flow. One of the top-selling supplements worldwide. Best for long-term brain health.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:55%"></div></div><span class="metric-value">5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:80%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:90%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-focus">Focus</span><span class="tag tag-neuro">Cerebral Blood Flow</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Flavonoids and terpenoids increase cerebral blood flow and have antioxidant effects. MAO inhibition boosts dopamine and serotonin. Most effective for improving memory in those with reduced cerebral circulation.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">80mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">120mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">240mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Use standardized EGb 761 extract. Takes 4-6 weeks for full effect. Classic combo with Panax Ginseng.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Blood-thinning effects — avoid before surgery or with anticoagulants.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="adaptogen">
+                    <div class="card-top"><div><div class="substance-name">Holy Basil</div><div class="substance-aka">Tulsi / Ocimum sanctum</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Ayurvedic adaptogen with cognitive and anti-anxiety effects. Underrated in Western nootropics communities despite solid evidence for stress reduction and memory.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:45%"></div></div><span class="metric-value">4/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:93%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:93%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-mood">Mood</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Eugenol and rosmarinic acid modulate cortisol via HPA axis. Human studies show reduced anxiety, improved cognitive flexibility, and better stress response.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">300mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">600mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">1200mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Works well as tea or capsule. Great complement to Ashwagandha for a cortisol management stack.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== STIMULANTS ===== -->
+        <div class="category-section" data-cat="stimulant">
+            <div class="category-header">
+                <span class="category-emoji">⚡</span>
+                <h2 class="category-title">Stimulants</h2>
+                <span class="category-count">3 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="stimulant">
+                    <div class="card-top"><div><div class="substance-name">Caffeine + L-Theanine</div><div class="substance-aka">The Classic Stack</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">The most evidence-backed nootropic combination in existence. L-Theanine smooths out caffeine's rough edges while amplifying its focus benefits. 1:2 ratio is optimal.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:72%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:85%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:92%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-energy">Energy</span><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Caffeine blocks adenosine receptors (reducing fatigue) and increases dopamine/norepinephrine. L-Theanine increases alpha brainwaves (calm focus state) and reduces caffeine-induced anxiety. Together they produce a clean, sustained focus state.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Caffeine</div><div class="dose-amount">100mg</div></div><div class="dose-box"><div class="dose-level">L-Theanine</div><div class="dose-amount">200mg</div></div><div class="dose-box"><div class="dose-level">Ratio</div><div class="dose-amount">1:2</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Don't use daily if possible — tolerance builds quickly. Caffeine withdrawal is real. Avoid after 2pm for sleep quality.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="stimulant">
+                    <div class="card-top"><div><div class="substance-name">Modafinil</div><div class="substance-aka">Provigil — Rx Required</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Prescription wakefulness agent. The most studied "smart drug." Strong evidence for cognitive enhancement in sleep-deprived individuals and complex task performance.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:90%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:72%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:30%"></div></div><span class="metric-value">💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-energy">Wakefulness</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Primarily inhibits dopamine reuptake and increases orexin (wakefulness hormone). Unlike amphetamines, it doesn't cause excessive dopamine release — lower abuse potential. FDA-approved for narcolepsy, shift work sleep disorder, and sleep apnea.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">50-100mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">200mg</div></div><div class="dose-box"><div class="dose-level">Max Freq</div><div class="dose-amount">2x/week</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Take before 10am or sleep will suffer. Half-life is 12-15 hours. Don't need 200mg — start at 50mg.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Prescription only in most countries. Can cause serious skin reactions (rare). Reduces contraceptive effectiveness. Dehydrating — drink extra water.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="stimulant">
+                    <div class="card-top"><div><div class="substance-name">Phenylpiracetam</div><div class="substance-aka">Phenotropil</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Most stimulating racetam — 30-60x more potent than Piracetam. Used by athletes for performance. Banned by WADA. Rapid tolerance means max 2x/week.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:92%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:70%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:55%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-energy">Stimulating</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Phenyl group addition allows it to modulate dopamine and norepinephrine in addition to AMPA effects. Increases cold resistance and physical endurance.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">50mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">100mg</div></div><div class="dose-box"><div class="dose-level">Max Freq</div><div class="dose-amount">2x/week</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Rapid tolerance — loses effectiveness quickly with frequent use. Do not take daily. Avoid in the afternoon — insomnia risk.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== NATURAL & OTC ===== -->
+        <div class="category-section" data-cat="natural">
+            <div class="category-header">
+                <span class="category-emoji">🌱</span>
+                <h2 class="category-title">Natural & OTC</h2>
+                <span class="category-count">4 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="natural">
+                    <div class="card-top"><div><div class="substance-name">Creatine</div><div class="substance-aka">The Brain & Body Supplement</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Most researched supplement in history. Originally for muscles — but creatine is also the brain's emergency ATP reserve. Significant cognitive benefits especially for vegetarians.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:98%"></div></div><span class="metric-value">9.8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:95%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-energy">Energy</span><span class="tag tag-memory">Memory</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Replenishes ATP (cellular energy currency) in brain tissue. Reduces mental fatigue and improves working memory, especially under sleep deprivation. Vegetarians and vegans have ~50% lower baseline brain creatine and see the biggest cognitive improvements.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">3-5g/day</div></div><div class="dose-box"><div class="dose-level">Form</div><div class="dose-amount">Monohydrate</div></div><div class="dose-box"><div class="dose-level">Timing</div><div class="dose-amount">Anytime</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Just use plain creatine monohydrate — no need for fancy forms. Mix in water or juice. Daily consistency matters more than timing.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="natural">
+                    <div class="card-top"><div><div class="substance-name">Omega-3 (DHA/EPA)</div><div class="substance-aka">Fish Oil / Algae Oil</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">DHA makes up 15-20% of the cerebral cortex. The brain literally builds itself from omega-3s. Foundation of any serious nootropic stack — can't be skipped.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:60%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:95%"></div></div><span class="metric-value">9.5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:78%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-mood">Mood</span><span class="tag tag-memory">Memory</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">DHA is a structural component of neuronal membranes. EPA has anti-inflammatory effects that protect neurons. Together they support neuroplasticity, mood regulation, and protect against age-related cognitive decline.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">DHA</div><div class="dose-amount">1000mg</div></div><div class="dose-box"><div class="dose-level">EPA</div><div class="dose-amount">500mg</div></div><div class="dose-box"><div class="dose-level">Timing</div><div class="dose-amount">With meals</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Vegans: use algae oil — it's the original source fish get their DHA from anyway. Store in fridge to prevent oxidation. Triglyceride form is more bioavailable than ethyl ester.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="natural">
+                    <div class="card-top"><div><div class="substance-name">Magnesium L-Threonate</div><div class="substance-aka">Magtein</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">The only magnesium that crosses the blood-brain barrier effectively. Increases synaptic density. Improves sleep, reduces anxiety, and enhances memory consolidation overnight.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:72%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:95%"></div></div><span class="metric-value">9.5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:50%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-anxiety">Sleep</span><span class="tag tag-neuro">Synaptic Density</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Mg2+ is required for NMDA receptor function and synaptic plasticity. L-Threonate acts as a shuttle, efficiently delivering magnesium into the brain. MIT research showed it increased synaptic density and reversed cognitive aging in animal models.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">1g</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">2g</div></div><div class="dose-box"><div class="dose-level">Timing</div><div class="dose-amount">Before bed</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Take at night — relaxing and improves sleep quality. Stack with Glycine and 0.3mg Melatonin for an excellent sleep protocol.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="natural">
+                    <div class="card-top"><div><div class="substance-name">Vitamin D3 + K2</div><div class="substance-aka">The Sunshine Stack</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">D3 deficiency affects 40%+ of the population and directly causes brain fog, depression, and cognitive decline. The most common and most impactful deficiency to fix.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:62%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:96%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-mood">Mood</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-energy">Hormonal</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Vitamin D acts as a hormone, modulating over 200 genes including those responsible for serotonin synthesis, neuroprotection, and immune function. K2 ensures calcium from D3 goes to bones/teeth rather than arteries. They should always be taken together.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">D3</div><div class="dose-amount">2000-5000 IU</div></div><div class="dose-box"><div class="dose-level">K2 (MK-7)</div><div class="dose-amount">100-200mcg</div></div><div class="dose-box"><div class="dose-level">Timing</div><div class="dose-amount">With fat</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Get your 25(OH)D blood level tested first. Optimal range is 40-60 ng/mL. Fat-soluble — take with your fattiest meal of the day.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Don't mega-dose without testing — D3 toxicity is possible at very high doses. Pair with K2 to prevent arterial calcification.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== AMINO ACIDS ===== -->
+        <div class="category-section" data-cat="amino">
+            <div class="category-header">
+                <span class="category-emoji">🔗</span>
+                <h2 class="category-title">Amino Acids</h2>
+                <span class="category-count">4 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="amino">
+                    <div class="card-top"><div><div class="substance-name">L-Tyrosine</div><div class="substance-aka">Dopamine Precursor</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Direct precursor to dopamine, norepinephrine, and epinephrine. Best nootropic for cold environments, high-stress situations, and sleep deprivation.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:62%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:90%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:90%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-mood">Mood</span><span class="tag tag-energy">Stress Resistance</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Tyrosine → L-DOPA → Dopamine → Norepinephrine. Replenishes catecholamines depleted by stress. Military studies show it maintains cognitive performance in cold-stress and sleep deprivation where other nootropics fail.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">500mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">1000mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">2000mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 N-Acetyl-L-Tyrosine (NALT) is more bioavailable. Best used situationally — before exams, presentations, tough workouts.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Avoid with MAOIs or thyroid medications. Can worsen anxiety — start low.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="amino">
+                    <div class="card-top"><div><div class="substance-name">5-HTP</div><div class="substance-aka">5-Hydroxytryptophan</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Direct serotonin precursor. More effective than tryptophan for raising brain serotonin. Used for mood, sleep, and MDMA recovery protocols.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:70%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:72%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:88%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-mood">Mood</span><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-anxiety">Sleep</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Converts directly to serotonin in the brain. Multiple clinical trials confirm effectiveness for depression comparable to some SSRIs. Also converts to melatonin. Core part of MDMA harm reduction — taken the day after to replenish serotonin.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Mood</div><div class="dose-amount">50-100mg</div></div><div class="dose-box"><div class="dose-level">Sleep</div><div class="dose-amount">100-200mg</div></div><div class="dose-box"><div class="dose-level">Timing</div><div class="dose-amount">Before Bed</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ NEVER combine with SSRIs, SNRIs, or MAOIs — serotonin syndrome risk. Don't use daily long-term. Can deplete dopamine with chronic use.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="amino">
+                    <div class="card-top"><div><div class="substance-name">NAC</div><div class="substance-aka">N-Acetyl Cysteine</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Glutathione precursor and glutamate modulator. Powerful neuroprotective and addiction-reduction effects. One of the most underrated supplements in nootropics.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:88%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-mood">Mood</span><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Replenishes glutathione (the brain's master antioxidant) and modulates glutamate cycling. Clinical evidence for OCD, bipolar disorder, addiction reduction (cocaine, cannabis), and depression. Excellent harm reduction supplement — reduces oxidative damage from drug use.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">600mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">1200mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">2400mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Excellent in any harm reduction protocol. Pairs well with Alpha-Lipoic Acid and Vitamin C.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Can cause nausea on empty stomach. High doses may worsen asthma.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="amino">
+                    <div class="card-top"><div><div class="substance-name">Glycine</div><div class="substance-aka">The Sleep Amino</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Inhibitory neurotransmitter and NMDA co-agonist. A small dose before bed dramatically improves sleep quality and next-day cognitive performance. Incredibly cheap.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:55%"></div></div><span class="metric-value">5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:98%"></div></div><span class="metric-value">9.8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:97%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-anxiety">Sleep</span><span class="tag tag-mood">Mood</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Lowers core body temperature by dilating blood vessels — mimicking the natural temp drop that initiates sleep. RCTs show 3g before bed reduces sleep latency and improves sleep quality scores.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Sleep</div><div class="dose-amount">3g</div></div><div class="dose-box"><div class="dose-level">Cognitive</div><div class="dose-amount">1-3g</div></div><div class="dose-box"><div class="dose-level">Timing</div><div class="dose-amount">Before Bed</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Dissolves in water, tastes slightly sweet. Stack with Magnesium L-Threonate for synergistic sleep improvement.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== VITAMINS & MINERALS ===== -->
+        <div class="category-section" data-cat="vitamin">
+            <div class="category-header">
+                <span class="category-emoji">💊</span>
+                <h2 class="category-title">Vitamins &amp; Minerals</h2>
+                <span class="category-count">4 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="vitamin">
+                    <div class="card-top"><div><div class="substance-name">Zinc</div><div class="substance-aka">The Testosterone Mineral</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Essential mineral involved in 300+ enzymatic reactions. Deficiency is extremely common and directly linked to poor cognition, low testosterone, and depression.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:58%"></div></div><span class="metric-value">5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:85%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:95%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-mood">Mood</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-energy">Hormonal</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Modulates NMDA glutamate receptors, required for dopamine synthesis, critical for testosterone production. Common deficiency in athletes who sweat heavily and people who don't eat red meat.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Maintenance</div><div class="dose-amount">15mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">25mg</div></div><div class="dose-box"><div class="dose-level">Form</div><div class="dose-amount">Zinc Picolinate</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Classic ZMA stack: Zinc + Magnesium + B6 before bed. Don't exceed 40mg/day long term.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ High doses deplete copper — supplement 1-2mg copper if taking 25mg+ zinc daily.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="vitamin">
+                    <div class="card-top"><div><div class="substance-name">B-Vitamin Complex</div><div class="substance-aka">B6 (P5P), B9 (Folate), B12</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Essential cofactors for neurotransmitter synthesis. B12 deficiency is one of the most common and overlooked causes of brain fog, fatigue, and depression.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:55%"></div></div><span class="metric-value">5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:95%"></div></div><span class="metric-value">9.5/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:92%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-energy">Energy</span><span class="tag tag-mood">Mood</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">B6 (P5P) is required for synthesis of serotonin, dopamine, GABA, and norepinephrine. B9 (methylfolate) needed for methylation critical to neurotransmitter recycling. B12 (methylcobalamin) maintains myelin sheaths. Vegans are especially prone to B12 deficiency.</p></div>
+                        <div class="detail-section"><div class="detail-label">Key Doses</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">B6 (P5P)</div><div class="dose-amount">25-50mg</div></div><div class="dose-box"><div class="dose-level">Folate</div><div class="dose-amount">400-800mcg</div></div><div class="dose-box"><div class="dose-level">B12</div><div class="dose-amount">500-1000mcg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Use methylated forms for significantly better absorption — especially with MTHFR gene variants.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ High dose B6 (500mg+) long-term can cause peripheral neuropathy. Stick to 50mg or under.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="vitamin">
+                    <div class="card-top"><div><div class="substance-name">Phosphatidylserine</div><div class="substance-aka">PS / Brain Phospholipid</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Phospholipid that makes up 15% of total brain fat. One of only two supplements with an FDA-qualified health claim for cognitive decline.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:60%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:93%"></div></div><span class="metric-value">9/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:58%"></div></div><span class="metric-value">💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-memory">Memory</span><span class="tag tag-neuro">Neuroprotective</span><span class="tag tag-anxiety">Cortisol</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Maintains neuronal membrane fluidity, supports glucose metabolism in the brain, and blunts cortisol response to exercise stress. Multiple RCTs confirm benefits for memory and attention.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">100mg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">300mg</div></div><div class="dose-box"><div class="dose-level">High</div><div class="dose-amount">600mg</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Sunflower-derived PS preferred over soy-derived. Synergizes well with DHA.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="vitamin">
+                    <div class="card-top"><div><div class="substance-name">Melatonin</div><div class="substance-aka">The Sleep Hormone</div></div><span class="evidence-badge evidence-high">High Evidence</span></div>
+                    <p class="substance-tagline">Most used sleep supplement on earth. Effective for circadian rhythm regulation — but most people take 10x too much. Less is more with melatonin.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:82%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:97%"></div></div><span class="metric-value">💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-anxiety">Sleep</span><span class="tag tag-neuro">Antioxidant</span><span class="tag tag-beginner">Beginner</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Signals the brain it's nighttime via MT1/MT2 receptors. Also a powerful mitochondrial antioxidant. Your brain naturally produces only 0.1-0.3mg — most supplements contain 5-10x this amount.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Physiological</div><div class="dose-amount">0.1-0.3mg</div></div><div class="dose-box"><div class="dose-level">Effective</div><div class="dose-amount">0.5-1mg</div></div><div class="dose-box"><div class="dose-level">Timing</div><div class="dose-amount">30-60min pre-bed</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Start at 0.3mg — you don't need 10mg. Best sleep stack: 0.3mg Melatonin + 3g Glycine + 2g Magnesium L-Threonate.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ High doses cause grogginess and can disrupt natural melatonin production. Reserve for travel or schedule shifts.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== PEPTIDES ===== -->
+        <div class="category-section" data-cat="peptide">
+            <div class="category-header">
+                <span class="category-emoji">💉</span>
+                <h2 class="category-title">Peptides</h2>
+                <span class="category-count">5 substances</span>
+            </div>
+            <div class="substances-grid">
+
+                <div class="substance-card" data-cat="peptide">
+                    <div class="card-top"><div><div class="substance-name">Semax</div><div class="substance-aka">ACTH(4-7) Pro-Gly-Pro</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Russian nootropic peptide developed by the Institute of Molecular Genetics. Dramatically increases BDNF. Nasal administration. One of the most potent cognitive enhancers available.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:72%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:35%"></div></div><span class="metric-value">💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-focus">Focus</span><span class="tag tag-neuro">BDNF</span><span class="tag tag-memory">Memory</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">ACTH fragment analog that increases BDNF (Brain-Derived Neurotrophic Factor) by 800% in some animal studies. Also increases dopamine and serotonin in the hippocampus and cortex. Used clinically in Russia for stroke, ADHD, and cognitive decline.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">200mcg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">400-600mcg</div></div><div class="dose-box"><div class="dose-level">Cycle</div><div class="dose-amount">2wk on/off</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Administer nasally. Store frozen. Cycle to prevent desensitization. Pairs well with Selank for focus + anxiety reduction.</div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Can increase anxiety in some users — start very low. Limited long-term human safety data. Research grade only.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="peptide">
+                    <div class="card-top"><div><div class="substance-name">Selank</div><div class="substance-aka">Tuftsin Analog</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Anxiolytic peptide with nootropic effects. Zero sedation — anxiolytic without the fog of benzos. Developed in Russia as an anti-anxiety treatment. Complements Semax perfectly.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:75%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:80%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:35%"></div></div><span class="metric-value">💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-anxiety">Anti-Anxiety</span><span class="tag tag-mood">Mood</span><span class="tag tag-focus">Focus</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Modulates GABA-A receptors and enkephalin systems. Also increases BDNF like Semax, but with anxiolytic rather than stimulating effects. Used clinically in Russia for generalized anxiety disorder. No withdrawal or dependence reported.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">250mcg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">500mcg</div></div><div class="dose-box"><div class="dose-level">Method</div><div class="dose-amount">Nasal spray</div></div></div></div>
+                        <div class="detail-section"><div class="stack-suggestion">💡 Semax + Selank is considered the premier Russian peptide stack — stimulating focus from Semax balanced by calm from Selank.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="peptide">
+                    <div class="card-top"><div><div class="substance-name">BPC-157</div><div class="substance-aka">Body Protection Compound</div></div><span class="evidence-badge evidence-low">Low Evidence</span></div>
+                    <p class="substance-tagline">Healing peptide derived from stomach protein. Dramatically accelerates recovery from injuries, gut issues, and substance-induced neurological damage. Growing popularity in biohacking.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:80%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:70%"></div></div><span class="metric-value">7/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:30%"></div></div><span class="metric-value">💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-neuro">Healing</span><span class="tag tag-mood">Mood</span><span class="tag tag-advanced">Advanced</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Upregulates growth hormone receptors and increases angiogenesis (new blood vessel formation). In animal studies it reversed dopamine system damage from antipsychotics and alcohol. Strong gut-healing effects — reduces intestinal inflammation. Primarily researched in animal models.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">250mcg</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">500mcg</div></div><div class="dose-box"><div class="dose-level">Method</div><div class="dose-amount">Oral or SubQ</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Very limited human clinical data. Mostly animal research. May promote tumor growth theoretically. Research grade only. Educational purposes.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="peptide">
+                    <div class="card-top"><div><div class="substance-name">Dihexa</div><div class="substance-aka">PNB-0408</div></div><span class="evidence-badge evidence-low">Low Evidence</span></div>
+                    <p class="substance-tagline">Considered the most potent nootropic peptide known. Animal studies show it to be millions of times more potent than BDNF at promoting synaptogenesis. Near-zero human data.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:98%"></div></div><span class="metric-value">?/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:25%"></div></div><span class="metric-value">Unknown</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:10%"></div></div><span class="metric-value">💲💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-neuro">Synaptogenesis</span><span class="tag tag-memory">Memory</span><span class="tag tag-advanced">Expert Only</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">HGF/MET receptor agonist promoting synaptogenesis. In animal studies it reversed severe cognitive impairment. Developed at Washington State University for Alzheimer's research. Very long half-life — potentially weeks.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Reported</div><div class="dose-amount">1-3mg</div></div><div class="dose-box"><div class="dose-level">Method</div><div class="dose-amount">Transdermal</div></div><div class="dose-box"><div class="dose-level">Frequency</div><div class="dose-amount">Weekly or less</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Most experimental substance on this page. Near-zero human safety data. Potential oncogenic risk. Educational purposes only.</div></div>
+                    </div>
+                </div>
+
+                <div class="substance-card" data-cat="peptide">
+                    <div class="card-top"><div><div class="substance-name">Cerebrolysin</div><div class="substance-aka">FPE 1070</div></div><span class="evidence-badge evidence-moderate">Moderate Evidence</span></div>
+                    <p class="substance-tagline">Injectable peptide mixture derived from pig brain proteins. Widely used in Eastern Europe and Asia for stroke recovery and cognitive enhancement. Strong BDNF and NGF activity.</p>
+                    <div class="metrics">
+                        <div class="metric-row"><span class="metric-label">Potency</span><div class="metric-bar"><div class="metric-fill fill-potency" style="width:88%"></div></div><span class="metric-value">8/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Safety</span><div class="metric-bar"><div class="metric-fill fill-safety" style="width:65%"></div></div><span class="metric-value">6/10</span></div>
+                        <div class="metric-row"><span class="metric-label">Cost</span><div class="metric-bar"><div class="metric-fill fill-cost" style="width:10%"></div></div><span class="metric-value">💲💲💲💲</span></div>
+                    </div>
+                    <div class="substance-tags"><span class="tag tag-neuro">Neurogenesis</span><span class="tag tag-memory">Memory</span><span class="tag tag-advanced">Expert Only</span></div>
+                    <button class="expand-btn" onclick="toggleCard(this)">▼ Show Full Details</button>
+                    <div class="expanded-details">
+                        <div class="detail-section"><div class="detail-label">How It Works</div><p class="detail-text">Contains small neuropeptides that mimic endogenous neurotrophic factors. Increases BDNF and NGF, promotes neurogenesis, and has neuroprotective effects. Prescription in many countries. Typically injected IM or IV.</p></div>
+                        <div class="detail-section"><div class="detail-label">Dosing</div><div class="dosing-grid"><div class="dose-box"><div class="dose-level">Low</div><div class="dose-amount">1-2ml IM</div></div><div class="dose-box"><div class="dose-level">Standard</div><div class="dose-amount">5ml IM</div></div><div class="dose-box"><div class="dose-level">Cycle</div><div class="dose-amount">10-20 days</div></div></div></div>
+                        <div class="detail-section"><div class="warning-box">⚠️ Injectable only — requires sterile technique. Prescription in most Western countries. Derived from animal tissue — allergy risk. Educational purposes only.</div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+        <script>
+        function toggleCard(btn) {
+            const card = btn.closest('.substance-card');
+            card.classList.toggle('expanded');
+            btn.textContent = card.classList.contains('expanded') ? '▲ Hide Details' : '▼ Show Full Details';
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.category-section').forEach(section => {
+                if (cat === 'all' || section.dataset.cat === cat) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
