@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychedelics — High IQ 🍄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple: #C084FC;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --indigo: #818CF8;
+            --violet: #8B5CF6;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #0f0020 0%, #1a0030 50%, #0a0025 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(45deg,
+                rgba(192,132,252,0.07) 0%,
+                rgba(236,72,153,0.05) 33%,
+                rgba(129,140,248,0.07) 66%,
+                rgba(192,132,252,0.04) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .back-btn:hover { background: rgba(192,132,252,0.2); border-color: var(--purple); color: #fff; transform: translateX(-4px); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(3rem, 10vw, 6rem);
+            background: linear-gradient(135deg, var(--purple), var(--pink), var(--indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .section-header {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--purple);
+            opacity: 0.7;
+            margin-bottom: 20px;
+            padding-left: 4px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 56px;
+        }
+
+        .cards-grid.two-col {
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        }
+
+        .cards-grid.three-col {
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        }
+
+        .hub-card {
+            display: block;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(192,132,252,0.08), transparent);
+            transition: left 0.5s;
+        }
+        .hub-card:hover::before { left: 100%; }
+
+        .hub-card:hover {
+            border-color: rgba(192,132,252,0.3);
+            background: rgba(192,132,252,0.05);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(192,132,252,0.1);
+        }
+
+        /* Safety/guides - cyan accent */
+        .hub-card.guide:hover {
+            border-color: rgba(6,182,212,0.3);
+            background: rgba(6,182,212,0.04);
+            box-shadow: 0 16px 40px rgba(6,182,212,0.08);
+        }
+        .hub-card.guide::before { background: linear-gradient(90deg, transparent, rgba(6,182,212,0.07), transparent); }
+        .hub-card.guide .card-title { color: var(--cyan); }
+        .hub-card.guide .tag { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.25); color: var(--cyan); }
+
+        /* Pink accent for trip guides */
+        .hub-card.trip:hover {
+            border-color: rgba(236,72,153,0.3);
+            background: rgba(236,72,153,0.04);
+            box-shadow: 0 16px 40px rgba(236,72,153,0.08);
+        }
+        .hub-card.trip::before { background: linear-gradient(90deg, transparent, rgba(236,72,153,0.07), transparent); }
+        .hub-card.trip .card-title { color: var(--pink); }
+        .hub-card.trip .tag { background: rgba(236,72,153,0.1); border-color: rgba(236,72,153,0.25); color: var(--pink); }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--purple);
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .card-desc {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            background: rgba(192,132,252,0.1);
+            border: 1px solid rgba(192,132,252,0.25);
+            border-radius: 20px;
+            font-size: 0.72rem;
+            color: var(--purple);
+            letter-spacing: 0.03em;
+        }
+
+        .arrow {
+            display: inline-block;
+            margin-left: 6px;
+            transition: transform 0.2s;
+        }
+        .hub-card:hover .arrow { transform: translateX(4px); }
+
+        @media (max-width: 600px) {
+            .cards-grid, .cards-grid.two-col, .cards-grid.three-col { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <div class="container">
+        <header>
+            <div class="eyebrow">High IQ · Psychedelics</div>
+            <h1>🍄 Psychedelics</h1>
+            <p class="subtitle">Harm reduction, trip guides, mushroom profiles, and preparation resources for conscious exploration.</p>
+        </header>
+
+        <!-- Databases -->
+        <div class="section-header">Databases</div>
+        <div class="cards-grid two-col">
+            <a href="mushrooms.html" class="hub-card">
+                <span class="card-icon">🍄</span>
+                <div class="card-title">Mushroom Strain Profiles <span class="arrow">→</span></div>
+                <p class="card-desc">12 psilocybin mushroom strains with potency levels, experience descriptions, grow difficulty, and dosing protocols from microdose to heroic.</p>
+                <div class="card-tags">
+                    <span class="tag">12 Strains</span>
+                    <span class="tag">Potency Ratings</span>
+                    <span class="tag">Dose Ranges</span>
+                    <span class="tag">Growing Info</span>
+                </div>
+            </a>
+
+            <a href="trip-guides.html" class="hub-card trip">
+                <span class="card-icon">🌀</span>
+                <div class="card-title">Trip Guides <span class="arrow">→</span></div>
+                <p class="card-desc">Substance-specific trip guides covering what to expect, hour-by-hour timelines, and how to navigate challenging experiences.</p>
+                <div class="card-tags">
+                    <span class="tag">Multiple Substances</span>
+                    <span class="tag">Hour-by-Hour</span>
+                    <span class="tag">Challenging Trips</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Preparation & Safety -->
+        <div class="section-header">Preparation & Safety</div>
+        <div class="cards-grid three-col">
+            <a href="first-timer-guide.html" class="hub-card guide">
+                <span class="card-icon">🌱</span>
+                <div class="card-title">First Timer Guide <span class="arrow">→</span></div>
+                <p class="card-desc">Everything a first-time psychedelic user needs to know before, during, and after their experience.</p>
+                <div class="card-tags">
+                    <span class="tag">Beginners</span>
+                    <span class="tag">What to Expect</span>
+                </div>
+            </a>
+
+            <a href="prep-guide.html" class="hub-card guide">
+                <span class="card-icon">📋</span>
+                <div class="card-title">Preparation Guide <span class="arrow">→</span></div>
+                <p class="card-desc">Set, setting, intention-setting, and practical preparation steps for a safe and meaningful experience.</p>
+                <div class="card-tags">
+                    <span class="tag">Set & Setting</span>
+                    <span class="tag">Checklist</span>
+                </div>
+            </a>
+
+            <a href="safety-guide.html" class="hub-card guide">
+                <span class="card-icon">🛡️</span>
+                <div class="card-title">Safety Guide <span class="arrow">→</span></div>
+                <p class="card-desc">Harm reduction principles, dangerous combinations, medical contraindications, and how to handle emergencies.</p>
+                <div class="card-tags">
+                    <span class="tag">Harm Reduction</span>
+                    <span class="tag">Interactions</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Integration & Advanced -->
+        <div class="section-header">Integration & Advanced</div>
+        <div class="cards-grid two-col">
+            <a href="integration-guide.html" class="hub-card">
+                <span class="card-icon">🧘</span>
+                <div class="card-title">Integration Guide <span class="arrow">→</span></div>
+                <p class="card-desc">How to process and integrate psychedelic experiences into your daily life for lasting benefit.</p>
+                <div class="card-tags">
+                    <span class="tag">Post-Trip</span>
+                    <span class="tag">Journaling</span>
+                    <span class="tag">Long-term Benefits</span>
+                </div>
+            </a>
+
+            <a href="microdosing-guide.html" class="hub-card">
+                <span class="card-icon">⚗️</span>
+                <div class="card-title">Microdosing Guide <span class="arrow">→</span></div>
+                <p class="card-desc">Protocols, dosing schedules, benefits, risks, and practical tips for sub-perceptual psychedelic use.</p>
+                <div class="card-tags">
+                    <span class="tag">Stamets Protocol</span>
+                    <span class="tag">Fadiman Protocol</span>
+                    <span class="tag">Dosing Schedules</span>
+                </div>
+            </a>
+
+            <a href="navigation-guide.html" class="hub-card">
+                <span class="card-icon">🧭</span>
+                <div class="card-title">Navigation Guide <span class="arrow">→</span></div>
+                <p class="card-desc">How to navigate difficult moments, overwhelming experiences, and challenging trips in real time.</p>
+                <div class="card-tags">
+                    <span class="tag">Difficult Trips</span>
+                    <span class="tag">Grounding Techniques</span>
+                    <span class="tag">Trip Sitter Tips</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

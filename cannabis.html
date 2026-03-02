@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cannabis — High IQ 🌿</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --lime: #84CC16;
+            --cyan: #06B6D4;
+            --purple: #8B5CF6;
+            --pink: #EC4899;
+            --yellow: #FBBF24;
+            --orange: #F97316;
+            --green: #10B981;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #0a1a00 0%, #001a0a 50%, #0a2800 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(45deg,
+                rgba(132,204,22,0.07) 0%,
+                rgba(6,182,212,0.05) 33%,
+                rgba(16,185,129,0.07) 66%,
+                rgba(132,204,22,0.05) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .back-btn:hover { background: rgba(132,204,22,0.2); border-color: var(--lime); color: #fff; transform: translateX(-4px); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(3rem, 10vw, 6rem);
+            background: linear-gradient(135deg, var(--lime), var(--cyan), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Section headers */
+        .section-header {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--lime);
+            opacity: 0.7;
+            margin-bottom: 20px;
+            padding-left: 4px;
+        }
+
+        /* Card grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 56px;
+        }
+
+        .cards-grid.two-col {
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        }
+
+        /* Hub card */
+        .hub-card {
+            display: block;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(132,204,22,0.08), transparent);
+            transition: left 0.5s;
+        }
+
+        .hub-card:hover::before { left: 100%; }
+
+        .hub-card:hover {
+            border-color: rgba(132,204,22,0.3);
+            background: rgba(132,204,22,0.05);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(132,204,22,0.1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.6rem;
+            color: var(--lime);
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .card-desc {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            background: rgba(132,204,22,0.1);
+            border: 1px solid rgba(132,204,22,0.25);
+            border-radius: 20px;
+            font-size: 0.72rem;
+            color: var(--lime);
+            letter-spacing: 0.03em;
+        }
+
+        /* Game cards slightly different accent */
+        .hub-card.game:hover {
+            border-color: rgba(251,191,36,0.3);
+            background: rgba(251,191,36,0.04);
+            box-shadow: 0 16px 40px rgba(251,191,36,0.08);
+        }
+        .hub-card.game::before { background: linear-gradient(90deg, transparent, rgba(251,191,36,0.07), transparent); }
+        .hub-card.game .card-title { color: var(--yellow); }
+        .hub-card.game .tag { background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.25); color: var(--yellow); }
+
+        /* Quiz cards */
+        .hub-card.quiz:hover {
+            border-color: rgba(139,92,246,0.3);
+            background: rgba(139,92,246,0.04);
+            box-shadow: 0 16px 40px rgba(139,92,246,0.08);
+        }
+        .hub-card.quiz::before { background: linear-gradient(90deg, transparent, rgba(139,92,246,0.07), transparent); }
+        .hub-card.quiz .card-title { color: var(--purple); }
+        .hub-card.quiz .tag { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.25); color: var(--purple); }
+
+        .arrow {
+            display: inline-block;
+            margin-left: 6px;
+            transition: transform 0.2s;
+        }
+        .hub-card:hover .arrow { transform: translateX(4px); }
+
+        @media (max-width: 600px) {
+            .cards-grid, .cards-grid.two-col { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <div class="container">
+        <header>
+            <div class="eyebrow">High IQ · Cannabis</div>
+            <h1>🌿 Cannabis</h1>
+            <p class="subtitle">Strain databases, knowledge games, and personality quizzes. Everything cannabis in one place.</p>
+        </header>
+
+        <!-- Databases -->
+        <div class="section-header">Databases</div>
+        <div class="cards-grid two-col">
+            <a href="strains.html" class="hub-card">
+                <span class="card-icon">🌱</span>
+                <div class="card-title">Strain Database <span class="arrow">→</span></div>
+                <p class="card-desc">50+ curated strains with effects, THC/CBD levels, flavor profiles, dosage guides, and more.</p>
+                <div class="card-tags">
+                    <span class="tag">50+ Strains</span>
+                    <span class="tag">Indica / Sativa / Hybrid</span>
+                    <span class="tag">Smart Search</span>
+                    <span class="tag">Dosage Guides</span>
+                </div>
+            </a>
+
+            <a href="databases.html" class="hub-card">
+                <span class="card-icon">🍄</span>
+                <div class="card-title">Substance Database <span class="arrow">→</span></div>
+                <p class="card-desc">Full substance database covering cannabis strains and psilocybin mushroom profiles side by side.</p>
+                <div class="card-tags">
+                    <span class="tag">Cannabis</span>
+                    <span class="tag">Mushrooms</span>
+                    <span class="tag">Harm Reduction</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Games -->
+        <div class="section-header">Games</div>
+        <div class="cards-grid two-col">
+            <a href="higher-lower.html" class="hub-card game">
+                <span class="card-icon">📈</span>
+                <div class="card-title">Higher or Lower: THC <span class="arrow">→</span></div>
+                <p class="card-desc">Two strains. Guess which has the higher THC%. How long can you keep your streak going?</p>
+                <div class="card-tags">
+                    <span class="tag">50 Strains</span>
+                    <span class="tag">High Score</span>
+                    <span class="tag">Quick Rounds</span>
+                </div>
+            </a>
+
+            <a href="real-or-fake.html" class="hub-card game">
+                <span class="card-icon">🤔</span>
+                <div class="card-title">Real or Fake Strain? <span class="arrow">→</span></div>
+                <p class="card-desc">Some strain names are absurd. But are they actually real? Test your knowledge — you'll be surprised.</p>
+                <div class="card-tags">
+                    <span class="tag">50 Names</span>
+                    <span class="tag">True / False</span>
+                    <span class="tag">Mind-Blowing</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Quizzes -->
+        <div class="section-header">Quizzes</div>
+        <div class="cards-grid two-col">
+            <a href="stoner-quiz.html" class="hub-card quiz">
+                <span class="card-icon">🧠</span>
+                <div class="card-title">What Type of Stoner Are You? <span class="arrow">→</span></div>
+                <p class="card-desc">15 questions to find your stoner archetype — from philosopher to social butterfly — with personalized strain recommendations.</p>
+                <div class="card-tags">
+                    <span class="tag">15 Questions</span>
+                    <span class="tag">5 Personality Types</span>
+                    <span class="tag">Strain Recs</span>
+                </div>
+            </a>
+
+            <a href="munchies-quiz.html" class="hub-card quiz">
+                <span class="card-icon">🍕</span>
+                <div class="card-title">What's Your Munchies Style? <span class="arrow">→</span></div>
+                <p class="card-desc">Fast food fiend or gourmet chef? Discover your munchies personality and get custom food recommendations.</p>
+                <div class="card-tags">
+                    <span class="tag">15 Questions</span>
+                    <span class="tag">6 Eating Styles</span>
+                    <span class="tag">Food Recs</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
